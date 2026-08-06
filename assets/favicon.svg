@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="gxGrad" x1="4" y1="8" x2="58" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#006b29"/>
+      <stop offset="1" stop-color="#006876"/>
+    </linearGradient>
+  </defs>
+  <polygon points="38,6 54,15.5 54,34.5 38,44 22,34.5 22,15.5" fill="none" stroke="url(#gxGrad)" stroke-width="3.4"/>
+  <line x1="22" y1="25" x2="9" y2="34" stroke="url(#gxGrad)" stroke-width="3.4" stroke-linecap="round"/>
+  <circle cx="38" cy="25" r="6.5" fill="#006b29"/>
+  <circle cx="9" cy="34" r="5" fill="#006876"/>
+  <circle cx="54" cy="44" r="4" fill="#006876"/>
+  <line x1="46" y1="39.5" x2="54" y2="44" stroke="url(#gxGrad)" stroke-width="3.4" stroke-linecap="round"/>
+</svg>
