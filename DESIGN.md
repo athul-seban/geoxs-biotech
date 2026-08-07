@@ -92,6 +92,18 @@ typography:
     fontSize: 12px
     fontWeight: '500'
     lineHeight: 16px
+  wordmark:
+    fontFamily: PT Serif
+    fontSize: 18px
+    fontWeight: '700'
+    lineHeight: 1
+    letterSpacing: 0.02em
+  wordmark-sub:
+    fontFamily: PT Serif
+    fontSize: 12px
+    fontWeight: '400'
+    lineHeight: 1
+    letterSpacing: 0.08em
 rounded:
   sm: 0.125rem
   DEFAULT: 0.25rem
@@ -131,6 +143,8 @@ The color palette is anchored by a vibrant "Biosphere Green" and a technical "La
 The typography system prioritizes legibility and technical precision. **Hanken Grotesk** is used for headlines to provide a sharp, modern, and high-tech feel. **Inter** serves as the workhorse for body copy, offering exceptional readability for scientific reports and dense documentation. 
 
 For technical data, serial numbers, and code-like identifiers, **JetBrains Mono** is utilized to reinforce the "Biotech" and data-driven nature of the product. Text should generally be set in the "Neutral" slate color to reduce eye strain compared to pure black, while maintaining high contrast against white surfaces.
+
+The wordmark (the "Geoxs Biotech" nameplate in the header and footer) is a deliberate exception, set in **PT Serif** — a classic serif matching the company's registered logotype — rather than the Hanken Grotesk display face used elsewhere. It appears in uppercase at the `wordmark` size with a smaller `wordmark-sub` line for "Private Limited." beneath it, echoing the two-line lockup of the source logo.
 
 ## Layout & Spacing
 

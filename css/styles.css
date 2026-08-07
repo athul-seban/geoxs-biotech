@@ -51,6 +51,7 @@
   --font-display: 'Hanken Grotesk', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-wordmark: 'PT Serif', Georgia, 'Times New Roman', serif;
 
   /* Radius */
   --radius-sm: 0.125rem;
@@ -216,10 +217,16 @@ h1,h2,h3,h4,p{ margin: 0; }
   width: 100%;
 }
 .brand{ display: inline-flex; align-items: center; gap: 10px; }
-.brand-mark{ width: 32px; height: 32px; flex-shrink: 0; }
+.brand-mark{ width: 44px; height: 44px; flex-shrink: 0; }
+.brand-text{ display: flex; flex-direction: column; line-height: 1; }
 .brand-word{
-  font-family: var(--font-display); font-weight: 600; font-size: 18px;
-  color: var(--on-surface); letter-spacing: -0.01em;
+  font-family: var(--font-wordmark); font-weight: 700; font-size: 18px;
+  color: var(--on-surface); letter-spacing: 0.02em; text-transform: uppercase;
+}
+.brand-sub{
+  font-family: var(--font-wordmark); font-weight: 400; font-size: 12px;
+  color: var(--on-surface-variant); letter-spacing: 0.08em; text-transform: uppercase;
+  margin-top: 2px;
 }
 .site-nav{ display: none; align-items: center; gap: var(--space-md); }
 .site-nav a{
@@ -513,6 +520,7 @@ h1,h2,h3,h4,p{ margin: 0; }
   border-bottom: 1px solid color-mix(in srgb, var(--inverse-on-surface) 15%, transparent);
 }
 .footer-brand .brand-word{ color: var(--inverse-on-surface); }
+.footer-brand .brand-sub{ color: color-mix(in srgb, var(--inverse-on-surface) 70%, transparent); }
 .footer-tagline{ margin-top: var(--space-sm); max-width: 40ch; color: color-mix(in srgb, var(--inverse-on-surface) 70%, transparent); }
 .footer-nav{ display: flex; flex-wrap: wrap; gap: var(--space-md); align-content: start; }
 .footer-nav a{
