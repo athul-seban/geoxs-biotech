@@ -120,7 +120,8 @@ h1,h2,h3,h4,p{ margin: 0; }
   .container{ padding: 0 20px; }
 }
 
-.section{ padding: var(--space-xl) 0; }
+.section{ padding: var(--space-xl) 0; scroll-margin-top: var(--header-h); }
+#top{ scroll-margin-top: var(--header-h); }
 @media (max-width: 767px){
   .section{ padding: var(--space-lg) 0; }
 }
