@@ -1,0 +1,53 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font-size",
+        "value": "34px",
+        "createdAt": "2026-08-13T02:54:37.813Z",
+        "reason": "User confirmed pre-existing font sizes are intentional, not part of the DESIGN.md type ramp"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "15px",
+        "createdAt": "2026-08-13T02:54:37.953Z",
+        "reason": "User confirmed pre-existing font sizes are intentional, not part of the DESIGN.md type ramp"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "11px",
+        "createdAt": "2026-08-13T02:54:38.071Z",
+        "reason": "User confirmed pre-existing font sizes are intentional, not part of the DESIGN.md type ramp"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "56px",
+        "createdAt": "2026-08-13T02:54:38.235Z",
+        "reason": "User confirmed pre-existing font sizes are intentional, not part of the DESIGN.md type ramp"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "26px",
+        "createdAt": "2026-08-13T02:54:38.361Z",
+        "reason": "User confirmed pre-existing font sizes are intentional, not part of the DESIGN.md type ramp"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "13px",
+        "createdAt": "2026-08-13T02:54:38.485Z",
+        "reason": "User confirmed pre-existing font sizes are intentional, not part of the DESIGN.md type ramp"
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "css/styles.css"
+        ],
+        "createdAt": "2026-08-13T02:54:38.612Z",
+        "reason": "User confirmed the molecular watermark background is intentional per DESIGN.md's documented brand texture"
+      }
+    ]
+  }
+}
