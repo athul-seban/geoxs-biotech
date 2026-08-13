@@ -1,6 +1,66 @@
 (function () {
   'use strict';
 
+  // Marks JS as active so CSS can gate the reveal animation on it — without
+  // this class, .reveal elements stay at full opacity (no-JS/blocked-JS safe).
+  document.documentElement.classList.add('js');
+
+  // Scroll reveal: fade/slide sections and cards in once, on first view.
+  // Wrapped defensively so any unexpected error still reveals everything
+  // instead of leaving content stuck at opacity:0.
+  try {
+    var revealEls = document.querySelectorAll('.reveal');
+    if (revealEls.length) {
+      if ('IntersectionObserver' in window) {
+        var revealObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+        revealEls.forEach(function (el) { revealObserver.observe(el); });
+      } else {
+        revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+      }
+    }
+  } catch (err) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  // Stat count-up: animate the "9%" figure once it scrolls into view.
+  try {
+    var statNumber = document.querySelector('.stat-number');
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (statNumber && 'IntersectionObserver' in window && !reduceMotion) {
+      var match = statNumber.textContent.match(/[\d.]+/);
+      if (match) {
+        var target = parseFloat(match[0]);
+        var prefix = statNumber.textContent.slice(0, match.index);
+        var suffix = statNumber.textContent.slice(match.index + match[0].length);
+        var statObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            statObserver.unobserve(entry.target);
+            var start = null;
+            var duration = 900;
+            function step(ts) {
+              if (!start) start = ts;
+              var progress = Math.min((ts - start) / duration, 1);
+              statNumber.textContent = prefix + Math.round(progress * target) + suffix;
+              if (progress < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+          });
+        }, { threshold: 0.4 });
+        statObserver.observe(statNumber);
+      }
+    }
+  } catch (err) {
+    // Leave the static value already in the markup.
+  }
+
   // Header scroll shadow
   var header = document.getElementById('site-header');
   var onScroll = function () {

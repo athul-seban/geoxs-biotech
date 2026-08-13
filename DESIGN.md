@@ -94,13 +94,13 @@ typography:
     lineHeight: 16px
   wordmark:
     fontFamily: PT Serif
-    fontSize: 18px
+    fontSize: 22px
     fontWeight: '700'
     lineHeight: 1
     letterSpacing: 0.02em
   wordmark-sub:
     fontFamily: PT Serif
-    fontSize: 12px
+    fontSize: 13px
     fontWeight: '400'
     lineHeight: 1
     letterSpacing: 0.08em
