@@ -287,21 +287,53 @@ h1,h2,h3,h4,p{ margin: 0; }
 }
 
 /* ==========================================================================
+   Container watermark (cropped brand mark, corner of card surfaces)
+   ========================================================================== */
+.pillar, .team-card, .stat-callout, .contact-form{
+  position: relative;
+  overflow: hidden;
+}
+.pillar::after, .team-card::after, .stat-callout::after, .contact-form::after{
+  content: '';
+  position: absolute; z-index: -1;
+  right: -18px; bottom: -18px;
+  width: 128px; height: 136px;
+  background-image: url('../assets/mark-watermark.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+/* ==========================================================================
    Hero globe (rotating flat-map — ambient "planet" motif)
    ========================================================================== */
 .hero-globe{ display: none; }
 .hero-globe svg{ display: block; width: 100%; height: 100%; overflow: hidden; }
-.hero-globe .globe-base-stop-a{ stop-color: #ffffff; }
-.hero-globe .globe-base-stop-b{ stop-color: var(--surface-container-highest); }
+.hero-globe .globe-base-stop-a{ stop-color: var(--mark-blue); stop-opacity: 0.6; }
+.hero-globe .globe-base-stop-b{ stop-color: var(--primary); stop-opacity: 0.48; }
 .hero-globe .globe-shade-stop-a{ stop-color: #000000; stop-opacity: 0; }
 .hero-globe .globe-shade-stop-b{ stop-color: #000000; stop-opacity: 0.16; }
-.hero-globe .globe-continents{ fill: var(--primary); }
+.hero-globe .globe-continents{ fill: var(--primary); fill-opacity: 0.72; }
+.hero-globe .globe-continents-back{
+  fill: var(--primary); fill-opacity: 0.16;
+  transform-origin: 50px 50px;
+  transform: scaleX(-1) translateX(-83.78435px);
+}
+.hero-globe .globe-equator,
+.hero-globe .globe-latitude,
+.hero-globe .globe-meridian{ fill: none; stroke: var(--outline); stroke-opacity: 0.4; stroke-width: 0.18; }
 .hero-globe .globe-outline{ fill: none; stroke: var(--outline); stroke-opacity: 0.35; stroke-width: 1; }
 @media (prefers-reduced-motion: no-preference){
-  .hero-globe .globe-continents{ animation: globe-scroll 26s linear infinite; }
+  .hero-globe .globe-continents{ animation: globe-scroll 120s linear infinite; }
+  .hero-globe .globe-continents-back{ animation: globe-scroll-back 120s linear infinite; animation-delay: -60s; }
   @keyframes globe-scroll{
-    from{ transform: translateX(0); }
-    to{ transform: translateX(-167.5687px); }
+    from{ transform: translateX(-167.5687px); }
+    to{ transform: translateX(0); }
+  }
+  @keyframes globe-scroll-back{
+    from{ transform: scaleX(-1) translateX(-167.5687px); }
+    to{ transform: scaleX(-1) translateX(0); }
   }
 }
 
