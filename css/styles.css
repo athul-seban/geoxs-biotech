@@ -275,12 +275,15 @@ h1,h2,h3,h4,p{ margin: 0; }
 @media (max-width: 1023px){
   .site-nav.is-open{
     display: flex; flex-direction: column;
-    position: absolute; top: var(--header-h); left: 0; right: 0;
+    position: fixed; top: 100%; left: 0; right: 0;
+    height: calc(100vh - var(--header-h));
     background: var(--surface-container-lowest);
     border-bottom: 1px solid var(--outline-variant);
     padding: var(--space-md) var(--margin-mobile);
     gap: var(--space-md);
+    overflow-y: auto;
   }
+  body.nav-open{ overflow: hidden; }
 }
 
 /* ==========================================================================
@@ -303,11 +306,12 @@ h1,h2,h3,h4,p{ margin: 0; }
 /* ==========================================================================
    Container watermark (cropped brand mark, corner of card surfaces)
    ========================================================================== */
-.pillar, .team-card, .stat-callout, .contact-form{
+.pillar, .team-card, .stat-callout, .contact-form, .hero-visual{
   position: relative;
   overflow: hidden;
+  z-index: 0;
 }
-.pillar::after, .team-card::after, .stat-callout::after, .contact-form::after{
+.pillar::after, .team-card::after, .stat-callout::after, .contact-form::after, .hero-visual::after{
   content: '';
   position: absolute; z-index: -1;
   right: -18px; bottom: -18px;
@@ -363,15 +367,16 @@ h1,h2,h3,h4,p{ margin: 0; }
 .hero-sub{ margin-top: var(--space-md); max-width: 42ch; }
 .hero-ctas{ display: flex; gap: var(--space-sm); margin-top: var(--space-lg); flex-wrap: wrap; }
 .hero-visual{ display: none; }
-.hero-mark{ display: block; width: 100%; max-width: 320px; height: auto; margin: 0 auto; }
 
 @media (min-width: 1024px){
   .hero{ padding-top: var(--space-xl); }
   .hero-grid{ grid-template-columns: 1.15fr 1fr; }
-  .hero-visual{ display: block; }
+  .hero-visual{
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; max-width: 420px; aspect-ratio: 1; margin-inline: auto;
+  }
   .hero-globe{
-    display: block; position: absolute; z-index: -1; bottom: -14%; right: -6%;
-    width: clamp(200px, 40vw, 460px); aspect-ratio: 1;
+    display: block; width: 100%; height: 100%;
     pointer-events: none;
   }
 }
@@ -615,7 +620,10 @@ h1,h2,h3,h4,p{ margin: 0; }
   font-size: 15px; font-weight: 500;
 }
 .footer-nav a:hover{ color: var(--inverse-on-surface); }
-.footer-bottom{ padding-top: var(--space-md); }
+.footer-bottom{
+  padding-top: var(--space-md);
+  display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-md);
+}
 .footer-bottom .label-sm{ color: color-mix(in srgb, var(--inverse-on-surface) 55%, transparent); }
 @media (min-width: 768px){
   .footer-grid{ grid-template-columns: 1.4fr 1fr; }
