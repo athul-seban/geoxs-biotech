@@ -1,0 +1,932 @@
+/* ==========================================================================
+   Geoxs Biotech — Design tokens (variant: Island Glass)
+   World: the same warm-white canvas and Biosphere Green / Lab Teal, staged
+   around one focal capsule — the nav's glass island morphs and slides to
+   whatever the visitor is about to choose, the way a Dynamic Island resizes
+   to the task at hand rather than sitting as a fixed bar.
+   ========================================================================== */
+:root{
+  /* Canvas & ink — the original Molecular Precision palette, unchanged */
+  --bg: #fbf9f8;
+  --bg-1: #303030;
+  --ink: #1b1c1c;
+  --ink-dim: #3e4a3d;
+  --ink-faint: #6b776f;
+
+  /* Brand — the original Biosphere Green / Lab Teal, unchanged */
+  --brand-green: #006b29;
+  --brand-green-deep: #008736;
+  --brand-teal: #006876;
+  --brand-teal-deep: #13a0a9;
+  --brand-gradient: linear-gradient(135deg, var(--brand-green), var(--brand-teal));
+
+  /* Legacy role names kept so component + JS references still resolve */
+  --surface: var(--bg);
+  --surface-container-lowest: var(--glass-bg);
+  --surface-container-low: var(--glass-bg-soft);
+  --on-surface: var(--ink);
+  --on-surface-variant: var(--ink-dim);
+  --inverse-surface: var(--bg-1);
+  --inverse-on-surface: #f2f0f0;
+  --outline: #6e7a6c;
+  --outline-variant: rgba(27,28,28,0.14);
+  --primary: var(--brand-green);
+  --on-primary: #ffffff;
+  --primary-container: var(--brand-green-deep);
+  --secondary: var(--brand-teal);
+  --on-secondary: #ffffff;
+  --error: #ba1a1a;
+  --mark-blue: var(--brand-teal-deep);
+
+  /* Glass material — white panels over the warm canvas, blur reveals the
+     colored aurora beneath so even a near-white surface reads as glass */
+  --glass-bg: rgba(255,255,255,0.5);
+  --glass-bg-soft: rgba(255,255,255,0.32);
+  --glass-bg-strong: rgba(255,255,255,0.72);
+  --glass-border: rgba(27,28,28,0.16);
+  --glass-border-soft: rgba(27,28,28,0.09);
+  --glass-blur: 26px;
+  --glass-blur-lg: 40px;
+  --glass-shadow: 0 22px 54px -26px rgba(20,32,26,0.18), inset 0 1px 0 rgba(255,255,255,0.85);
+  --glass-shadow-lg: 0 32px 76px -28px rgba(20,32,26,0.22), inset 0 1px 0 rgba(255,255,255,0.9);
+
+  /* Typography */
+  --font-display: 'Hanken Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-wordmark: 'PT Serif', Georgia, 'Times New Roman', serif;
+
+  /* Radius — continuous, generous, glass-appropriate */
+  --radius-sm: 0.875rem;
+  --radius: 1.25rem;
+  --radius-md: 1.5rem;
+  --radius-lg: 1.75rem;
+  --radius-xl: 2.25rem;
+  --radius-field: 0.875rem;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --space-base: 8px;
+  --space-xs: 4px;
+  --space-sm: 12px;
+  --space-md: 24px;
+  --space-lg: 48px;
+  --space-xl: 80px;
+  --gutter: 24px;
+  --margin-mobile: 16px;
+  --margin-desktop: 64px;
+
+  --header-h: 84px;
+  --container-max: 1280px;
+}
+
+/* ==========================================================================
+   Reset & base
+   ========================================================================== */
+*, *::before, *::after{ box-sizing: border-box; }
+html{ scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *, *::before, *::after{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+body{
+  margin: 0;
+  position: relative;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+/* Ambient light source: fixed aurora the glass throughout the page catches. */
+body::before{
+  content: '';
+  position: fixed; inset: 0; z-index: -3; pointer-events: none;
+  background:
+    radial-gradient(1100px 760px at 12% -8%, color-mix(in srgb, var(--brand-green) 16%, transparent), transparent 60%),
+    radial-gradient(950px 720px at 92% 18%, color-mix(in srgb, var(--brand-teal) 14%, transparent), transparent 58%),
+    radial-gradient(900px 900px at 45% 108%, color-mix(in srgb, var(--brand-green) 10%, transparent), transparent 62%),
+    var(--bg);
+}
+img, svg{ display: block; max-width: 100%; }
+a{ color: inherit; text-decoration: none; }
+button{ font: inherit; }
+ul{ margin: 0; padding: 0; }
+h1,h2,h3,h4,p{ margin: 0; }
+:focus-visible{ outline: 2px solid var(--brand-teal); outline-offset: 3px; }
+
+/* Browser-owned surfaces, themed rather than left to defaults */
+::selection{ background: color-mix(in srgb, var(--brand-teal) 35%, white); color: var(--ink); }
+html{ scrollbar-width: thin; scrollbar-color: rgba(27,28,28,0.2) transparent; }
+::-webkit-scrollbar{ width: 11px; height: 11px; }
+::-webkit-scrollbar-track{ background: transparent; }
+::-webkit-scrollbar-thumb{
+  background: rgba(27,28,28,0.18);
+  border-radius: var(--radius-full);
+  border: 3px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover{ background: rgba(27,28,28,0.28); }
+a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
+.label-md, .label-sm, .stat-number, .process-node{ font-variant-numeric: tabular-nums; }
+
+.skip-link{
+  position: absolute; left: -9999px; top: 0;
+  background: var(--brand-green); color: var(--on-primary);
+  padding: var(--space-sm) var(--space-md); z-index: 100;
+  border-radius: var(--radius-sm);
+}
+.skip-link:focus{ left: var(--space-md); top: var(--space-md); }
+
+.container{
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--margin-mobile);
+}
+@media (min-width: 1024px){
+  .container{ padding: 0 var(--margin-desktop); }
+}
+@media (min-width: 640px) and (max-width: 1023px){
+  .container{ padding: 0 20px; }
+}
+
+.section{ padding: var(--space-xl) 0; scroll-margin-top: calc(var(--header-h) + 20px); position: relative; }
+#top{ scroll-margin-top: var(--header-h); }
+@media (max-width: 767px){
+  .section{ padding: var(--space-lg) 0; }
+}
+
+/* ==========================================================================
+   Typography scale
+   ========================================================================== */
+.display-lg{
+  font-family: var(--font-display);
+  font-size: 64px; font-weight: 700; line-height: 1.08; letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.headline-lg{
+  font-family: var(--font-display);
+  font-size: 38px; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.headline-md{
+  font-family: var(--font-display);
+  font-size: 24px; font-weight: 600; line-height: 32px;
+  color: var(--ink);
+}
+.body-lg{
+  font-family: var(--font-body);
+  font-size: 18px; font-weight: 400; line-height: 28px;
+  color: var(--ink-dim);
+}
+.body-md{
+  font-family: var(--font-body);
+  font-size: 16px; font-weight: 400; line-height: 24px;
+  color: var(--ink-dim);
+}
+.label-md{
+  font-family: var(--font-mono);
+  font-size: 13px; font-weight: 500; line-height: 20px; letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.label-sm{
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 500; line-height: 16px;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 767px){
+  .display-lg{ font-size: 38px; line-height: 1.14; letter-spacing: -0.01em; }
+  .headline-lg{ font-size: 29px; line-height: 1.2; }
+}
+
+/* ==========================================================================
+   Buttons — glass pills
+   ========================================================================== */
+.btn{
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--space-xs);
+  font-family: var(--font-body); font-size: 15px; font-weight: 600;
+  white-space: nowrap;
+  padding: 14px 26px;
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 160ms cubic-bezier(.16,1,.3,1), background-color 160ms ease, border-color 160ms ease, box-shadow 200ms ease;
+}
+.btn:active{ transform: translateY(1px) scale(0.98); }
+.btn-primary{
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--brand-green) 22%, transparent), color-mix(in srgb, var(--brand-teal) 16%, transparent)),
+    rgba(255,255,255,0.55);
+  border-color: rgba(27,28,28,0.12);
+  color: var(--ink);
+  box-shadow: 0 10px 26px -14px color-mix(in srgb, var(--brand-green) 55%, transparent),
+    0 14px 34px -20px color-mix(in srgb, var(--brand-teal) 45%, transparent),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+.btn-primary:hover{
+  border-color: rgba(27,28,28,0.18);
+  box-shadow: 0 12px 32px -12px color-mix(in srgb, var(--brand-green) 65%, transparent),
+    0 16px 40px -18px color-mix(in srgb, var(--brand-teal) 55%, transparent),
+    inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.btn-secondary{
+  background: rgba(255,255,255,0.32);
+  border-color: rgba(27,28,28,0.16);
+  color: var(--ink);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+.btn-secondary:hover{ background: rgba(255,255,255,0.55); border-color: rgba(27,28,28,0.24); }
+
+/* ==========================================================================
+   Header — a floating glass capsule, not a full-width bar
+   ========================================================================== */
+.site-header{
+  position: sticky; top: 0; z-index: 50;
+  padding: 14px var(--margin-mobile) 0;
+  display: flex; justify-content: center;
+  pointer-events: none;
+  transition: transform 280ms cubic-bezier(.16,1,.3,1);
+}
+.site-header > .header-inner{ pointer-events: auto; }
+@media (min-width: 1024px){
+  .site-header{ padding: 18px var(--margin-desktop) 0; }
+}
+@media (max-width: 1023px){
+  .site-header.is-hidden{ transform: translateY(-130%); }
+}
+.header-inner{
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; max-width: 1180px;
+  padding: 8px 10px 8px 20px;
+  border-radius: var(--radius-full);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border-soft);
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  box-shadow: var(--glass-shadow);
+  transition: background 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+.site-header.is-scrolled .header-inner{
+  background: var(--glass-bg-strong);
+  box-shadow: var(--glass-shadow-lg);
+}
+.brand{ display: inline-flex; align-items: center; gap: 12px; }
+.brand-mark{ width: 44px; height: 44px; flex-shrink: 0; }
+.brand-text{ display: flex; flex-direction: column; line-height: 1; }
+.brand-word{
+  font-family: var(--font-wordmark); font-weight: 700; font-size: 19px;
+  color: var(--ink); letter-spacing: 0.02em; text-transform: uppercase;
+}
+.brand-sub{
+  font-family: var(--font-wordmark); font-weight: 400; font-size: 11.5px;
+  color: var(--ink-dim); letter-spacing: 0.08em; text-transform: uppercase;
+  margin-top: 2px;
+}
+.site-nav{ display: none; align-items: center; gap: 2px; position: relative; }
+.site-nav a{
+  position: relative; z-index: 1;
+  font-size: 14.5px; font-weight: 500; color: var(--ink-dim);
+  padding: 9px 16px;
+  border-radius: var(--radius-full);
+  transition: color 200ms ease;
+}
+.site-nav a:hover{ color: var(--ink); }
+/* Island indicator: one capsule that slides and resizes to whichever link
+   the visitor is about to choose, instead of each link owning its own state. */
+.nav-island{
+  position: absolute; top: 0; left: 0; z-index: 0;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--brand-teal) 12%, white);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-teal) 20%, transparent);
+  opacity: 0;
+  transition: transform 480ms cubic-bezier(.34,1.4,.4,1), width 480ms cubic-bezier(.34,1.4,.4,1), opacity 200ms ease;
+  pointer-events: none;
+}
+.site-nav.is-tracking .nav-island{ opacity: 1; }
+.header-actions{ display: flex; align-items: center; gap: var(--space-sm); }
+.header-actions .btn{ display: none; padding: 10px 20px; font-size: 14px; }
+
+@media (max-width: 400px){
+  .brand-mark{ width: 38px; height: 38px; }
+  .brand-word{ font-size: 16px; }
+}
+
+.nav-toggle{
+  display: flex; flex-direction: column; justify-content: center; gap: 5px;
+  width: 40px; height: 40px; padding: 8px;
+  background: transparent; border: none; cursor: pointer;
+}
+.nav-toggle span{
+  display: block; height: 2px; width: 100%; background: var(--ink);
+  border-radius: 2px; transition: transform 200ms ease, opacity 200ms ease;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+@media (min-width: 1024px){
+  .site-nav{ display: flex; }
+  .header-actions .btn{ display: inline-flex; }
+  .nav-toggle{ display: none; }
+}
+
+@media (max-width: 1023px){
+  .site-nav.is-open{
+    display: flex; flex-direction: column;
+    position: fixed; top: calc(var(--header-h) + 8px); left: var(--margin-mobile); right: var(--margin-mobile);
+    max-height: calc(100vh - var(--header-h) - 32px);
+    background: var(--bg);
+    border: 1px solid var(--glass-border-soft);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
+    -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
+    box-shadow: var(--glass-shadow-lg);
+    padding: var(--space-sm) var(--space-md);
+    gap: 0;
+    overflow-y: auto;
+  }
+  body.nav-open{ overflow: hidden; }
+  .site-nav.is-open a{
+    padding: 15px 4px;
+    font-size: 17px;
+    border-bottom: 1px solid var(--glass-border-soft);
+    border-radius: 0;
+  }
+  .site-nav.is-open a:hover{ background: transparent; color: var(--secondary); }
+  .site-nav.is-open a:last-child{ border-bottom: none; }
+}
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference){
+  .site-nav.is-open a{
+    animation: nav-link-in 320ms cubic-bezier(.16,1,.3,1) both;
+  }
+  .site-nav.is-open a:nth-child(2){ animation-delay: 40ms; }
+  .site-nav.is-open a:nth-child(3){ animation-delay: 80ms; }
+  .site-nav.is-open a:nth-child(4){ animation-delay: 120ms; }
+  .site-nav.is-open a:nth-child(5){ animation-delay: 160ms; }
+  @keyframes nav-link-in{
+    from{ opacity: 0; transform: translateX(-10px); }
+    to{ opacity: 1; transform: none; }
+  }
+}
+
+/* ==========================================================================
+   Molecular watermark — recast as a dim circuit-trace field on dark glass
+   ========================================================================== */
+:root{
+  --molecular-pattern: radial-gradient(circle at 8% 20%, var(--outline) 0 3px, transparent 3px),
+    radial-gradient(circle at 22% 55%, var(--outline) 0 4px, transparent 4px),
+    radial-gradient(circle at 40% 15%, var(--outline) 0 3px, transparent 3px),
+    radial-gradient(circle at 68% 40%, var(--outline) 0 5px, transparent 5px),
+    radial-gradient(circle at 85% 70%, var(--outline) 0 3px, transparent 3px),
+    radial-gradient(circle at 55% 80%, var(--outline) 0 4px, transparent 4px),
+    linear-gradient(115deg, transparent 49%, var(--outline) 49% 50.5%, transparent 50.5%),
+    linear-gradient(30deg, transparent 49%, var(--outline) 49% 50.5%, transparent 50.5%);
+}
+.molecular-watermark{
+  position: absolute; inset: 0; z-index: -1;
+  background-image: var(--molecular-pattern);
+  background-size: 340px 340px;
+  opacity: 0.06;
+}
+
+.molecular-drift{
+  position: absolute; inset: -20px; z-index: -1;
+  background-image: var(--molecular-pattern);
+  background-size: 340px 340px;
+  opacity: 0.05;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference){
+  .molecular-drift{ animation: molecular-drift-move 90s linear infinite; }
+  @keyframes molecular-drift-move{
+    from{ background-position: 0 0; }
+    to{ background-position: 340px 340px; }
+  }
+}
+
+.molecular-canvas{
+  position: absolute; inset: 0; z-index: -1;
+  width: 100%; height: 100%;
+  display: none;
+  pointer-events: none;
+}
+.hero.js-canvas-active .molecular-watermark{ display: none; }
+.hero.js-canvas-active .molecular-canvas{ display: block; }
+
+/* ==========================================================================
+   Glass material — shared by every elevated panel on the page
+   ========================================================================== */
+.pillar-featured, .stat-callout, .contact-form,
+.team-grid, .pillar-grid-quad, .pillar-grid-duo, .pillar-stack{
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border-soft);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  box-shadow: var(--glass-shadow);
+}
+/* Cropped brand-mark watermark, once per panel — quiet corner texture */
+.pillar-featured::after, .stat-callout::after, .contact-form::after,
+.team-grid::after, .pillar-grid-quad::after, .pillar-grid-duo::after, .pillar-stack::after{
+  content: '';
+  position: absolute; z-index: -1;
+  right: -18px; bottom: -18px;
+  width: 128px; height: 136px;
+  background-image: url('../../assets/mark-watermark.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  opacity: 0.1;
+  pointer-events: none;
+}
+/* Specular highlight that tracks the pointer — the one authored glass motion */
+.pillar-featured::before, .stat-callout::before, .contact-form::before,
+.team-grid::before, .pillar-grid-quad::before, .pillar-grid-duo::before, .pillar-stack::before,
+.header-inner::before{
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,0.75), transparent 70%);
+  opacity: 0;
+  transition: opacity 400ms ease;
+  pointer-events: none;
+}
+.header-inner{ position: relative; }
+.pillar-featured:hover::before, .stat-callout:hover::before, .contact-form:hover::before,
+.team-grid:hover::before, .pillar-grid-quad:hover::before, .pillar-grid-duo:hover::before, .pillar-stack:hover::before,
+.header-inner:hover::before{ opacity: 1; }
+
+/* ==========================================================================
+   Hero globe — recast as a lit sphere held inside a glass lens
+   ========================================================================== */
+.hero-globe{ display: none; }
+.hero-globe svg{ display: block; width: 100%; height: 100%; overflow: hidden; }
+.hero-globe .globe-base-stop-a{ stop-color: var(--mark-blue); stop-opacity: 0.6; }
+.hero-globe .globe-base-stop-b{ stop-color: var(--primary); stop-opacity: 0.48; }
+.hero-globe .globe-shade-stop-a{ stop-color: #000000; stop-opacity: 0; }
+.hero-globe .globe-shade-stop-b{ stop-color: #000000; stop-opacity: 0.16; }
+.hero-globe .globe-continents{ fill: var(--primary); fill-opacity: 0.72; }
+.hero-globe .globe-continents-back{
+  fill: var(--primary); fill-opacity: 0.16;
+  transform-origin: 50px 50px;
+  transform: scaleX(-1) translateX(-83.78435px);
+}
+.hero-globe .globe-equator,
+.hero-globe .globe-latitude,
+.hero-globe .globe-meridian{ fill: none; stroke: var(--outline); stroke-opacity: 0.4; stroke-width: 0.18; }
+.hero-globe .globe-outline{ fill: none; stroke: var(--outline); stroke-opacity: 0.35; stroke-width: 1; }
+@media (prefers-reduced-motion: no-preference){
+  .hero-globe .globe-continents{ animation: globe-scroll 120s linear infinite; }
+  .hero-globe .globe-continents-back{ animation: globe-scroll-back 120s linear infinite; animation-delay: -60s; }
+  @keyframes globe-scroll{
+    from{ transform: translateX(-167.5687px); }
+    to{ transform: translateX(0); }
+  }
+  @keyframes globe-scroll-back{
+    from{ transform: scaleX(-1) translateX(-167.5687px); }
+    to{ transform: scaleX(-1) translateX(0); }
+  }
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.hero{ position: relative; overflow: hidden; padding: var(--space-lg) 0 var(--space-xl); }
+.hero-grid{
+  display: grid; gap: var(--space-lg);
+  align-items: center;
+}
+.hero-copy{ max-width: 46ch; }
+.hero-sub{ margin-top: var(--space-md); max-width: 42ch; }
+.hero-ctas{ display: flex; gap: var(--space-sm); margin-top: var(--space-lg); flex-wrap: wrap; }
+.hero-ctas .btn{ flex: 1 1 180px; }
+.hero-visual{ display: none; }
+
+@media (min-width: 1024px){
+  .hero{ padding-top: calc(var(--space-xl) + 20px); }
+  .hero-grid{ grid-template-columns: 1.15fr 1fr; }
+  .hero-visual{
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; max-width: 480px; aspect-ratio: 1; margin-inline: auto;
+  }
+  .hero-globe{
+    display: block; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+}
+
+/* ==========================================================================
+   Credibility strip — a thin glass instrument-panel rail
+   ========================================================================== */
+.credibility{
+  position: relative;
+  border-top: 1px solid var(--glass-border-soft);
+  border-bottom: 1px solid var(--glass-border-soft);
+  background: rgba(255,255,255,0.3);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.credibility-row{
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) 0;
+}
+.credibility-row span{
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  letter-spacing: 0.08em; color: var(--ink-dim);
+  padding: 0 var(--space-md);
+  position: relative;
+}
+.credibility-row span + span::before{
+  content: ''; position: absolute; left: calc(-1 * var(--space-md) / 2 - 1px);
+  top: 2px; bottom: 2px; width: 1px; background: var(--glass-border-soft);
+}
+@media (max-width: 640px){
+  .credibility-row span + span::before{ display: none; }
+}
+
+/* ==========================================================================
+   Mission
+   ========================================================================== */
+.mission-grid{
+  display: grid; gap: var(--space-lg);
+}
+.mission-copy h2{ max-width: 24ch; }
+.mission-copy p{ margin-top: var(--space-md); max-width: 62ch; }
+.stat-callout{
+  padding: var(--space-md);
+  align-self: start;
+}
+.stat-number{
+  font-family: var(--font-display); font-weight: 700; font-size: 56px;
+  line-height: 1; color: var(--brand-teal); margin-bottom: var(--space-sm);
+  text-shadow: 0 0 32px color-mix(in srgb, var(--brand-teal) 22%, transparent);
+}
+@media (min-width: 1024px){
+  .mission-grid{ grid-template-columns: 1.4fr 1fr; align-items: start; }
+}
+
+/* Ambient illustration: a polymer chain held apart by an enzyme, with
+   fragment particles releasing at the cut — visualizes the stat above it. */
+.enzyme-illustration{ margin-top: var(--space-md); }
+.enzyme-illustration svg{ width: 100%; max-width: 220px; height: auto; display: block; }
+.enzyme-illustration .chain-half line{ stroke: var(--outline); stroke-opacity: 0.7; stroke-width: 1.5; }
+.enzyme-illustration .chain-half circle{ fill: var(--brand-green); fill-opacity: 0.75; }
+.enzyme-illustration .chain-fragment{ fill: var(--brand-teal); opacity: 0; }
+.enzyme-illustration .enzyme-bite{ fill: var(--brand-teal); }
+@media (prefers-reduced-motion: no-preference){
+  .enzyme-illustration .chain-left{ animation: molecule-cut-left 4.4s ease-in-out infinite; }
+  .enzyme-illustration .chain-right{ animation: molecule-cut-right 4.4s ease-in-out infinite; }
+  .enzyme-illustration .enzyme-bite{
+    transform-box: fill-box; transform-origin: center;
+    animation: enzyme-bite-pulse 4.4s ease-in-out infinite;
+  }
+  .enzyme-illustration .chain-fragment-a{ animation: fragment-float 4.4s ease-in-out infinite; }
+  .enzyme-illustration .chain-fragment-b{ animation: fragment-float 4.4s ease-in-out infinite; animation-delay: 0.3s; }
+  @keyframes molecule-cut-left{
+    0%, 100%{ transform: translateX(0); }
+    50%{ transform: translateX(-4px); }
+  }
+  @keyframes molecule-cut-right{
+    0%, 100%{ transform: translateX(0); }
+    50%{ transform: translateX(4px); }
+  }
+  @keyframes enzyme-bite-pulse{
+    0%, 100%{ transform: scale(1); }
+    50%{ transform: scale(1.22); }
+  }
+  @keyframes fragment-float{
+    0%, 40%, 100%{ opacity: 0; transform: translateY(0); }
+    55%{ opacity: 0.9; }
+    70%{ opacity: 0; transform: translateY(-5px); }
+  }
+}
+
+/* ==========================================================================
+   Section head
+   ========================================================================== */
+.section-head{ max-width: 60ch; margin-bottom: var(--space-lg); }
+.section-head p{ margin-top: var(--space-sm); }
+
+/* ==========================================================================
+   Technology / pillars — one large glass instrument + a connected rail
+   ========================================================================== */
+.hexagon{
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: color-mix(in srgb, var(--brand-teal) 12%, white);
+  border: 1px solid color-mix(in srgb, var(--brand-teal) 22%, transparent);
+  color: var(--brand-teal);
+}
+.pillar-icon svg{ width: 22px; height: 22px; }
+.pillar-icon{ transition: transform 220ms cubic-bezier(.16,1,.3,1); }
+.pillar:hover .pillar-icon, .rail-item:hover .pillar-icon{ transform: scale(1.08) rotate(4deg); }
+
+/* Algae cell cluster — a quiet breathing/dividing loop standing in for a
+   static leaf icon on the algae-derived-bioplastics cards. */
+.pillar-icon-algae .algae-cell{ fill: none; }
+@media (prefers-reduced-motion: no-preference){
+  .pillar-icon-algae .algae-cell{ transform-box: fill-box; transform-origin: center; }
+  .pillar-icon-algae .algae-cell-a{ animation: algae-pulse 4.2s ease-in-out infinite; }
+  .pillar-icon-algae .algae-cell-b{ animation: algae-pulse 4.2s ease-in-out infinite; animation-delay: -1.4s; }
+  .pillar-icon-algae .algae-cell-c{ animation: algae-pulse 4.2s ease-in-out infinite; animation-delay: -2.8s; }
+  @keyframes algae-pulse{
+    0%, 100%{ transform: scale(0.85); opacity: 0.7; }
+    50%{ transform: scale(1.08); opacity: 1; }
+  }
+}
+
+.pillar-grid{
+  display: grid; gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+.pillar-featured{ padding: var(--space-lg); display: flex; flex-direction: column; justify-content: center; }
+.pillar-featured .headline-md{ font-size: 27px; }
+.pillar-featured h3{ margin-top: var(--space-sm); }
+.pillar-featured p{ margin-top: var(--space-sm); }
+
+/* The secondary disciplines share one connected glass rail rather than
+   three separate cards — a circuit, not a shelf of boxes. */
+.pillar-stack{ display: flex; flex-direction: column; padding: 0 var(--space-md); }
+.pillar-stack .pillar{ position: relative; padding: var(--space-md) 0; }
+.pillar-stack .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+.pillar-stack .pillar:not(:first-child)::before{
+  content: ''; position: absolute; left: 23px; top: -1px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--brand-teal);
+  box-shadow: 0 0 10px 2px color-mix(in srgb, var(--brand-teal) 70%, transparent);
+  transform: translate(-50%, -50%);
+}
+.pillar-stack .pillar h3{ margin-top: var(--space-sm); }
+.pillar-stack .pillar p{ margin-top: var(--space-sm); }
+
+@media (min-width: 1024px){
+  .pillar-grid{ grid-template-columns: 1.3fr 1fr; }
+}
+
+/* Business model — one glass instrument panel, rows not cards */
+.pillar-grid-quad{ display: grid; padding: var(--space-sm) var(--space-md); }
+.pillar-grid-quad .pillar{ padding: var(--space-md) 0; }
+.pillar-grid-quad .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+.pillar-grid-quad .pillar h3{ margin-top: var(--space-sm); }
+.pillar-grid-quad .pillar p{ margin-top: var(--space-sm); }
+@media (min-width: 640px){
+  .pillar-grid-quad{ grid-template-columns: 1fr 1fr; }
+  .pillar-grid-quad .pillar{ padding: var(--space-md); }
+  .pillar-grid-quad .pillar:nth-child(1), .pillar-grid-quad .pillar:nth-child(2){ border-top: none; }
+  .pillar-grid-quad .pillar:nth-child(2n){ border-left: 1px solid var(--glass-border-soft); }
+  .pillar-grid-quad .pillar:nth-child(3), .pillar-grid-quad .pillar:nth-child(4){ border-top: 1px solid var(--glass-border-soft); }
+}
+@media (min-width: 1024px){
+  .pillar-grid-quad{ grid-template-columns: repeat(4, 1fr); }
+  .pillar-grid-quad .pillar{ border-top: none !important; }
+  .pillar-grid-quad .pillar:nth-child(n+2){ border-left: 1px solid var(--glass-border-soft); }
+}
+
+/* Viability & scalability — one split glass panel, two columns */
+.pillar-grid-duo{ display: grid; padding: var(--space-sm) var(--space-md); }
+.pillar-grid-duo .pillar{ padding: var(--space-md) 0; }
+.pillar-grid-duo .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+.pillar-grid-duo .pillar h3{ margin-top: var(--space-sm); }
+.pillar-grid-duo .pillar p{ margin-top: var(--space-sm); }
+@media (min-width: 768px){
+  .pillar-grid-duo{ grid-template-columns: 1fr 1fr; }
+  .pillar-grid-duo .pillar{ padding: var(--space-md); }
+  .pillar-grid-duo .pillar:not(:first-child){ border-top: none; border-left: 1px solid var(--glass-border-soft); }
+}
+
+.section-note{ margin-top: var(--space-lg); max-width: 70ch; }
+
+.process-flow{
+  display: grid; gap: var(--space-md);
+  align-items: start;
+}
+.process-step{ text-align: left; }
+.process-node{
+  font-family: var(--font-mono); font-weight: 600; font-size: 15px;
+  color: var(--brand-teal);
+  margin-bottom: var(--space-sm);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-teal) 25%, transparent);
+  background: color-mix(in srgb, var(--brand-teal) 10%, white);
+}
+.process-step h4{ margin-bottom: var(--space-xs); }
+.process-connector{
+  display: none;
+}
+@media (min-width: 900px){
+  .process-flow{
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  }
+  .process-connector{
+    display: block; align-self: center; height: 1px; width: 100%;
+    min-width: 24px;
+    background: linear-gradient(90deg, var(--brand-green), var(--brand-teal));
+    opacity: 0.55;
+    margin-top: 24px;
+  }
+}
+
+/* ==========================================================================
+   Team — one glass roster panel
+   ========================================================================== */
+.team{ position: relative; overflow: hidden; }
+.team-grid{ display: grid; padding: var(--space-sm) var(--space-md); }
+.team-card{ padding: var(--space-md) 0; }
+.team-card:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+.team-avatar{
+  width: 56px; height: 56px;
+  font-family: var(--font-display); font-weight: 600; font-size: 16px;
+  background: color-mix(in srgb, var(--brand-green) 10%, white);
+  border: 1px solid color-mix(in srgb, var(--brand-green) 22%, transparent);
+  color: var(--brand-green);
+}
+.team-card h3{ margin-bottom: var(--space-xs); }
+.team-role{ display: block; }
+.team-card p{ margin-top: var(--space-md); }
+.team-link{
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: var(--space-md);
+  font-size: 14px; font-weight: 600; color: var(--brand-teal);
+}
+.team-link:hover{ text-decoration: underline; }
+@media (min-width: 768px){
+  .team-grid{ grid-template-columns: 1fr 1fr; }
+  .team-card{ padding: var(--space-md); }
+  .team-card:not(:first-child){ border-top: none; border-left: 1px solid var(--glass-border-soft); }
+}
+
+/* ==========================================================================
+   Contact
+   ========================================================================== */
+.contact{ position: relative; overflow: hidden; }
+.contact-grid{ display: grid; gap: var(--space-lg); }
+.contact-copy p{ margin-top: var(--space-sm); }
+.contact-info{ margin-top: var(--space-lg); display: grid; gap: var(--space-sm); }
+.contact-info-row{ display: flex; flex-direction: column; gap: 4px; }
+.contact-info-row a{ color: var(--brand-teal); font-weight: 500; }
+.contact-info-row a:hover{ text-decoration: underline; }
+
+.contact-form{
+  padding: var(--space-lg);
+  display: grid; gap: var(--space-md);
+}
+.field{ display: grid; gap: var(--space-xs); }
+.field label{
+  font-family: var(--font-body); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.01em; color: var(--ink-dim);
+}
+.field input, .field textarea{
+  font-family: var(--font-body); font-size: 15px; color: var(--ink);
+  background: rgba(27,28,28,0.04);
+  border: 1px solid var(--glass-border-soft);
+  border-radius: var(--radius-field);
+  padding: 13px 14px;
+  resize: vertical;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.field input::placeholder, .field textarea::placeholder{ color: var(--ink-faint); }
+.field input:focus, .field textarea:focus{
+  outline: none; border-color: var(--brand-teal);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-teal) 20%, transparent);
+}
+.field-error{
+  display: none;
+  font-size: 13px; color: var(--error);
+}
+.field.has-error input, .field.has-error textarea{ border-color: var(--error); }
+.field.has-error .field-error{ display: block; }
+.form-hint{ font-size: 13px; color: var(--ink-faint); margin: 0; }
+.form-success{
+  font-size: 14px; font-weight: 500; color: var(--brand-green); margin: 0;
+}
+@media (min-width: 1024px){
+  .contact-grid{ grid-template-columns: 1fr 1.2fr; }
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.site-footer{
+  position: relative;
+  background: var(--inverse-surface);
+  color: var(--inverse-on-surface);
+  padding: var(--space-xl) 0 var(--space-md);
+}
+.footer-grid{
+  display: grid; gap: var(--space-lg);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+}
+.footer-brand .brand-word{ color: var(--inverse-on-surface); }
+.footer-brand .brand-sub{ color: color-mix(in srgb, var(--inverse-on-surface) 65%, transparent); }
+.footer-tagline{ margin-top: var(--space-sm); max-width: 40ch; color: color-mix(in srgb, var(--inverse-on-surface) 65%, transparent); }
+.footer-nav{ display: flex; flex-wrap: wrap; gap: var(--space-md); align-content: start; }
+.footer-nav a{
+  color: color-mix(in srgb, var(--inverse-on-surface) 78%, transparent);
+  font-size: 15px; font-weight: 500;
+}
+.footer-nav a:hover{ color: var(--inverse-on-surface); }
+.footer-bottom{
+  padding-top: var(--space-md);
+  display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-md);
+}
+.footer-bottom .label-sm{ color: color-mix(in srgb, var(--inverse-on-surface) 55%, transparent); }
+@media (min-width: 768px){
+  .footer-grid{ grid-template-columns: 1.4fr 1fr; }
+}
+
+/* ==========================================================================
+   Hero entrance (deterministic, load-triggered — never scroll/JS gated,
+   so content can never get stuck invisible)
+   ========================================================================== */
+.hero-enter{ opacity: 1; transform: none; }
+@media (prefers-reduced-motion: no-preference){
+  /* Opacity stays at 1 throughout — only position animates — so a fast or
+     mistimed render (screenshot tools, slow paint) never catches this content
+     invisible; worst case it's a few px off from its resting position. */
+  .hero-enter{
+    animation: hero-enter-anim 500ms cubic-bezier(.16,1,.3,1) both;
+  }
+  .hero-enter-delay{ animation-delay: 100ms; }
+  @keyframes hero-enter-anim{
+    from{ transform: translateY(12px); }
+    to{ transform: none; }
+  }
+}
+
+@media print{
+  .hero-enter{ transform: none !important; animation: none !important; }
+}
+
+/* ==========================================================================
+   Scroll reveal (progressive enhancement — only takes effect once main.js
+   adds .js to <html>, so content stays fully visible with JS off/blocked)
+   ========================================================================== */
+.js .reveal{
+  opacity: 0; transform: translateY(18px);
+  transition: opacity 600ms cubic-bezier(.16,1,.3,1), transform 600ms cubic-bezier(.16,1,.3,1);
+}
+.js .reveal.is-visible{ opacity: 1; transform: none; }
+
+@media print{
+  .js .reveal{ opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   Card-grid & process-step stagger — these are lists, so siblings cascade
+   in on the same reveal trigger instead of the whole grid fading as one
+   block. Delays are capped under ~350ms total.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference){
+  .js .pillar-stack.reveal .pillar,
+  .js .pillar-grid-quad.reveal .pillar,
+  .js .pillar-grid-duo.reveal .pillar,
+  .js .team-grid.reveal .team-card,
+  .js .process-flow.reveal .process-step{
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 480ms cubic-bezier(.16,1,.3,1), transform 480ms cubic-bezier(.16,1,.3,1);
+  }
+  .js .pillar-stack.reveal.is-visible .pillar,
+  .js .pillar-grid-quad.reveal.is-visible .pillar,
+  .js .pillar-grid-duo.reveal.is-visible .pillar,
+  .js .team-grid.reveal.is-visible .team-card,
+  .js .process-flow.reveal.is-visible .process-step{
+    opacity: 1; transform: none;
+  }
+
+  .js .pillar-stack.reveal.is-visible .pillar:nth-child(1){ transition-delay: 90ms; }
+  .js .pillar-stack.reveal.is-visible .pillar:nth-child(2){ transition-delay: 170ms; }
+  .js .pillar-stack.reveal.is-visible .pillar:nth-child(3){ transition-delay: 250ms; }
+
+  .js .pillar-grid-quad.reveal.is-visible .pillar:nth-child(2){ transition-delay: 80ms; }
+  .js .pillar-grid-quad.reveal.is-visible .pillar:nth-child(3){ transition-delay: 160ms; }
+  .js .pillar-grid-quad.reveal.is-visible .pillar:nth-child(4){ transition-delay: 240ms; }
+
+  .js .pillar-grid-duo.reveal.is-visible .pillar:nth-child(2){ transition-delay: 100ms; }
+
+  .js .team-grid.reveal.is-visible .team-card:nth-child(2){ transition-delay: 100ms; }
+
+  .js .process-flow.reveal.is-visible .process-step:nth-child(3){ transition-delay: 100ms; }
+  .js .process-flow.reveal.is-visible .process-step:nth-child(5){ transition-delay: 200ms; }
+  .js .process-flow.reveal.is-visible .process-step:nth-child(7){ transition-delay: 300ms; }
+}
+
+@media print{
+  .js .pillar-stack.reveal .pillar,
+  .js .pillar-grid-quad.reveal .pillar,
+  .js .pillar-grid-duo.reveal .pillar,
+  .js .team-grid.reveal .team-card,
+  .js .process-flow.reveal .process-step{
+    opacity: 1; transform: none;
+  }
+}
