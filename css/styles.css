@@ -196,7 +196,7 @@ h1,h2,h3,h4,p{ margin: 0; }
   border-color: var(--secondary);
   color: var(--secondary);
 }
-.btn-secondary:hover{ background: var(--secondary-container); color: var(--on-secondary-container); }
+.btn-secondary:hover{ background: color-mix(in srgb, var(--secondary) 10%, transparent); }
 
 /* ==========================================================================
    Header
@@ -208,11 +208,14 @@ h1,h2,h3,h4,p{ margin: 0; }
   background: color-mix(in srgb, var(--surface) 92%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid transparent;
-  transition: border-color 200ms ease, box-shadow 200ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 280ms cubic-bezier(.16,1,.3,1);
 }
 .site-header.is-scrolled{
   border-bottom-color: var(--outline-variant);
   box-shadow: 0 8px 24px -16px rgb(0 107 118 / 0.16);
+}
+@media (max-width: 1023px){
+  .site-header.is-hidden{ transform: translateY(-100%); }
 }
 .header-inner{
   display: flex; align-items: center; justify-content: space-between;
@@ -280,18 +283,36 @@ h1,h2,h3,h4,p{ margin: 0; }
     background: var(--surface-container-lowest);
     border-bottom: 1px solid var(--outline-variant);
     padding: var(--space-md) var(--margin-mobile);
-    gap: var(--space-md);
+    gap: 0;
     overflow-y: auto;
   }
   body.nav-open{ overflow: hidden; }
+  .site-nav.is-open a{
+    padding: 14px 4px;
+    font-size: 18px;
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .site-nav.is-open a:last-child{ border-bottom: none; }
+}
+@media (max-width: 1023px) and (prefers-reduced-motion: no-preference){
+  .site-nav.is-open a{
+    animation: nav-link-in 320ms cubic-bezier(.16,1,.3,1) both;
+  }
+  .site-nav.is-open a:nth-child(2){ animation-delay: 40ms; }
+  .site-nav.is-open a:nth-child(3){ animation-delay: 80ms; }
+  .site-nav.is-open a:nth-child(4){ animation-delay: 120ms; }
+  .site-nav.is-open a:nth-child(5){ animation-delay: 160ms; }
+  @keyframes nav-link-in{
+    from{ opacity: 0; transform: translateX(-10px); }
+    to{ opacity: 1; transform: none; }
+  }
 }
 
 /* ==========================================================================
    Molecular watermark
    ========================================================================== */
-.molecular-watermark{
-  position: absolute; inset: 0; z-index: -1;
-  background-image: radial-gradient(circle at 8% 20%, var(--outline) 0 3px, transparent 3px),
+:root{
+  --molecular-pattern: radial-gradient(circle at 8% 20%, var(--outline) 0 3px, transparent 3px),
     radial-gradient(circle at 22% 55%, var(--outline) 0 4px, transparent 4px),
     radial-gradient(circle at 40% 15%, var(--outline) 0 3px, transparent 3px),
     radial-gradient(circle at 68% 40%, var(--outline) 0 5px, transparent 5px),
@@ -299,9 +320,39 @@ h1,h2,h3,h4,p{ margin: 0; }
     radial-gradient(circle at 55% 80%, var(--outline) 0 4px, transparent 4px),
     linear-gradient(115deg, transparent 49%, var(--outline) 49% 50.5%, transparent 50.5%),
     linear-gradient(30deg, transparent 49%, var(--outline) 49% 50.5%, transparent 50.5%);
+}
+.molecular-watermark{
+  position: absolute; inset: 0; z-index: -1;
+  background-image: var(--molecular-pattern);
   background-size: 340px 340px;
   opacity: 0.05;
 }
+
+/* Ambient drifting variant of the same pattern — used as a quiet background
+   texture in sections that otherwise have no visual motion of their own. */
+.molecular-drift{
+  position: absolute; inset: -20px; z-index: -1;
+  background-image: var(--molecular-pattern);
+  background-size: 340px 340px;
+  opacity: 0.045;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference){
+  .molecular-drift{ animation: molecular-drift-move 90s linear infinite; }
+  @keyframes molecular-drift-move{
+    from{ background-position: 0 0; }
+    to{ background-position: 340px 340px; }
+  }
+}
+
+.molecular-canvas{
+  position: absolute; inset: 0; z-index: -1;
+  width: 100%; height: 100%;
+  display: none;
+  pointer-events: none;
+}
+.hero.js-canvas-active .molecular-watermark{ display: none; }
+.hero.js-canvas-active .molecular-canvas{ display: block; }
 
 /* ==========================================================================
    Container watermark (cropped brand mark, corner of card surfaces)
@@ -366,6 +417,7 @@ h1,h2,h3,h4,p{ margin: 0; }
 .hero-copy{ max-width: 46ch; }
 .hero-sub{ margin-top: var(--space-md); max-width: 42ch; }
 .hero-ctas{ display: flex; gap: var(--space-sm); margin-top: var(--space-lg); flex-wrap: wrap; }
+.hero-ctas .btn{ flex: 1 1 180px; }
 .hero-visual{ display: none; }
 
 @media (min-width: 1024px){
@@ -431,6 +483,42 @@ h1,h2,h3,h4,p{ margin: 0; }
   .mission-grid{ grid-template-columns: 1.4fr 1fr; align-items: start; }
 }
 
+/* Ambient illustration: a polymer chain held apart by an enzyme, with
+   fragment particles releasing at the cut — visualizes the stat above it. */
+.enzyme-illustration{ margin-top: var(--space-md); }
+.enzyme-illustration svg{ width: 100%; max-width: 220px; height: auto; display: block; }
+.enzyme-illustration .chain-half line{ stroke: var(--outline); stroke-opacity: 0.45; stroke-width: 1.5; }
+.enzyme-illustration .chain-half circle{ fill: var(--primary); fill-opacity: 0.55; }
+.enzyme-illustration .chain-fragment{ fill: var(--secondary); opacity: 0; }
+.enzyme-illustration .enzyme-bite{ fill: var(--secondary); }
+@media (prefers-reduced-motion: no-preference){
+  .enzyme-illustration .chain-left{ animation: molecule-cut-left 4.4s ease-in-out infinite; }
+  .enzyme-illustration .chain-right{ animation: molecule-cut-right 4.4s ease-in-out infinite; }
+  .enzyme-illustration .enzyme-bite{
+    transform-box: fill-box; transform-origin: center;
+    animation: enzyme-bite-pulse 4.4s ease-in-out infinite;
+  }
+  .enzyme-illustration .chain-fragment-a{ animation: fragment-float 4.4s ease-in-out infinite; }
+  .enzyme-illustration .chain-fragment-b{ animation: fragment-float 4.4s ease-in-out infinite; animation-delay: 0.3s; }
+  @keyframes molecule-cut-left{
+    0%, 100%{ transform: translateX(0); }
+    50%{ transform: translateX(-4px); }
+  }
+  @keyframes molecule-cut-right{
+    0%, 100%{ transform: translateX(0); }
+    50%{ transform: translateX(4px); }
+  }
+  @keyframes enzyme-bite-pulse{
+    0%, 100%{ transform: scale(1); }
+    50%{ transform: scale(1.22); }
+  }
+  @keyframes fragment-float{
+    0%, 40%, 100%{ opacity: 0; transform: translateY(0); }
+    55%{ opacity: 0.9; }
+    70%{ opacity: 0; transform: translateY(-5px); }
+  }
+}
+
 /* ==========================================================================
    Section head
    ========================================================================== */
@@ -451,6 +539,20 @@ h1,h2,h3,h4,p{ margin: 0; }
 .pillar-icon{ transition: transform 220ms cubic-bezier(.16,1,.3,1); }
 .pillar:hover .pillar-icon{ transform: scale(1.08) rotate(4deg); }
 
+/* Algae cell cluster — a quiet breathing/dividing loop standing in for a
+   static leaf icon on the algae-derived-bioplastics cards. */
+.pillar-icon-algae .algae-cell{ fill: none; }
+@media (prefers-reduced-motion: no-preference){
+  .pillar-icon-algae .algae-cell{ transform-box: fill-box; transform-origin: center; }
+  .pillar-icon-algae .algae-cell-a{ animation: algae-pulse 4.2s ease-in-out infinite; }
+  .pillar-icon-algae .algae-cell-b{ animation: algae-pulse 4.2s ease-in-out infinite; animation-delay: -1.4s; }
+  .pillar-icon-algae .algae-cell-c{ animation: algae-pulse 4.2s ease-in-out infinite; animation-delay: -2.8s; }
+  @keyframes algae-pulse{
+    0%, 100%{ transform: scale(0.85); opacity: 0.7; }
+    50%{ transform: scale(1.08); opacity: 1; }
+  }
+}
+
 .pillar-grid{
   display: grid; gap: var(--space-md);
   margin-bottom: var(--space-xl);
@@ -468,6 +570,13 @@ h1,h2,h3,h4,p{ margin: 0; }
 }
 .team-card, .stat-callout, .contact-form{
   transition: box-shadow 200ms ease, border-color 200ms ease;
+}
+@media (hover: none){
+  .pillar:active, .team-card:active, .stat-callout:active, .contact-form:active{
+    border-color: var(--secondary);
+    box-shadow: 0 10px 30px -18px color-mix(in srgb, var(--secondary) 55%, transparent);
+    transition: box-shadow 120ms ease, border-color 120ms ease;
+  }
 }
 .pillar h3{ margin-top: var(--space-sm); }
 .pillar p{ margin-top: var(--space-sm); }
@@ -523,6 +632,7 @@ h1,h2,h3,h4,p{ margin: 0; }
 /* ==========================================================================
    Team
    ========================================================================== */
+.team{ position: relative; overflow: hidden; }
 .team-grid{ display: grid; gap: var(--space-md); }
 .team-card{
   background: var(--surface-container-lowest);
@@ -553,6 +663,7 @@ h1,h2,h3,h4,p{ margin: 0; }
 /* ==========================================================================
    Contact
    ========================================================================== */
+.contact{ position: relative; overflow: hidden; }
 .contact-grid{ display: grid; gap: var(--space-lg); }
 .contact-copy p{ margin-top: var(--space-sm); }
 .contact-info{ margin-top: var(--space-lg); display: grid; gap: var(--space-sm); }
@@ -664,4 +775,53 @@ h1,h2,h3,h4,p{ margin: 0; }
 
 @media print{
   .js .reveal{ opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   Card-grid & process-step stagger — these are lists, so siblings cascade
+   in on the same reveal trigger instead of the whole grid fading as one
+   block. Delays are capped under ~350ms total.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference){
+  .js .pillar-grid.reveal .pillar,
+  .js .pillar-grid-quad.reveal .pillar,
+  .js .pillar-grid-duo.reveal .pillar,
+  .js .team-grid.reveal .team-card,
+  .js .process-flow.reveal .process-step{
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 480ms cubic-bezier(.16,1,.3,1), transform 480ms cubic-bezier(.16,1,.3,1);
+  }
+  .js .pillar-grid.reveal.is-visible .pillar,
+  .js .pillar-grid-quad.reveal.is-visible .pillar,
+  .js .pillar-grid-duo.reveal.is-visible .pillar,
+  .js .team-grid.reveal.is-visible .team-card,
+  .js .process-flow.reveal.is-visible .process-step{
+    opacity: 1; transform: none;
+  }
+
+  .js .pillar-grid.reveal.is-visible .pillar-stack .pillar:nth-child(1){ transition-delay: 90ms; }
+  .js .pillar-grid.reveal.is-visible .pillar-stack .pillar:nth-child(2){ transition-delay: 170ms; }
+  .js .pillar-grid.reveal.is-visible .pillar-stack .pillar:nth-child(3){ transition-delay: 250ms; }
+
+  .js .pillar-grid-quad.reveal.is-visible .pillar:nth-child(2){ transition-delay: 80ms; }
+  .js .pillar-grid-quad.reveal.is-visible .pillar:nth-child(3){ transition-delay: 160ms; }
+  .js .pillar-grid-quad.reveal.is-visible .pillar:nth-child(4){ transition-delay: 240ms; }
+
+  .js .pillar-grid-duo.reveal.is-visible .pillar:nth-child(2){ transition-delay: 100ms; }
+
+  .js .team-grid.reveal.is-visible .team-card:nth-child(2){ transition-delay: 100ms; }
+
+  .js .process-flow.reveal.is-visible .process-step:nth-child(3){ transition-delay: 100ms; }
+  .js .process-flow.reveal.is-visible .process-step:nth-child(5){ transition-delay: 200ms; }
+  .js .process-flow.reveal.is-visible .process-step:nth-child(7){ transition-delay: 300ms; }
+}
+
+@media print{
+  .js .pillar-grid.reveal .pillar,
+  .js .pillar-grid-quad.reveal .pillar,
+  .js .pillar-grid-duo.reveal .pillar,
+  .js .team-grid.reveal .team-card,
+  .js .process-flow.reveal .process-step{
+    opacity: 1; transform: none;
+  }
 }

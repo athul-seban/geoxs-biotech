@@ -47,6 +47,24 @@
         ],
         "createdAt": "2026-08-13T02:54:38.612Z",
         "reason": "User confirmed the molecular watermark background is intentional per DESIGN.md's documented brand texture"
+      },
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-08-13T13:20:53.460Z",
+        "reason": "User confirmed Inter is intentional (pre-existing DESIGN.md brand typeface, chosen for readability in dense scientific copy)"
+      },
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(.34, 1.4, .64, 1)",
+        "createdAt": "2026-08-13T15:38:16.924Z",
+        "reason": "User confirmed bottle-drop landing bounce is intentional literal motion"
+      },
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(.3, .9, .4, 1.15)",
+        "createdAt": "2026-08-13T15:38:17.021Z",
+        "reason": "User confirmed hex-bite snap overshoot is intentional literal motion"
       }
     ]
   }

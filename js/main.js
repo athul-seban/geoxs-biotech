@@ -61,22 +61,34 @@
     // Leave the static value already in the markup.
   }
 
-  // Header scroll shadow
+  // Header scroll shadow + mobile autohide (frees up viewport height while
+  // reading down, reappears on any upward scroll for quick access to nav).
   var header = document.getElementById('site-header');
+  var nav = document.getElementById('site-nav');
+  var lastScrollY = window.scrollY;
   var onScroll = function () {
-    header.classList.toggle('is-scrolled', window.scrollY > 8);
+    var y = window.scrollY;
+    header.classList.toggle('is-scrolled', y > 8);
+    if (!nav.classList.contains('is-open')) {
+      if (y > lastScrollY && y > header.offsetHeight + 24) {
+        header.classList.add('is-hidden');
+      } else if (y < lastScrollY) {
+        header.classList.remove('is-hidden');
+      }
+    }
+    lastScrollY = y;
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
   // Mobile nav toggle
   var toggle = document.getElementById('nav-toggle');
-  var nav = document.getElementById('site-nav');
   toggle.addEventListener('click', function () {
     var open = nav.classList.toggle('is-open');
     document.body.classList.toggle('nav-open', open);
     toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    if (open) header.classList.remove('is-hidden');
   });
   nav.querySelectorAll('a').forEach(function (link) {
     link.addEventListener('click', function () {
@@ -133,4 +145,187 @@
     window.location.href = mailto;
     successMsg.hidden = false;
   });
+
+  // Interactive molecular background: a lightweight canvas node network in
+  // the hero that drifts on its own and responds to pointer/touch proximity.
+  // It only takes over from the static CSS watermark once motion is allowed
+  // and a 2D context is available — the watermark stays the safe fallback.
+  try {
+    var heroEl = document.querySelector('.hero');
+    var canvas = heroEl && heroEl.querySelector('.molecular-canvas');
+    var reduceMotionMQ = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    var ctx = canvas && canvas.getContext && canvas.getContext('2d');
+
+    if (heroEl && ctx && !(reduceMotionMQ && reduceMotionMQ.matches)) {
+      var nodes = [];
+      var pointer = { x: 0, y: 0, active: false };
+      var box = { width: 0, height: 0 };
+      var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      var rafId = null;
+      var running = false;
+
+      var rootStyle = getComputedStyle(document.documentElement);
+      function hexToRgb(hex) {
+        var m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec((hex || '').trim());
+        return m ? [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)] : [110, 122, 108];
+      }
+      var lineRgb = hexToRgb(rootStyle.getPropertyValue('--outline'));
+      var accentRgb = hexToRgb(rootStyle.getPropertyValue('--secondary'));
+
+      function seedNodes() {
+        var count = Math.max(18, Math.min(52, Math.round((box.width * box.height) / 15000)));
+        nodes = [];
+        for (var i = 0; i < count; i++) {
+          nodes.push({
+            x: Math.random() * box.width,
+            y: Math.random() * box.height,
+            vx: (Math.random() - 0.5) * 0.18,
+            vy: (Math.random() - 0.5) * 0.18,
+            r: 1.4 + Math.random() * 1.6
+          });
+        }
+      }
+
+      function resize() {
+        var rect = heroEl.getBoundingClientRect();
+        box.width = rect.width;
+        box.height = rect.height;
+        canvas.width = Math.round(box.width * dpr);
+        canvas.height = Math.round(box.height * dpr);
+        canvas.style.width = box.width + 'px';
+        canvas.style.height = box.height + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        seedNodes();
+      }
+
+      function step() {
+        ctx.clearRect(0, 0, box.width, box.height);
+        var connectDist = Math.max(90, Math.min(box.width, box.height) * 0.16);
+        var influenceR = 120;
+        var i, n;
+
+        for (i = 0; i < nodes.length; i++) {
+          n = nodes[i];
+          if (pointer.active) {
+            var dx = n.x - pointer.x, dy = n.y - pointer.y;
+            var d = Math.sqrt(dx * dx + dy * dy);
+            if (d < influenceR && d > 0.01) {
+              var f = (1 - d / influenceR) * 0.55;
+              n.vx += (dx / d) * f * 0.06;
+              n.vy += (dy / d) * f * 0.06;
+            }
+          }
+          n.vx *= 0.98; n.vy *= 0.98;
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > box.width) n.vx *= -1;
+          if (n.y < 0 || n.y > box.height) n.vy *= -1;
+          n.x = Math.max(0, Math.min(box.width, n.x));
+          n.y = Math.max(0, Math.min(box.height, n.y));
+        }
+
+        for (i = 0; i < nodes.length; i++) {
+          for (var j = i + 1; j < nodes.length; j++) {
+            var a = nodes[i], b = nodes[j];
+            var ddx = a.x - b.x, ddy = a.y - b.y;
+            var dist = Math.sqrt(ddx * ddx + ddy * ddy);
+            if (dist > connectDist) continue;
+            var near = pointer.active && (
+              Math.hypot(a.x - pointer.x, a.y - pointer.y) < influenceR ||
+              Math.hypot(b.x - pointer.x, b.y - pointer.y) < influenceR
+            );
+            var rgb = near ? accentRgb : lineRgb;
+            var alpha = (1 - dist / connectDist) * (near ? 0.4 : 0.16);
+            ctx.strokeStyle = 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + alpha.toFixed(3) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+
+        for (i = 0; i < nodes.length; i++) {
+          n = nodes[i];
+          var isNear = pointer.active && Math.hypot(n.x - pointer.x, n.y - pointer.y) < influenceR;
+          var rgb2 = isNear ? accentRgb : lineRgb;
+          ctx.fillStyle = 'rgba(' + rgb2[0] + ',' + rgb2[1] + ',' + rgb2[2] + ',' + (isNear ? 0.45 : 0.22) + ')';
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        if (running) rafId = requestAnimationFrame(step);
+      }
+
+      function updatePointer(e) {
+        var rect = heroEl.getBoundingClientRect();
+        var x = e.clientX - rect.left, y = e.clientY - rect.top;
+        if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+          pointer.x = x; pointer.y = y; pointer.active = true;
+        } else {
+          pointer.active = false;
+        }
+      }
+      function clearPointer() { pointer.active = false; }
+
+      function start() {
+        if (running) return;
+        running = true;
+        window.addEventListener('pointermove', updatePointer, { passive: true });
+        window.addEventListener('pointerdown', updatePointer, { passive: true });
+        window.addEventListener('pointerup', clearPointer, { passive: true });
+        window.addEventListener('pointercancel', clearPointer, { passive: true });
+        rafId = requestAnimationFrame(step);
+      }
+      function stop() {
+        running = false;
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = null;
+        window.removeEventListener('pointermove', updatePointer);
+        window.removeEventListener('pointerdown', updatePointer);
+        window.removeEventListener('pointerup', clearPointer);
+        window.removeEventListener('pointercancel', clearPointer);
+      }
+
+      var resizeTimer = null;
+      window.addEventListener('resize', function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resize, 150);
+      }, { passive: true });
+
+      if ('IntersectionObserver' in window) {
+        var heroObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && document.visibilityState === 'visible') start();
+            else stop();
+          });
+        }, { threshold: 0.05 });
+        heroObserver.observe(heroEl);
+      } else {
+        start();
+      }
+
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'hidden') {
+          stop();
+        } else if (heroEl.getBoundingClientRect().top < window.innerHeight) {
+          start();
+        }
+      });
+
+      if (reduceMotionMQ && reduceMotionMQ.addEventListener) {
+        reduceMotionMQ.addEventListener('change', function (e) {
+          if (e.matches) {
+            stop();
+            heroEl.classList.remove('js-canvas-active');
+          }
+        });
+      }
+
+      resize();
+      heroEl.classList.add('js-canvas-active');
+    }
+  } catch (err) {
+    // Static CSS watermark (already in the markup) remains the fallback.
+  }
 })();

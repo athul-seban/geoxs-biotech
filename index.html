@@ -138,6 +138,7 @@
       <!-- HERO -->
       <section class="hero" id="top">
         <div class="molecular-watermark" aria-hidden="true"></div>
+        <canvas class="molecular-canvas" aria-hidden="true"></canvas>
         <div class="container hero-grid">
           <div class="hero-copy hero-enter">
             <h1 class="display-lg">Enzymes that break plastic back down.</h1>
@@ -307,6 +308,30 @@
               estimates. The rest is landfilled, incinerated, or left in the
               environment.
             </p>
+            <div class="enzyme-illustration" aria-hidden="true">
+              <svg viewBox="0 0 220 44" role="presentation">
+                <g class="chain-half chain-left">
+                  <line x1="16" y1="22" x2="40" y2="22" />
+                  <line x1="40" y1="22" x2="64" y2="22" />
+                  <circle cx="16" cy="22" r="3.4" />
+                  <circle cx="40" cy="22" r="3.4" />
+                  <circle cx="64" cy="22" r="3.4" />
+                </g>
+                <g class="chain-half chain-right">
+                  <line x1="156" y1="22" x2="180" y2="22" />
+                  <line x1="180" y1="22" x2="204" y2="22" />
+                  <circle cx="156" cy="22" r="3.4" />
+                  <circle cx="180" cy="22" r="3.4" />
+                  <circle cx="204" cy="22" r="3.4" />
+                </g>
+                <circle class="chain-fragment chain-fragment-a" cx="98" cy="12" r="2" />
+                <circle class="chain-fragment chain-fragment-b" cx="122" cy="32" r="1.6" />
+                <polygon
+                  class="enzyme-bite"
+                  points="110,12 119,17 119,27 110,32 101,27 101,17"
+                />
+              </svg>
+            </div>
           </aside>
         </div>
       </section>
@@ -389,15 +414,16 @@
                 </p>
               </article>
               <article class="pillar">
-                <div class="pillar-icon hexagon">
+                <div class="pillar-icon hexagon pillar-icon-algae">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
                     stroke-width="1.6"
                   >
-                    <path d="M4 20c8-1 14-7 15-15-8 1-14 7-15 15z" />
-                    <path d="M8.5 15.5c2-4 5-7 9-9" />
+                    <circle class="algae-cell algae-cell-a" cx="9" cy="14.5" r="4.3" />
+                    <circle class="algae-cell algae-cell-b" cx="15.5" cy="10" r="3.3" />
+                    <circle class="algae-cell algae-cell-c" cx="14.5" cy="17.2" r="2.5" />
                   </svg>
                 </div>
                 <h3 class="headline-md">Algae-Derived Bioplastics</h3>
@@ -628,15 +654,16 @@
               </p>
             </article>
             <article class="pillar">
-              <div class="pillar-icon hexagon">
+              <div class="pillar-icon hexagon pillar-icon-algae">
                 <svg
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   stroke-width="1.6"
                 >
-                  <path d="M4 20c8-1 14-7 15-15-8 1-14 7-15 15z" />
-                  <path d="M8.5 15.5c2-4 5-7 9-9" />
+                  <circle class="algae-cell algae-cell-a" cx="9" cy="14.5" r="4.3" />
+                  <circle class="algae-cell algae-cell-b" cx="15.5" cy="10" r="3.3" />
+                  <circle class="algae-cell algae-cell-c" cx="14.5" cy="17.2" r="2.5" />
                 </svg>
               </div>
               <h3 class="headline-md">Bioplastic Materials</h3>
@@ -670,6 +697,7 @@
 
       <!-- TEAM -->
       <section class="section team" id="team">
+        <div class="molecular-drift" aria-hidden="true"></div>
         <div class="container">
           <div class="section-head reveal">
             <h2 class="headline-lg">
@@ -724,6 +752,7 @@
 
       <!-- CONTACT -->
       <section class="section contact" id="contact">
+        <div class="molecular-drift" aria-hidden="true"></div>
         <div class="container contact-grid">
           <div class="contact-copy reveal">
             <h2 class="headline-lg">Let's talk about partnering</h2>
