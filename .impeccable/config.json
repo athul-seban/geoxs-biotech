@@ -164,6 +164,54 @@
         ],
         "createdAt": "2026-08-15T16:41:31.754Z",
         "reason": "Dark drop-shadow needed for the black Dynamic-Island-style capsule header, which is intentionally outside the light-glass palette"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "72px",
+        "createdAt": "2026-08-15T17:56:48.596Z",
+        "reason": "User confirmed the glass/redesign prototypes (new-1..new-5) each use their own type scale larger than the live DESIGN.md ramp; 72px is new-3's Swiss-style oversized display size"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "40px",
+        "createdAt": "2026-08-15T17:56:48.838Z",
+        "reason": "User confirmed the glass/redesign prototypes (new-1..new-5) each use their own type scale larger than the live DESIGN.md ramp; 40px is new-3's Swiss-style headline size"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "#b6f0c2",
+        "files": [
+          "new-5/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T17:57:29.510Z",
+        "reason": "Minor decorative tint on the small enzyme-bite icon illustration, not a structural UI color; low-risk on-brand light-green variation"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(10,20,14,0.15)",
+        "files": [
+          "new-5/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T18:03:35.215Z",
+        "reason": "Scrim gradient over the bioprocessing photo tile, needed for white-text legibility, not decorative drift"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(10,20,14,0.72)",
+        "files": [
+          "new-5/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T18:03:35.353Z",
+        "reason": "Scrim gradient over the bioprocessing photo tile, needed for white-text legibility, not decorative drift"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(20,24,20,0.24)",
+        "files": [
+          "new-4/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T18:13:32.094Z",
+        "reason": "Mobile nav dropdown drop-shadow, consistent with new-4's flat tonal-layer elevation system, not decorative drift"
       }
     ]
   }

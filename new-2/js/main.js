@@ -146,26 +146,21 @@
     successMsg.hidden = false;
   });
 
-  // Glass specular highlight: every frosted panel catches a soft light
-  // that follows the pointer, as if the surface were real ground glass.
-  // One coherent motion system shared by every panel, not a per-element effect.
+  // Clay press feedback: CSS :active already flips the puffy shadow to a
+  // pressed-in state, but pointer/touch cancel events (e.g. a drag that
+  // starts on a button) can leave :active stuck or skip it entirely on some
+  // touch browsers. Mirroring it with an explicit class keeps every button's
+  // squish reliable across mouse, touch, and pen.
   try {
-    var glassSelector = '.pillar-featured, .stat-callout, .contact-form, ' +
-      '.team-grid, .pillar-grid-quad, .pillar-grid-duo, .pillar-stack, .header-inner';
-    var reduceMotionForGlass = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduceMotionForGlass && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
-      document.addEventListener('pointermove', function (e) {
-        var panel = e.target.closest ? e.target.closest(glassSelector) : null;
-        if (!panel) return;
-        var rect = panel.getBoundingClientRect();
-        var mx = ((e.clientX - rect.left) / rect.width) * 100;
-        var my = ((e.clientY - rect.top) / rect.height) * 100;
-        panel.style.setProperty('--mx', mx + '%');
-        panel.style.setProperty('--my', my + '%');
-      }, { passive: true });
-    }
+    document.querySelectorAll('.btn').forEach(function (btn) {
+      btn.addEventListener('pointerdown', function () { btn.classList.add('is-pressed'); });
+      var release = function () { btn.classList.remove('is-pressed'); };
+      btn.addEventListener('pointerup', release);
+      btn.addEventListener('pointerleave', release);
+      btn.addEventListener('pointercancel', release);
+    });
   } catch (err) {
-    // Panels keep their default top-centered highlight.
+    // CSS :active still covers the press state on its own.
   }
 
   // Interactive molecular background: a lightweight canvas node network in

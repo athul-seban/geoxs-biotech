@@ -1,8 +1,10 @@
 /* ==========================================================================
    Geoxs Biotech — Design tokens
-   World: instrument-grade frosted glass over the brand's own warm-white
-   canvas, with its original Biosphere Green / Lab Teal read as soft washes
-   of light glowing up through the panels — daylight glass, not night glass.
+   World: Claymorphism — puffy, matte shapes molded from soft pastel clay,
+   extruded above a warm-white canvas. Solid, saturated fills (never the
+   same hue as the page background), chunky radii, and paired shadows
+   (a hard-edged "rim" plus a soft ambient drop, and a light top inset)
+   sell the extrusion. No blur, no translucency, no hairline borders.
    ========================================================================== */
 :root{
   /* Canvas & ink — the original Molecular Precision palette, unchanged */
@@ -15,14 +17,16 @@
   /* Brand — the original Biosphere Green / Lab Teal, unchanged */
   --brand-green: #006b29;
   --brand-green-deep: #008736;
+  --brand-green-press: #00531f;
   --brand-teal: #006876;
   --brand-teal-deep: #13a0a9;
+  --brand-teal-press: #004e58;
   --brand-gradient: linear-gradient(135deg, var(--brand-green), var(--brand-teal));
 
   /* Legacy role names kept so component + JS references still resolve */
   --surface: var(--bg);
-  --surface-container-lowest: var(--glass-bg);
-  --surface-container-low: var(--glass-bg-soft);
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: var(--clay-green);
   --on-surface: var(--ink);
   --on-surface-variant: var(--ink-dim);
   --inverse-surface: var(--bg-1);
@@ -37,17 +41,38 @@
   --error: #ba1a1a;
   --mark-blue: var(--brand-teal-deep);
 
-  /* Glass material — white panels over the warm canvas, blur reveals the
-     colored aurora beneath so even a near-white surface reads as glass */
-  --glass-bg: rgba(255,255,255,0.5);
-  --glass-bg-soft: rgba(255,255,255,0.32);
-  --glass-bg-strong: rgba(255,255,255,0.72);
-  --glass-border: rgba(27,28,28,0.16);
-  --glass-border-soft: rgba(27,28,28,0.09);
-  --glass-blur: 26px;
-  --glass-blur-lg: 40px;
-  --glass-shadow: 0 6px 16px -10px rgba(20,32,26,0.14), inset 0 1px 0 rgba(255,255,255,0.85);
-  --glass-shadow-lg: 0 10px 24px -12px rgba(20,32,26,0.18), inset 0 1px 0 rgba(255,255,255,0.9);
+  /* Clay palette — pastel-ized versions of the brand hues for large
+     matte surfaces, plus their darker "rim" tints used in the puffy
+     shadow pairs. Kept distinct from --bg so text contrast never suffers. */
+  --clay-green: #d7f2df;
+  --clay-green-shadow: #a6d8b6;
+  --clay-teal: #cdeef1;
+  --clay-teal-shadow: #9dd6da;
+  --clay-header-bg: #eef8f1;
+  --clay-header-shadow: #c7e5d1;
+  --clay-well: rgba(27,28,28,0.055);
+  --clay-well-shadow: rgba(27,28,28,0.14);
+
+  /* Puffy shadow pairs: a hard-edged solid "rim" (offset, no blur, slight
+     negative spread so it tucks under the rounded corners) + a soft wide
+     ambient drop + a light inset top edge to sell the extrusion. */
+  --clay-shadow-green: 0 10px 0 -2px var(--clay-green-shadow), 0 22px 34px -16px rgba(0,64,26,0.3), inset 0 2px 0 rgba(255,255,255,0.6);
+  --clay-shadow-green-sm: 0 7px 0 -2px var(--clay-green-shadow), 0 16px 26px -14px rgba(0,64,26,0.26), inset 0 2px 0 rgba(255,255,255,0.55);
+  --clay-shadow-green-hover: 0 14px 0 -2px var(--clay-green-shadow), 0 28px 40px -16px rgba(0,64,26,0.32), inset 0 2px 0 rgba(255,255,255,0.6);
+  --clay-shadow-teal: 0 10px 0 -2px var(--clay-teal-shadow), 0 22px 34px -16px rgba(0,58,62,0.28), inset 0 2px 0 rgba(255,255,255,0.6);
+  --clay-shadow-teal-sm: 0 7px 0 -2px var(--clay-teal-shadow), 0 16px 26px -14px rgba(0,58,62,0.24), inset 0 2px 0 rgba(255,255,255,0.55);
+  --clay-shadow-teal-hover: 0 14px 0 -2px var(--clay-teal-shadow), 0 28px 40px -16px rgba(0,58,62,0.3), inset 0 2px 0 rgba(255,255,255,0.6);
+  --clay-shadow-header: 0 8px 0 -1px var(--clay-header-shadow), 0 20px 30px -16px rgba(0,64,30,0.22), inset 0 2px 0 rgba(255,255,255,0.7);
+  --clay-shadow-header-scrolled: 0 8px 0 -1px var(--clay-header-shadow), 0 22px 34px -14px rgba(0,64,30,0.28), inset 0 2px 0 rgba(255,255,255,0.7);
+  --clay-shadow-chip: 0 4px 0 -1px var(--clay-teal-shadow), 0 8px 14px -8px rgba(0,58,62,0.28), inset 0 1px 0 rgba(255,255,255,0.55);
+  --clay-shadow-chip-green: 0 4px 0 -1px var(--clay-green-shadow), 0 8px 14px -8px rgba(0,64,26,0.28), inset 0 1px 0 rgba(255,255,255,0.55);
+
+  /* Button shadows — same convention, tuned smaller for pill controls, with
+     a matching "pressed" state (below) that flattens the rim and drop. */
+  --clay-shadow-btn-primary: 0 6px 0 0 var(--brand-green-press), 0 14px 22px -10px rgba(0,55,20,0.4), inset 0 2px 0 rgba(255,255,255,0.3);
+  --clay-shadow-btn-primary-active: 0 1px 0 0 var(--brand-green-press), 0 4px 8px -6px rgba(0,55,20,0.35), inset 0 1px 0 rgba(255,255,255,0.18);
+  --clay-shadow-btn-secondary: 0 6px 0 0 var(--clay-teal-shadow), 0 12px 20px -10px rgba(0,55,60,0.22), inset 0 2px 0 rgba(255,255,255,0.55);
+  --clay-shadow-btn-secondary-active: 0 1px 0 0 var(--clay-teal-shadow), 0 4px 8px -6px rgba(0,55,60,0.2), inset 0 1px 0 rgba(255,255,255,0.4);
 
   /* Typography */
   --font-display: 'Hanken Grotesk', system-ui, sans-serif;
@@ -55,13 +80,13 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-wordmark: 'PT Serif', Georgia, 'Times New Roman', serif;
 
-  /* Radius — tight and precise, an instrument panel rather than a pillow */
-  --radius-sm: 0.375rem;
-  --radius: 0.5rem;
-  --radius-md: 0.625rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 0.875rem;
-  --radius-field: 0.5rem;
+  /* Radius — chunky and generous, molded rather than machined */
+  --radius-sm: 16px;
+  --radius: 20px;
+  --radius-md: 24px;
+  --radius-lg: 32px;
+  --radius-xl: 40px;
+  --radius-field: 18px;
   --radius-full: 9999px;
 
   /* Spacing */
@@ -75,7 +100,7 @@
   --margin-mobile: 16px;
   --margin-desktop: 64px;
 
-  --header-h: 84px;
+  --header-h: 100px;
   --container-max: 1280px;
 }
 
@@ -99,22 +124,12 @@ body{
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
-/* Ambient light source: fixed aurora the glass throughout the page catches. */
-body::before{
-  content: '';
-  position: fixed; inset: 0; z-index: -3; pointer-events: none;
-  background:
-    radial-gradient(1100px 760px at 12% -8%, color-mix(in srgb, var(--brand-green) 16%, transparent), transparent 60%),
-    radial-gradient(950px 720px at 92% 18%, color-mix(in srgb, var(--brand-teal) 14%, transparent), transparent 58%),
-    radial-gradient(900px 900px at 45% 108%, color-mix(in srgb, var(--brand-green) 10%, transparent), transparent 62%),
-    var(--bg);
-}
 img, svg{ display: block; max-width: 100%; }
 a{ color: inherit; text-decoration: none; }
 button{ font: inherit; }
 ul{ margin: 0; padding: 0; }
 h1,h2,h3,h4,p{ margin: 0; }
-:focus-visible{ outline: 2px solid var(--brand-teal); outline-offset: 3px; }
+:focus-visible{ outline: 2px solid var(--brand-teal); outline-offset: 3px; border-radius: 6px; }
 
 /* Browser-owned surfaces, themed rather than left to defaults */
 ::selection{ background: color-mix(in srgb, var(--brand-teal) 35%, white); color: var(--ink); }
@@ -202,54 +217,50 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 
 /* ==========================================================================
-   Buttons — glass pills
+   Buttons — puffy clay pills. Solid fill, hard "rim" shadow + soft ambient
+   drop + light top-edge inset. Pressing one flattens the rim and nudges the
+   whole pill down, like real soft plastic being pushed into its socket.
    ========================================================================== */
 .btn{
   display: inline-flex; align-items: center; justify-content: center;
   gap: var(--space-xs);
   font-family: var(--font-body); font-size: 15px; font-weight: 600;
   white-space: nowrap;
-  padding: 14px 26px;
+  padding: 15px 28px;
   border-radius: var(--radius-full);
-  border: 1px solid transparent;
+  border: none;
   cursor: pointer;
-  transition: transform 160ms cubic-bezier(.16,1,.3,1), background-color 160ms ease, border-color 160ms ease, box-shadow 200ms ease;
+  transition: transform 160ms cubic-bezier(.16,1,.3,1), box-shadow 160ms cubic-bezier(.16,1,.3,1), background-color 160ms ease;
 }
-.btn:active{ transform: translateY(1px) scale(0.98); }
 .btn-primary{
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--brand-green) 22%, transparent), color-mix(in srgb, var(--brand-teal) 16%, transparent)),
-    rgba(255,255,255,0.55);
-  border-color: rgba(27,28,28,0.12);
-  color: var(--ink);
-  box-shadow: 0 10px 26px -14px color-mix(in srgb, var(--brand-green) 55%, transparent),
-    0 14px 34px -20px color-mix(in srgb, var(--brand-teal) 45%, transparent),
-    inset 0 1px 0 rgba(255,255,255,0.8);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  background: linear-gradient(160deg, var(--brand-green-deep), var(--brand-green));
+  color: var(--on-primary);
+  box-shadow: var(--clay-shadow-btn-primary);
 }
-.btn-primary:hover{
-  border-color: rgba(27,28,28,0.18);
-  box-shadow: 0 12px 32px -12px color-mix(in srgb, var(--brand-green) 65%, transparent),
-    0 16px 40px -18px color-mix(in srgb, var(--brand-teal) 55%, transparent),
-    inset 0 1px 0 rgba(255,255,255,0.9);
+.btn-primary:hover{ transform: translateY(-2px); }
+.btn-primary:active, .btn-primary.is-pressed{
+  transform: translateY(3px);
+  box-shadow: var(--clay-shadow-btn-primary-active);
 }
 .btn-secondary{
-  background: rgba(255,255,255,0.32);
-  border-color: rgba(27,28,28,0.16);
-  color: var(--ink);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  background: var(--clay-teal);
+  color: var(--brand-teal-press);
+  box-shadow: var(--clay-shadow-btn-secondary);
 }
-.btn-secondary:hover{ background: rgba(255,255,255,0.55); border-color: rgba(27,28,28,0.24); }
+.btn-secondary:hover{ transform: translateY(-2px); }
+.btn-secondary:active, .btn-secondary.is-pressed{
+  transform: translateY(3px);
+  box-shadow: var(--clay-shadow-btn-secondary-active);
+}
 
 /* ==========================================================================
-   Header — a full-width instrument bar docked flush to the top, not a
-   floating capsule. A single hairline accent marks its lower edge like the
-   sealed seam of a lab enclosure.
+   Header — a puffy floating clay capsule, docked with a visible gap above
+   it so the page canvas shows through on every side. Fully rounded ends
+   read as a capsule rather than a card or a docked instrument bar.
    ========================================================================== */
 .site-header{
   position: sticky; top: 0; z-index: 50;
+  padding-top: 14px;
   pointer-events: none;
   transition: transform 280ms cubic-bezier(.16,1,.3,1);
 }
@@ -260,21 +271,17 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .header-inner{
   display: flex; align-items: center; justify-content: space-between;
   width: 100%;
-  padding: 18px var(--margin-mobile);
-  background: var(--glass-bg);
-  border-bottom: 1px solid var(--glass-border-soft);
-  border-top: 2px solid var(--brand-green);
-  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
-  box-shadow: var(--glass-shadow);
-  transition: background 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  padding: 16px 22px;
+  background: var(--clay-header-bg);
+  border-radius: var(--radius-full);
+  box-shadow: var(--clay-shadow-header);
+  transition: box-shadow 220ms ease;
 }
 @media (min-width: 1024px){
-  .header-inner{ padding: 18px var(--margin-desktop); }
+  .header-inner{ padding: 18px 20px 18px 32px; }
 }
 .site-header.is-scrolled .header-inner{
-  background: var(--glass-bg-strong);
-  box-shadow: var(--glass-shadow-lg);
+  box-shadow: var(--clay-shadow-header-scrolled);
 }
 .brand{ display: inline-flex; align-items: center; gap: 12px; }
 .brand-mark{ width: 44px; height: 44px; flex-shrink: 0; }
@@ -295,9 +302,9 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   border-radius: var(--radius-full);
   transition: color 150ms ease, background-color 150ms ease;
 }
-.site-nav a:hover{ color: var(--ink); background: rgba(27,28,28,0.055); }
+.site-nav a:hover{ color: var(--brand-teal-press); background: color-mix(in srgb, var(--brand-teal) 12%, transparent); }
 .header-actions{ display: flex; align-items: center; gap: var(--space-sm); }
-.header-actions .btn{ display: none; padding: 10px 20px; font-size: 14px; }
+.header-actions .btn{ display: none; padding: 11px 22px; font-size: 14px; }
 
 @media (max-width: 400px){
   .brand-mark{ width: 38px; height: 38px; }
@@ -310,12 +317,12 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   background: transparent; border: none; cursor: pointer;
 }
 .nav-toggle span{
-  display: block; height: 2px; width: 100%; background: var(--ink);
-  border-radius: 2px; transition: transform 200ms ease, opacity 200ms ease;
+  display: block; height: 3px; width: 100%; background: var(--ink);
+  border-radius: var(--radius-full); transition: transform 200ms ease, opacity 200ms ease;
 }
-.nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(8px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
-.nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(3){ transform: translateY(-8px) rotate(-45deg); }
 
 @media (min-width: 1024px){
   .site-nav{ display: flex; }
@@ -328,25 +335,21 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
     display: flex; flex-direction: column;
     position: fixed; top: calc(var(--header-h) + 8px); left: var(--margin-mobile); right: var(--margin-mobile);
     max-height: calc(100vh - var(--header-h) - 32px);
-    background: var(--bg);
-    border: 1px solid var(--glass-border-soft);
+    background: var(--clay-header-bg);
     border-radius: var(--radius-lg);
-    backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
-    -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
-    box-shadow: var(--glass-shadow-lg);
+    box-shadow: var(--clay-shadow-header-scrolled);
     padding: var(--space-sm) var(--space-md);
-    gap: 0;
+    gap: 4px;
     overflow-y: auto;
   }
   body.nav-open{ overflow: hidden; }
   .site-nav.is-open a{
-    padding: 15px 4px;
+    padding: 15px 12px;
     font-size: 17px;
-    border-bottom: 1px solid var(--glass-border-soft);
-    border-radius: 0;
+    color: var(--ink);
+    border-radius: var(--radius-md);
   }
-  .site-nav.is-open a:hover{ background: transparent; color: var(--secondary); }
-  .site-nav.is-open a:last-child{ border-bottom: none; }
+  .site-nav.is-open a:hover{ background: color-mix(in srgb, var(--brand-teal) 14%, transparent); color: var(--brand-teal-press); }
 }
 @media (max-width: 1023px) and (prefers-reduced-motion: no-preference){
   .site-nav.is-open a{
@@ -363,7 +366,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 
 /* ==========================================================================
-   Molecular watermark — recast as a dim circuit-trace field on dark glass
+   Molecular watermark — a quiet dotted/traced texture, unrelated to material
    ========================================================================== */
 :root{
   --molecular-pattern: radial-gradient(circle at 8% 20%, var(--outline) 0 3px, transparent 3px),
@@ -407,51 +410,38 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .hero.js-canvas-active .molecular-canvas{ display: block; }
 
 /* ==========================================================================
-   Glass material — shared by every elevated panel on the page
+   Clay material — shared by the standalone panel elements (the featured
+   technology tile, the stat callout, the contact form). Solid pastel fill,
+   chunky radius, puffy shadow pair. No blur, no border, no translucency.
    ========================================================================== */
-.pillar-featured, .stat-callout, .contact-form,
-.team-grid, .pillar-grid-quad, .pillar-grid-duo, .pillar-stack{
+.pillar-featured, .stat-callout, .contact-form{
   position: relative;
   overflow: hidden;
-  z-index: 0;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border-soft);
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-xl);
+  transition: transform 220ms cubic-bezier(.16,1,.3,1), box-shadow 220ms cubic-bezier(.16,1,.3,1);
 }
+.pillar-featured{ background: var(--clay-green); box-shadow: var(--clay-shadow-green); }
+.stat-callout{ background: var(--clay-teal); box-shadow: var(--clay-shadow-teal); }
+.contact-form{ background: var(--clay-teal); box-shadow: var(--clay-shadow-teal); }
+.pillar-featured:hover{ box-shadow: var(--clay-shadow-green-hover); }
+.stat-callout:hover{ box-shadow: var(--clay-shadow-teal-hover); }
+
 /* Cropped brand-mark watermark, once per panel — quiet corner texture */
-.pillar-featured::after, .stat-callout::after, .contact-form::after,
-.team-grid::after, .pillar-grid-quad::after, .pillar-grid-duo::after, .pillar-stack::after{
+.pillar-featured::after, .stat-callout::after, .contact-form::after{
   content: '';
-  position: absolute; z-index: -1;
+  position: absolute; z-index: 0;
   right: -18px; bottom: -18px;
   width: 128px; height: 136px;
   background-image: url('../../assets/mark-watermark.svg');
   background-repeat: no-repeat;
   background-size: contain;
-  opacity: 0.1;
+  opacity: 0.09;
   pointer-events: none;
 }
-/* Specular highlight that tracks the pointer — the one authored glass motion */
-.pillar-featured::before, .stat-callout::before, .contact-form::before,
-.team-grid::before, .pillar-grid-quad::before, .pillar-grid-duo::before, .pillar-stack::before,
-.header-inner::before{
-  content: '';
-  position: absolute; inset: 0; z-index: 1;
-  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,0.75), transparent 70%);
-  opacity: 0;
-  transition: opacity 400ms ease;
-  pointer-events: none;
-}
-.header-inner{ position: relative; }
-.pillar-featured:hover::before, .stat-callout:hover::before, .contact-form:hover::before,
-.team-grid:hover::before, .pillar-grid-quad:hover::before, .pillar-grid-duo:hover::before, .pillar-stack:hover::before,
-.header-inner:hover::before{ opacity: 1; }
+.pillar-featured > *, .stat-callout > *, .contact-form > *{ position: relative; z-index: 1; }
 
 /* ==========================================================================
-   Hero globe — recast as a lit sphere held inside a glass lens
+   Hero globe — a lit sphere, independent of the surrounding material
    ========================================================================== */
 .hero-globe{ display: none; }
 .hero-globe svg{ display: block; width: 100%; height: 100%; overflow: hidden; }
@@ -486,13 +476,39 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
    Hero
    ========================================================================== */
 .hero{ position: relative; overflow: hidden; padding: var(--space-lg) 0 var(--space-xl); }
-/* Ambient illustration: a calibration schematic — crosshair, graticule rings,
-   corner registration marks — standing in for instrumentation imagery. */
-.instrument-schematic{
+
+/* Ambient illustration: a loose cluster of puffy clay blobs sitting behind
+   the copy and globe — solid pastel fills with a soft gloss highlight,
+   standing in for the material language as imagery rather than instruments. */
+.clay-blobs{
   position: absolute; inset: 0; z-index: 0;
   width: 100%; height: 100%;
   pointer-events: none;
+  opacity: 0.8;
 }
+.clay-blobs .blob-fill-green{ fill: var(--clay-green); }
+.clay-blobs .blob-fill-teal{ fill: var(--clay-teal); }
+.clay-blobs .blob-fill-green-deep{ fill: var(--clay-green-shadow); }
+.clay-blobs .blob-fill-teal-deep{ fill: var(--clay-teal-shadow); }
+.clay-blobs .blob-highlight{ fill: rgba(255,255,255,0.55); }
+@media (prefers-reduced-motion: no-preference){
+  .clay-blobs .blob-a{ animation: blob-float-a 13s ease-in-out infinite; }
+  .clay-blobs .blob-b{ animation: blob-float-b 16s ease-in-out infinite; }
+  .clay-blobs .blob-c{ animation: blob-float-a 19s ease-in-out infinite; animation-delay: -4s; }
+  .clay-blobs .blob-d{ animation: blob-float-b 11s ease-in-out infinite; animation-delay: -2s; }
+  @keyframes blob-float-a{
+    0%, 100%{ transform: translateY(0) translateX(0); }
+    50%{ transform: translateY(-14px) translateX(6px); }
+  }
+  @keyframes blob-float-b{
+    0%, 100%{ transform: translateY(0) translateX(0); }
+    50%{ transform: translateY(12px) translateX(-8px); }
+  }
+}
+@media (max-width: 1023px){
+  .clay-blobs{ opacity: 0.55; }
+}
+
 .hero-grid{
   display: grid; gap: var(--space-lg);
   align-items: center;
@@ -517,15 +533,11 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 
 /* ==========================================================================
-   Credibility strip — a thin glass instrument-panel rail
+   Credibility strip — a soft pastel band, no hairlines, gentle dot dividers
    ========================================================================== */
 .credibility{
   position: relative;
-  border-top: 1px solid var(--glass-border-soft);
-  border-bottom: 1px solid var(--glass-border-soft);
-  background: rgba(255,255,255,0.3);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  background: var(--clay-header-bg);
 }
 .credibility-row{
   display: flex; flex-wrap: wrap; justify-content: center;
@@ -539,8 +551,10 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   position: relative;
 }
 .credibility-row span + span::before{
-  content: ''; position: absolute; left: calc(-1 * var(--space-md) / 2 - 1px);
-  top: 2px; bottom: 2px; width: 1px; background: var(--glass-border-soft);
+  content: ''; position: absolute; left: calc(-1 * var(--space-md) / 2 - 2px);
+  top: 50%; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--ink-faint);
+  transform: translate(-50%, -50%);
 }
 @media (max-width: 640px){
   .credibility-row span + span::before{ display: none; }
@@ -554,14 +568,27 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .mission-copy h2{ max-width: 24ch; }
 .mission-copy p{ margin-top: var(--space-md); max-width: 62ch; }
+/* A photo mounted in its own puffy clay frame — Claymorphism doesn't blur
+   imagery through glass, it molds a chunky rounded frame around it instead. */
+.clay-photo-frame{
+  margin: var(--space-lg) 0 0; max-width: 46ch;
+  padding: 10px;
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--clay-shadow-teal);
+  transform: rotate(-1.2deg);
+}
+.clay-photo-frame img{
+  display: block; width: 100%; height: 220px; object-fit: cover;
+  border-radius: var(--radius-md);
+}
 .stat-callout{
   padding: var(--space-md);
   align-self: start;
 }
 .stat-number{
   font-family: var(--font-display); font-weight: 700; font-size: 56px;
-  line-height: 1; color: var(--brand-teal); margin-bottom: var(--space-sm);
-  text-shadow: 0 0 32px color-mix(in srgb, var(--brand-teal) 22%, transparent);
+  line-height: 1; color: var(--brand-teal-press); margin-bottom: var(--space-sm);
 }
 @media (min-width: 1024px){
   .mission-grid{ grid-template-columns: 1.4fr 1fr; align-items: start; }
@@ -610,15 +637,15 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .section-head p{ margin-top: var(--space-sm); }
 
 /* ==========================================================================
-   Technology / pillars — one large glass instrument + a connected rail
+   Technology / pillars — puffy clay tiles throughout
    ========================================================================== */
 .hexagon{
   width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  background: color-mix(in srgb, var(--brand-teal) 12%, white);
-  border: 1px solid color-mix(in srgb, var(--brand-teal) 22%, transparent);
-  color: var(--brand-teal);
+  border-radius: var(--radius-sm);
+  background: var(--clay-teal);
+  box-shadow: var(--clay-shadow-chip);
+  color: var(--brand-teal-press);
 }
 .pillar-icon svg{ width: 22px; height: 22px; }
 .pillar-icon{ transition: transform 220ms cubic-bezier(.16,1,.3,1); }
@@ -647,18 +674,17 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .pillar-featured h3{ margin-top: var(--space-sm); }
 .pillar-featured p{ margin-top: var(--space-sm); }
 
-/* The secondary disciplines share one connected glass rail rather than
-   three separate cards — a circuit, not a shelf of boxes. */
-.pillar-stack{ display: flex; flex-direction: column; padding: 0 var(--space-md); }
-.pillar-stack .pillar{ position: relative; padding: var(--space-md) 0; }
-.pillar-stack .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
-.pillar-stack .pillar:not(:first-child)::before{
-  content: ''; position: absolute; left: 23px; top: -1px;
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--brand-teal);
-  box-shadow: 0 0 10px 2px color-mix(in srgb, var(--brand-teal) 70%, transparent);
-  transform: translate(-50%, -50%);
+/* The secondary disciplines are individual puffy clay tiles stacked with
+   breathing room between them — no shared rail, no connecting hairlines. */
+.pillar-stack{ display: flex; flex-direction: column; gap: var(--space-md); }
+.pillar-stack .pillar{
+  padding: var(--space-md);
+  background: var(--clay-teal);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--clay-shadow-teal-sm);
+  transition: transform 220ms cubic-bezier(.16,1,.3,1), box-shadow 220ms cubic-bezier(.16,1,.3,1);
 }
+.pillar-stack .pillar:hover{ transform: translateY(-3px); box-shadow: var(--clay-shadow-teal-hover); }
 .pillar-stack .pillar h3{ margin-top: var(--space-sm); }
 .pillar-stack .pillar p{ margin-top: var(--space-sm); }
 
@@ -666,35 +692,39 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   .pillar-grid{ grid-template-columns: 1.3fr 1fr; }
 }
 
-/* Business model — one glass instrument panel, rows not cards */
-.pillar-grid-quad{ display: grid; padding: var(--space-sm) var(--space-md); }
-.pillar-grid-quad .pillar{ padding: var(--space-md) 0; }
-.pillar-grid-quad .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+/* Business model — four individual puffy clay tiles */
+.pillar-grid-quad{ display: grid; gap: var(--space-md); }
+.pillar-grid-quad .pillar{
+  padding: var(--space-md);
+  background: var(--clay-teal);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--clay-shadow-teal-sm);
+  transition: transform 220ms cubic-bezier(.16,1,.3,1), box-shadow 220ms cubic-bezier(.16,1,.3,1);
+}
+.pillar-grid-quad .pillar:hover{ transform: translateY(-3px); box-shadow: var(--clay-shadow-teal-hover); }
 .pillar-grid-quad .pillar h3{ margin-top: var(--space-sm); }
 .pillar-grid-quad .pillar p{ margin-top: var(--space-sm); }
 @media (min-width: 640px){
   .pillar-grid-quad{ grid-template-columns: 1fr 1fr; }
-  .pillar-grid-quad .pillar{ padding: var(--space-md); }
-  .pillar-grid-quad .pillar:nth-child(1), .pillar-grid-quad .pillar:nth-child(2){ border-top: none; }
-  .pillar-grid-quad .pillar:nth-child(2n){ border-left: 1px solid var(--glass-border-soft); }
-  .pillar-grid-quad .pillar:nth-child(3), .pillar-grid-quad .pillar:nth-child(4){ border-top: 1px solid var(--glass-border-soft); }
 }
 @media (min-width: 1024px){
   .pillar-grid-quad{ grid-template-columns: repeat(4, 1fr); }
-  .pillar-grid-quad .pillar{ border-top: none !important; }
-  .pillar-grid-quad .pillar:nth-child(n+2){ border-left: 1px solid var(--glass-border-soft); }
 }
 
-/* Viability & scalability — one split glass panel, two columns */
-.pillar-grid-duo{ display: grid; padding: var(--space-sm) var(--space-md); }
-.pillar-grid-duo .pillar{ padding: var(--space-md) 0; }
-.pillar-grid-duo .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+/* Viability & scalability — two individual puffy clay tiles */
+.pillar-grid-duo{ display: grid; gap: var(--space-md); }
+.pillar-grid-duo .pillar{
+  padding: var(--space-md);
+  background: var(--clay-green);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--clay-shadow-green-sm);
+  transition: transform 220ms cubic-bezier(.16,1,.3,1), box-shadow 220ms cubic-bezier(.16,1,.3,1);
+}
+.pillar-grid-duo .pillar:hover{ transform: translateY(-3px); box-shadow: var(--clay-shadow-green-hover); }
 .pillar-grid-duo .pillar h3{ margin-top: var(--space-sm); }
 .pillar-grid-duo .pillar p{ margin-top: var(--space-sm); }
 @media (min-width: 768px){
   .pillar-grid-duo{ grid-template-columns: 1fr 1fr; }
-  .pillar-grid-duo .pillar{ padding: var(--space-md); }
-  .pillar-grid-duo .pillar:not(:first-child){ border-top: none; border-left: 1px solid var(--glass-border-soft); }
 }
 
 .section-note{ margin-top: var(--space-lg); max-width: 70ch; }
@@ -706,10 +736,8 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .process-step{ text-align: left; }
 .process-node{
   font-family: var(--font-mono); font-weight: 600; font-size: 15px;
-  color: var(--brand-teal);
+  color: var(--brand-teal-press);
   margin-bottom: var(--space-sm);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-teal) 25%, transparent);
-  background: color-mix(in srgb, var(--brand-teal) 10%, white);
 }
 .process-step h4{ margin-bottom: var(--space-xs); }
 .process-connector{
@@ -720,27 +748,33 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
     grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
   }
   .process-connector{
-    display: block; align-self: center; height: 1px; width: 100%;
+    display: block; align-self: center; height: 5px; width: 100%;
     min-width: 24px;
-    background: linear-gradient(90deg, var(--brand-green), var(--brand-teal));
-    opacity: 0.55;
+    border-radius: var(--radius-full);
+    background: linear-gradient(90deg, var(--clay-green-shadow), var(--clay-teal-shadow));
     margin-top: 24px;
   }
 }
 
 /* ==========================================================================
-   Team — one glass roster panel
+   Team — individual puffy clay tiles, green to match the avatar chips
    ========================================================================== */
 .team{ position: relative; overflow: hidden; }
-.team-grid{ display: grid; padding: var(--space-sm) var(--space-md); }
-.team-card{ padding: var(--space-md) 0; }
-.team-card:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+.team-grid{ display: grid; gap: var(--space-md); }
+.team-card{
+  padding: var(--space-md);
+  background: var(--clay-green);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--clay-shadow-green-sm);
+  transition: transform 220ms cubic-bezier(.16,1,.3,1), box-shadow 220ms cubic-bezier(.16,1,.3,1);
+}
+.team-card:hover{ transform: translateY(-3px); box-shadow: var(--clay-shadow-green-hover); }
 .team-avatar{
   width: 56px; height: 56px;
   font-family: var(--font-display); font-weight: 600; font-size: 16px;
-  background: color-mix(in srgb, var(--brand-green) 10%, white);
-  border: 1px solid color-mix(in srgb, var(--brand-green) 22%, transparent);
-  color: var(--brand-green);
+  background: var(--surface-container-lowest);
+  box-shadow: var(--clay-shadow-chip-green);
+  color: var(--brand-green-press);
 }
 .team-card h3{ margin-bottom: var(--space-xs); }
 .team-role{ display: block; }
@@ -748,13 +782,11 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .team-link{
   display: inline-flex; align-items: center; gap: 6px;
   margin-top: var(--space-md);
-  font-size: 14px; font-weight: 600; color: var(--brand-teal);
+  font-size: 14px; font-weight: 600; color: var(--brand-teal-press);
 }
 .team-link:hover{ text-decoration: underline; }
 @media (min-width: 768px){
   .team-grid{ grid-template-columns: 1fr 1fr; }
-  .team-card{ padding: var(--space-md); }
-  .team-card:not(:first-child){ border-top: none; border-left: 1px solid var(--glass-border-soft); }
 }
 
 /* ==========================================================================
@@ -765,7 +797,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .contact-copy p{ margin-top: var(--space-sm); }
 .contact-info{ margin-top: var(--space-lg); display: grid; gap: var(--space-sm); }
 .contact-info-row{ display: flex; flex-direction: column; gap: 4px; }
-.contact-info-row a{ color: var(--brand-teal); font-weight: 500; }
+.contact-info-row a{ color: var(--brand-teal-press); font-weight: 500; }
 .contact-info-row a:hover{ text-decoration: underline; }
 
 .contact-form{
@@ -779,27 +811,30 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .field input, .field textarea{
   font-family: var(--font-body); font-size: 15px; color: var(--ink);
-  background: rgba(27,28,28,0.04);
-  border: 1px solid var(--glass-border-soft);
+  background: var(--clay-well);
+  border: none;
   border-radius: var(--radius-field);
-  padding: 13px 14px;
+  padding: 14px 16px;
   resize: vertical;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  box-shadow: inset 0 2px 6px var(--clay-well-shadow);
+  transition: box-shadow 150ms ease;
 }
 .field input::placeholder, .field textarea::placeholder{ color: var(--ink-faint); }
 .field input:focus, .field textarea:focus{
-  outline: none; border-color: var(--brand-teal);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-teal) 20%, transparent);
+  outline: none;
+  box-shadow: inset 0 2px 6px var(--clay-well-shadow), 0 0 0 3px color-mix(in srgb, var(--brand-teal) 45%, transparent);
 }
 .field-error{
   display: none;
   font-size: 13px; color: var(--error);
 }
-.field.has-error input, .field.has-error textarea{ border-color: var(--error); }
+.field.has-error input, .field.has-error textarea{
+  box-shadow: inset 0 2px 6px var(--clay-well-shadow), 0 0 0 3px color-mix(in srgb, var(--error) 40%, transparent);
+}
 .field.has-error .field-error{ display: block; }
 .form-hint{ font-size: 13px; color: var(--ink-faint); margin: 0; }
 .form-success{
-  font-size: 14px; font-weight: 500; color: var(--brand-green); margin: 0;
+  font-size: 14px; font-weight: 500; color: var(--brand-green-press); margin: 0;
 }
 @media (min-width: 1024px){
   .contact-grid{ grid-template-columns: 1fr 1.2fr; }

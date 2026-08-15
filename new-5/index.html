@@ -139,24 +139,30 @@
       <section class="hero" id="top">
         <div class="molecular-watermark" aria-hidden="true"></div>
         <canvas class="molecular-canvas" aria-hidden="true"></canvas>
-        <svg class="glass-shards" viewBox="0 0 1200 700" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+        <svg class="bento-tiles-deco" viewBox="0 0 1200 700" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
           <defs>
-            <linearGradient id="shard-fill-a" x1="0" y1="0" x2="1" y2="1">
+            <linearGradient id="bento-fill-a" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stop-color="var(--brand-teal)" stop-opacity="0.16" />
-              <stop offset="100%" stop-color="var(--brand-teal)" stop-opacity="0.02" />
+              <stop offset="100%" stop-color="var(--brand-teal)" stop-opacity="0.03" />
             </linearGradient>
-            <linearGradient id="shard-fill-b" x1="0" y1="0" x2="1" y2="1">
+            <linearGradient id="bento-fill-b" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stop-color="var(--brand-green)" stop-opacity="0.15" />
-              <stop offset="100%" stop-color="var(--brand-green)" stop-opacity="0.02" />
+              <stop offset="100%" stop-color="var(--brand-green)" stop-opacity="0.03" />
             </linearGradient>
           </defs>
-          <g stroke="var(--outline)">
-            <polygon points="718,80 942,80 970,108 970,258 942,286 718,286 690,258 690,108"
-              fill="url(#shard-fill-a)" stroke-opacity="0.22" transform="rotate(-7 830 183)" />
-            <polygon points="600,360 900,360 924,384 924,560 900,584 600,584 576,560 576,384"
-              fill="url(#shard-fill-b)" stroke-opacity="0.24" transform="rotate(5 750 472)" />
-            <polygon points="30,610 220,610 240,630 240,710 220,730 30,730 10,710 10,630"
-              fill="url(#shard-fill-a)" stroke-opacity="0.18" transform="rotate(-4 125 670)" />
+          <g>
+            <rect x="700" y="70" width="200" height="150" rx="26"
+              fill="url(#bento-fill-a)" stroke="var(--brand-teal)" stroke-opacity="0.22" transform="rotate(-4 800 145)" />
+            <rect x="905" y="90" width="95" height="95" rx="22"
+              fill="url(#bento-fill-b)" stroke="var(--brand-green)" stroke-opacity="0.2" transform="rotate(6 952 137)" />
+            <rect x="600" y="340" width="150" height="230" rx="28"
+              fill="url(#bento-fill-b)" stroke="var(--brand-green)" stroke-opacity="0.22" transform="rotate(3 675 455)" />
+            <rect x="770" y="380" width="150" height="105" rx="24"
+              fill="url(#bento-fill-a)" stroke="var(--brand-teal)" stroke-opacity="0.2" transform="rotate(-3 845 432)" />
+            <rect x="770" y="505" width="105" height="105" rx="22"
+              fill="url(#bento-fill-b)" stroke="var(--brand-green)" stroke-opacity="0.2" transform="rotate(5 822 557)" />
+            <rect x="30" y="600" width="210" height="120" rx="24"
+              fill="url(#bento-fill-a)" stroke="var(--brand-teal)" stroke-opacity="0.2" transform="rotate(-3 135 660)" />
           </g>
         </svg>
         <div class="container hero-grid">
@@ -321,7 +327,7 @@
               up afterward.
             </p>
           </div>
-          <aside class="stat-callout reveal">
+          <aside class="stat-callout tile-hero reveal">
             <div class="stat-number">9%</div>
             <p class="body-md">
               of plastic waste is recycled worldwide, according to OECD
@@ -369,7 +375,7 @@
           </div>
 
           <div class="pillar-grid reveal">
-            <article class="pillar pillar-featured">
+            <article class="pillar pillar-featured tile-tint-teal">
               <div class="pillar-icon hexagon">
                 <svg
                   viewBox="0 0 24 24"
@@ -393,7 +399,7 @@
             </article>
 
             <div class="pillar-stack">
-              <article class="pillar">
+              <article class="pillar tile-photo" style="background-image: url('../../assets/photos/bioprocessing-lab.jpg')">
                 <div class="pillar-icon hexagon">
                   <svg
                     viewBox="0 0 24 24"
@@ -412,7 +418,7 @@
                   enzymes at a scale beyond a research bench.
                 </p>
               </article>
-              <article class="pillar">
+              <article class="pillar tile-tint-teal">
                 <div class="pillar-icon hexagon">
                   <svg
                     viewBox="0 0 24 24"
@@ -432,7 +438,7 @@
                   industries can actually use.
                 </p>
               </article>
-              <article class="pillar">
+              <article class="pillar tile-tint-green">
                 <div class="pillar-icon hexagon pillar-icon-algae">
                   <svg
                     viewBox="0 0 24 24"
@@ -506,7 +512,7 @@
           </div>
 
           <div class="pillar-grid-duo reveal">
-            <article class="pillar">
+            <article class="pillar tile-tint-green">
               <div class="pillar-icon hexagon">
                 <svg
                   viewBox="0 0 24 24"
@@ -633,7 +639,7 @@
           </div>
 
           <div class="pillar-grid-quad reveal">
-            <article class="pillar">
+            <article class="pillar tile-hero-gradient">
               <div class="pillar-icon hexagon">
                 <svg
                   viewBox="0 0 24 24"
@@ -651,7 +657,7 @@
                 and materials companies looking to scale sustainably.
               </p>
             </article>
-            <article class="pillar">
+            <article class="pillar tile-tint-green">
               <div class="pillar-icon hexagon">
                 <svg
                   viewBox="0 0 24 24"
@@ -670,7 +676,7 @@
                 reusable raw material inputs.
               </p>
             </article>
-            <article class="pillar">
+            <article class="pillar tile-tint-teal">
               <div class="pillar-icon hexagon pillar-icon-algae">
                 <svg
                   viewBox="0 0 24 24"

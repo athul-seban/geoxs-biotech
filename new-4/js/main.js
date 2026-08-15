@@ -146,57 +146,106 @@
     successMsg.hidden = false;
   });
 
-  // Glass specular highlight: every frosted panel catches a soft light
-  // that follows the pointer, as if the surface were real ground glass.
-  // One coherent motion system shared by every panel, not a per-element effect.
+  // Scrollytelling engine: continuous scroll-linked motion, driving CSS
+  // custom properties every animation frame (throttled off the raw scroll
+  // event) rather than one-shot IntersectionObserver reveals. Four effects
+  // share one rAF loop:
+  //   1. --page-progress on the header's progress rail (whole-page read-through)
+  //   2. --hero-progress on the hero section (globe/visual "left behind" as
+  //      the visitor descends into Mission, plus the scroll-cue fade)
+  //   3. --connector-progress per .process-connector (the line between
+  //      process steps draws itself in as its section scrolls through view)
+  //   4. --mission-parallax on the Mission photo (drifts as its section
+  //      crosses the viewport — real imagery given the same "motion carries
+  //      the design" treatment as the diagrammatic connectors)
+  // Entirely skipped under prefers-reduced-motion — CSS already defaults
+  // every one of these custom properties to a static, fully-visible resting
+  // state (see styles.css), so skipping here just means that state persists.
   try {
-    var glassSelector = '.pillar-featured, .stat-callout, .contact-form, ' +
-      '.team-grid, .pillar-grid-quad, .pillar-grid-duo, .pillar-stack, .header-inner';
-    var reduceMotionForGlass = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduceMotionForGlass && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
-      document.addEventListener('pointermove', function (e) {
-        var panel = e.target.closest ? e.target.closest(glassSelector) : null;
-        if (!panel) return;
-        var rect = panel.getBoundingClientRect();
-        var mx = ((e.clientX - rect.left) / rect.width) * 100;
-        var my = ((e.clientY - rect.top) / rect.height) * 100;
-        panel.style.setProperty('--mx', mx + '%');
-        panel.style.setProperty('--my', my + '%');
-      }, { passive: true });
-    }
-  } catch (err) {
-    // Panels keep their default top-centered highlight.
-  }
+    var reduceMotionForScroll = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotionForScroll) {
+      var scrollHeroEl = document.querySelector('.hero');
+      var scrollProgressFill = document.getElementById('scroll-progress-fill');
+      var scrollFlowEls = Array.prototype.slice.call(document.querySelectorAll('.process-flow'));
+      var scrollFlowConnectors = scrollFlowEls.map(function (flow) {
+        return Array.prototype.slice.call(flow.querySelectorAll('.process-connector'));
+      });
+      var scrollMissionImg = document.querySelector('.mission-plate-frame img');
 
-  // Island indicator: one capsule slides and resizes between nav links,
-  // tracking whichever one the visitor is about to choose — this variant's
-  // one signature motion, a Dynamic-Island-style focal element in the header.
-  try {
-    var islandNav = document.getElementById('site-nav');
-    var islandLinks = islandNav ? Array.prototype.slice.call(islandNav.querySelectorAll('a')) : [];
-    if (islandNav && islandLinks.length) {
-      var island = document.createElement('span');
-      island.className = 'nav-island';
-      island.setAttribute('aria-hidden', 'true');
-      islandNav.insertBefore(island, islandNav.firstChild);
+      var clamp01 = function (v) { return Math.max(0, Math.min(1, v)); };
+      var storyTicking = false;
 
-      function moveIslandTo(link) {
-        var navWidth = islandNav.clientWidth;
-        var rightInset = navWidth - (link.offsetLeft + link.offsetWidth);
-        island.style.clipPath = 'inset(0 ' + rightInset + 'px 0 ' + link.offsetLeft + 'px round 9999px)';
-      }
-      islandLinks.forEach(function (link) {
-        link.addEventListener('pointerenter', function () {
-          islandNav.classList.add('is-tracking');
-          moveIslandTo(link);
+      var updateScrollStory = function () {
+        storyTicking = false;
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+
+        // 1. Header progress rail: how far down the entire page the visitor
+        // has read.
+        if (scrollProgressFill) {
+          var doc = document.documentElement;
+          var maxScroll = (doc.scrollHeight || document.body.scrollHeight) - vh;
+          var pageProgress = maxScroll > 0 ? clamp01(window.scrollY / maxScroll) : 0;
+          scrollProgressFill.style.setProperty('--page-progress', pageProgress.toFixed(4));
+        }
+
+        // 2. Hero: scales down, rotates, and fades over its own height as
+        // the visitor scrolls from the top of the page into Mission.
+        if (scrollHeroEl) {
+          var heroHeight = scrollHeroEl.offsetHeight || 1;
+          var heroProgress = clamp01(window.scrollY / heroHeight);
+          scrollHeroEl.style.setProperty('--hero-progress', heroProgress.toFixed(4));
+        }
+
+        // 3. Process-flow connectors: each one draws left-to-right in turn
+        // as the section it belongs to scrolls through the viewport.
+        scrollFlowEls.forEach(function (flow, idx) {
+          var rect = flow.getBoundingClientRect();
+          var flowProgress = clamp01((vh - rect.top) / (vh + rect.height));
+          var connectors = scrollFlowConnectors[idx];
+          var count = connectors.length || 1;
+          connectors.forEach(function (connector, i) {
+            var segStart = i / count;
+            var segEnd = (i + 1) / count;
+            var segProgress = clamp01((flowProgress - segStart) / (segEnd - segStart));
+            connector.style.setProperty('--connector-progress', segProgress.toFixed(4));
+          });
         });
-      });
-      islandNav.addEventListener('pointerleave', function () {
-        islandNav.classList.remove('is-tracking');
-      });
+
+        // 4. Mission photo: drifts vertically inside its frame as the section
+        // crosses the viewport, centered (0px) when the section is centered.
+        if (scrollMissionImg) {
+          var plateRect = scrollMissionImg.parentElement.getBoundingClientRect();
+          var plateCenter = plateRect.top + plateRect.height / 2;
+          var plateSigned = (plateCenter - vh / 2) / (vh / 2 + plateRect.height / 2);
+          scrollMissionImg.style.setProperty('--mission-parallax', (-plateSigned * 26).toFixed(1) + 'px');
+        }
+      };
+
+      var onScrollStory = function () {
+        if (!storyTicking) {
+          storyTicking = true;
+          requestAnimationFrame(updateScrollStory);
+        }
+      };
+
+      window.addEventListener('scroll', onScrollStory, { passive: true });
+      window.addEventListener('resize', onScrollStory, { passive: true });
+      updateScrollStory();
     }
   } catch (err) {
-    // Nav links keep their default hover color change without the island.
+    // Fall back to the static resting state already defined in CSS: header
+    // rail and hero at rest (progress vars unset ⇒ 0), connectors fully
+    // drawn (default 1) — so a failure here never leaves anything stuck
+    // mid-animation or invisible.
+    document.querySelectorAll('.process-connector').forEach(function (c) {
+      c.style.removeProperty('--connector-progress');
+    });
+    var fallbackHero = document.querySelector('.hero');
+    if (fallbackHero) fallbackHero.style.removeProperty('--hero-progress');
+    var fallbackFill = document.getElementById('scroll-progress-fill');
+    if (fallbackFill) fallbackFill.style.removeProperty('--page-progress');
+    var fallbackMissionImg = document.querySelector('.mission-plate-frame img');
+    if (fallbackMissionImg) fallbackMissionImg.style.removeProperty('--mission-parallax');
   }
 
   // Interactive molecular background: a lightweight canvas node network in

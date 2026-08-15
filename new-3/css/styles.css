@@ -1,53 +1,44 @@
 /* ==========================================================================
-   Geoxs Biotech — Design tokens (variant: Spatial Glass)
-   World: the same warm-white canvas and Biosphere Green / Lab Teal, staged
-   as floating planes at real depth — panels tilt toward the pointer like
-   windows in space, the hero's layers part at different speeds on scroll.
+   Geoxs Biotech — Design tokens (variant: Swiss / International Typographic)
+   World: strict grid alignment, bold confident sans-serif typography as the
+   dominant visual element, extreme restraint in color and ornament. No
+   blur, no shadow, no gradient, no rounded structural corners — definition
+   comes from typography, alignment, and thin rule lines only.
    ========================================================================== */
 :root{
-  /* Canvas & ink — the original Molecular Precision palette, unchanged */
+  /* Canvas & ink — near-black on near-white, restrained neutral grays */
   --bg: #fbf9f8;
   --bg-1: #303030;
   --ink: #1b1c1c;
-  --ink-dim: #3e4a3d;
-  --ink-faint: #6b776f;
+  --ink-dim: #4a4a4a;
+  --ink-faint: #6b6b6b;
 
-  /* Brand — the original Biosphere Green / Lab Teal, unchanged */
+  /* Brand — ONE accent only: the brand's real green. No secondary hue. */
   --brand-green: #006b29;
-  --brand-green-deep: #008736;
-  --brand-teal: #006876;
-  --brand-teal-deep: #13a0a9;
-  --brand-gradient: linear-gradient(135deg, var(--brand-green), var(--brand-teal));
+  --brand-green-deep: #00531e;
 
   /* Legacy role names kept so component + JS references still resolve */
-  --surface: var(--bg);
-  --surface-container-lowest: var(--glass-bg);
-  --surface-container-low: var(--glass-bg-soft);
+  --surface: #ffffff;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f5f3f3;
   --on-surface: var(--ink);
   --on-surface-variant: var(--ink-dim);
   --inverse-surface: var(--bg-1);
   --inverse-on-surface: #f2f0f0;
-  --outline: #6e7a6c;
+  --outline: #707070;
   --outline-variant: rgba(27,28,28,0.14);
   --primary: var(--brand-green);
   --on-primary: #ffffff;
   --primary-container: var(--brand-green-deep);
-  --secondary: var(--brand-teal);
+  --secondary: var(--brand-green);
   --on-secondary: #ffffff;
   --error: #ba1a1a;
-  --mark-blue: var(--brand-teal-deep);
+  --mark-blue: var(--ink);
 
-  /* Glass material — white panels over the warm canvas, blur reveals the
-     colored aurora beneath so even a near-white surface reads as glass */
-  --glass-bg: rgba(255,255,255,0.5);
-  --glass-bg-soft: rgba(255,255,255,0.32);
-  --glass-bg-strong: rgba(255,255,255,0.72);
-  --glass-border: rgba(27,28,28,0.16);
-  --glass-border-soft: rgba(27,28,28,0.09);
-  --glass-blur: 26px;
-  --glass-blur-lg: 40px;
-  --glass-shadow: 0 40px 70px -24px rgba(20,32,26,0.24), 0 10px 20px -12px rgba(20,32,26,0.14), inset 0 1px 0 rgba(255,255,255,0.85);
-  --glass-shadow-lg: 0 54px 96px -26px rgba(20,32,26,0.28), 0 14px 26px -14px rgba(20,32,26,0.18), inset 0 1px 0 rgba(255,255,255,0.9);
+  /* Rule lines — the only "material" this style has: hairline borders */
+  --rule: var(--ink);
+  --rule-soft: rgba(27,28,28,0.16);
+  --rule-faint: rgba(27,28,28,0.1);
 
   /* Typography */
   --font-display: 'Hanken Grotesk', system-ui, sans-serif;
@@ -55,14 +46,14 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-wordmark: 'PT Serif', Georgia, 'Times New Roman', serif;
 
-  /* Radius — continuous, generous, glass-appropriate */
-  --radius-sm: 0.875rem;
-  --radius: 1.25rem;
-  --radius-md: 1.5rem;
-  --radius-lg: 1.75rem;
-  --radius-xl: 2.25rem;
-  --radius-field: 0.875rem;
-  --radius-full: 9999px;
+  /* Radius — Swiss: flat, structural elements are sharp rectangles */
+  --radius-sm: 0;
+  --radius: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-field: 0;
+  --radius-full: 0;
 
   /* Spacing */
   --space-base: 8px;
@@ -75,7 +66,7 @@
   --margin-mobile: 16px;
   --margin-desktop: 64px;
 
-  --header-h: 84px;
+  --header-h: 82px;
   --container-max: 1280px;
 }
 
@@ -99,31 +90,24 @@ body{
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
-/* Ambient light source: fixed aurora the glass throughout the page catches. */
-body::before{
-  content: '';
-  position: fixed; inset: 0; z-index: -3; pointer-events: none;
-  background:
-    radial-gradient(1100px 760px at 12% -8%, color-mix(in srgb, var(--brand-green) 16%, transparent), transparent 60%),
-    radial-gradient(950px 720px at 92% 18%, color-mix(in srgb, var(--brand-teal) 14%, transparent), transparent 58%),
-    radial-gradient(900px 900px at 45% 108%, color-mix(in srgb, var(--brand-green) 10%, transparent), transparent 62%),
-    var(--bg);
-}
 img, svg{ display: block; max-width: 100%; }
 a{ color: inherit; text-decoration: none; }
 button{ font: inherit; }
 ul{ margin: 0; padding: 0; }
 h1,h2,h3,h4,p{ margin: 0; }
-:focus-visible{ outline: 2px solid var(--brand-teal); outline-offset: 3px; }
+:focus-visible{ outline: 2px solid var(--brand-green); outline-offset: 3px; }
+/* Green reads too close to the dark footer surface to serve as a visible
+   focus ring there — swap to the light inverse-on-surface tone instead. */
+.site-footer :focus-visible{ outline-color: var(--inverse-on-surface); }
 
 /* Browser-owned surfaces, themed rather than left to defaults */
-::selection{ background: color-mix(in srgb, var(--brand-teal) 35%, white); color: var(--ink); }
+::selection{ background: color-mix(in srgb, var(--brand-green) 30%, white); color: var(--ink); }
 html{ scrollbar-width: thin; scrollbar-color: rgba(27,28,28,0.2) transparent; }
 ::-webkit-scrollbar{ width: 11px; height: 11px; }
 ::-webkit-scrollbar-track{ background: transparent; }
 ::-webkit-scrollbar-thumb{
   background: rgba(27,28,28,0.18);
-  border-radius: var(--radius-full);
+  border-radius: 0;
   border: 3px solid var(--bg);
 }
 ::-webkit-scrollbar-thumb:hover{ background: rgba(27,28,28,0.28); }
@@ -134,7 +118,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   position: absolute; left: -9999px; top: 0;
   background: var(--brand-green); color: var(--on-primary);
   padding: var(--space-sm) var(--space-md); z-index: 100;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
 }
 .skip-link:focus{ left: var(--space-md); top: var(--space-md); }
 
@@ -150,28 +134,34 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   .container{ padding: 0 20px; }
 }
 
-.section{ padding: var(--space-xl) 0; scroll-margin-top: calc(var(--header-h) + 20px); position: relative; }
+.section{
+  padding: var(--space-xl) 0;
+  scroll-margin-top: calc(var(--header-h) + 20px);
+  position: relative;
+  border-top: 1px solid var(--rule-faint);
+}
+.section.mission{ border-top: none; }
 #top{ scroll-margin-top: var(--header-h); }
 @media (max-width: 767px){
   .section{ padding: var(--space-lg) 0; }
 }
 
 /* ==========================================================================
-   Typography scale
+   Typography scale — bold, oversized, tight tracking. The type IS the design.
    ========================================================================== */
 .display-lg{
   font-family: var(--font-display);
-  font-size: 64px; font-weight: 700; line-height: 1.08; letter-spacing: -0.02em;
+  font-size: 72px; font-weight: 700; line-height: 1.04; letter-spacing: -0.025em;
   color: var(--ink);
 }
 .headline-lg{
   font-family: var(--font-display);
-  font-size: 38px; font-weight: 600; line-height: 1.15; letter-spacing: -0.01em;
+  font-size: 40px; font-weight: 700; line-height: 1.1; letter-spacing: -0.015em;
   color: var(--ink);
 }
 .headline-md{
   font-family: var(--font-display);
-  font-size: 24px; font-weight: 600; line-height: 32px;
+  font-size: 24px; font-weight: 700; line-height: 32px;
   color: var(--ink);
 }
 .body-lg{
@@ -192,92 +182,68 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .label-sm{
   font-family: var(--font-mono);
-  font-size: 12px; font-weight: 500; line-height: 16px;
+  font-size: 11px; font-weight: 500; line-height: 16px; letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--ink-faint);
 }
 
+/* The one deliberate, sparing use of the accent color inside body copy —
+   a single headline word, not a general text-color utility. */
+.accent{ color: var(--brand-green); }
+
 @media (max-width: 767px){
-  .display-lg{ font-size: 38px; line-height: 1.14; letter-spacing: -0.01em; }
+  .display-lg{ font-size: 40px; line-height: 1.12; letter-spacing: -0.015em; }
   .headline-lg{ font-size: 29px; line-height: 1.2; }
 }
 
 /* ==========================================================================
-   Buttons — glass pills
+   Buttons — flat rectangles, solid fill or solid outline. No pill shape,
+   no gradient, no blur, no shadow. Radius 0 via the token above.
    ========================================================================== */
 .btn{
   display: inline-flex; align-items: center; justify-content: center;
   gap: var(--space-xs);
   font-family: var(--font-body); font-size: 15px; font-weight: 600;
   white-space: nowrap;
-  padding: 14px 26px;
+  padding: 14px 28px;
   border-radius: var(--radius-full);
-  border: 1px solid transparent;
+  border: 1px solid var(--ink);
   cursor: pointer;
-  transition: transform 160ms cubic-bezier(.16,1,.3,1), background-color 160ms ease, border-color 160ms ease, box-shadow 200ms ease;
+  transition: background-color 140ms ease, color 140ms ease, border-color 140ms ease;
 }
-.btn:active{ transform: translateY(1px) scale(0.98); }
+.btn:active{ transform: translateY(1px); }
 .btn-primary{
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--brand-green) 22%, transparent), color-mix(in srgb, var(--brand-teal) 16%, transparent)),
-    rgba(255,255,255,0.55);
-  border-color: rgba(27,28,28,0.12);
-  color: var(--ink);
-  box-shadow: 0 10px 26px -14px color-mix(in srgb, var(--brand-green) 55%, transparent),
-    0 14px 34px -20px color-mix(in srgb, var(--brand-teal) 45%, transparent),
-    inset 0 1px 0 rgba(255,255,255,0.8);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  background: var(--brand-green);
+  border-color: var(--brand-green);
+  color: var(--on-primary);
 }
 .btn-primary:hover{
-  border-color: rgba(27,28,28,0.18);
-  box-shadow: 0 12px 32px -12px color-mix(in srgb, var(--brand-green) 65%, transparent),
-    0 16px 40px -18px color-mix(in srgb, var(--brand-teal) 55%, transparent),
-    inset 0 1px 0 rgba(255,255,255,0.9);
+  background: var(--brand-green-deep);
+  border-color: var(--brand-green-deep);
 }
 .btn-secondary{
-  background: rgba(255,255,255,0.32);
-  border-color: rgba(27,28,28,0.16);
+  background: transparent;
+  border-color: var(--ink);
   color: var(--ink);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
 }
-.btn-secondary:hover{ background: rgba(255,255,255,0.55); border-color: rgba(27,28,28,0.24); }
+.btn-secondary:hover{ background: var(--ink); color: var(--bg); }
 
 /* ==========================================================================
-   Header — a floating glass capsule, not a full-width bar
+   Header — a flush, full-width rule-bordered bar, not a floating capsule
    ========================================================================== */
 .site-header{
   position: sticky; top: 0; z-index: 50;
-  padding: 14px var(--margin-mobile) 0;
-  display: flex; justify-content: center;
-  pointer-events: none;
-  transition: transform 280ms cubic-bezier(.16,1,.3,1);
-}
-.site-header > .header-inner{ pointer-events: auto; }
-@media (min-width: 1024px){
-  .site-header{ padding: 18px var(--margin-desktop) 0; }
+  background: var(--bg);
+  border-bottom: 1px solid var(--ink);
+  transition: transform 220ms ease, box-shadow 160ms ease;
 }
 @media (max-width: 1023px){
-  .site-header.is-hidden{ transform: translateY(-130%); }
+  .site-header.is-hidden{ transform: translateY(-100%); }
 }
+.site-header.is-scrolled{ box-shadow: 0 1px 0 0 var(--ink); }
 .header-inner{
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; max-width: 1180px;
-  padding: 8px 10px 8px 20px;
-  border-radius: var(--radius-full);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border-soft);
-  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  box-shadow: var(--glass-shadow);
-  transform: perspective(1400px) rotateX(4deg);
-  transform-origin: center top;
-  transition: background 220ms ease, box-shadow 220ms ease, border-color 220ms ease, transform 400ms cubic-bezier(.16,1,.3,1);
-}
-.site-header.is-scrolled .header-inner{ transform: perspective(1400px) rotateX(0deg); }
-.site-header.is-scrolled .header-inner{
-  background: var(--glass-bg-strong);
-  box-shadow: var(--glass-shadow-lg);
+  padding: 18px 0;
 }
 .brand{ display: inline-flex; align-items: center; gap: 12px; }
 .brand-mark{ width: 44px; height: 44px; flex-shrink: 0; }
@@ -291,14 +257,14 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   color: var(--ink-dim); letter-spacing: 0.08em; text-transform: uppercase;
   margin-top: 2px;
 }
-.site-nav{ display: none; align-items: center; gap: 2px; }
+.site-nav{ display: none; align-items: center; gap: 4px; }
 .site-nav a{
   font-size: 14.5px; font-weight: 500; color: var(--ink-dim);
-  padding: 9px 16px;
-  border-radius: var(--radius-full);
-  transition: color 150ms ease, background-color 150ms ease;
+  padding: 9px 14px;
+  border-radius: 0;
+  transition: color 140ms ease;
 }
-.site-nav a:hover{ color: var(--ink); background: rgba(27,28,28,0.055); }
+.site-nav a:hover{ color: var(--ink); text-decoration: underline; }
 .header-actions{ display: flex; align-items: center; gap: var(--space-sm); }
 .header-actions .btn{ display: none; padding: 10px 20px; font-size: 14px; }
 
@@ -314,7 +280,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .nav-toggle span{
   display: block; height: 2px; width: 100%; background: var(--ink);
-  border-radius: 2px; transition: transform 200ms ease, opacity 200ms ease;
+  border-radius: 0; transition: transform 200ms ease, opacity 200ms ease;
 }
 .nav-toggle[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
 .nav-toggle[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
@@ -329,44 +295,41 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 @media (max-width: 1023px){
   .site-nav.is-open{
     display: flex; flex-direction: column;
-    position: fixed; top: calc(var(--header-h) + 8px); left: var(--margin-mobile); right: var(--margin-mobile);
-    max-height: calc(100vh - var(--header-h) - 32px);
+    position: fixed; top: calc(var(--header-h) + 1px); left: 0; right: 0;
+    max-height: calc(100vh - var(--header-h) - 16px);
     background: var(--bg);
-    border: 1px solid var(--glass-border-soft);
-    border-radius: var(--radius-lg);
-    backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
-    -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
-    box-shadow: var(--glass-shadow-lg);
-    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--ink);
+    padding: var(--space-sm) var(--margin-mobile);
     gap: 0;
     overflow-y: auto;
   }
   body.nav-open{ overflow: hidden; }
   .site-nav.is-open a{
-    padding: 15px 4px;
+    padding: 16px 4px;
     font-size: 17px;
-    border-bottom: 1px solid var(--glass-border-soft);
+    color: var(--ink);
+    border-bottom: 1px solid var(--rule-soft);
     border-radius: 0;
   }
-  .site-nav.is-open a:hover{ background: transparent; color: var(--secondary); }
+  .site-nav.is-open a:hover{ color: var(--brand-green); }
   .site-nav.is-open a:last-child{ border-bottom: none; }
 }
 @media (max-width: 1023px) and (prefers-reduced-motion: no-preference){
   .site-nav.is-open a{
-    animation: nav-link-in 320ms cubic-bezier(.16,1,.3,1) both;
+    animation: nav-link-in 260ms cubic-bezier(.16,1,.3,1) both;
   }
-  .site-nav.is-open a:nth-child(2){ animation-delay: 40ms; }
-  .site-nav.is-open a:nth-child(3){ animation-delay: 80ms; }
-  .site-nav.is-open a:nth-child(4){ animation-delay: 120ms; }
-  .site-nav.is-open a:nth-child(5){ animation-delay: 160ms; }
+  .site-nav.is-open a:nth-child(2){ animation-delay: 30ms; }
+  .site-nav.is-open a:nth-child(3){ animation-delay: 60ms; }
+  .site-nav.is-open a:nth-child(4){ animation-delay: 90ms; }
+  .site-nav.is-open a:nth-child(5){ animation-delay: 120ms; }
   @keyframes nav-link-in{
-    from{ opacity: 0; transform: translateX(-10px); }
+    from{ opacity: 0; transform: translateX(-8px); }
     to{ opacity: 1; transform: none; }
   }
 }
 
 /* ==========================================================================
-   Molecular watermark — recast as a dim circuit-trace field on dark glass
+   Molecular watermark — a quiet neutral-gray node field, no color tint
    ========================================================================== */
 :root{
   --molecular-pattern: radial-gradient(circle at 8% 20%, var(--outline) 0 3px, transparent 3px),
@@ -410,78 +373,25 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .hero.js-canvas-active .molecular-canvas{ display: block; }
 
 /* ==========================================================================
-   Glass material — shared by every elevated panel on the page
+   Flat content modules — shared by every structural block on the page.
+   A single hairline border, sharp corners, no fill effect. Definition
+   comes from the border and the grid it sits on, not from material.
    ========================================================================== */
-.pillar-grid, .pillar-grid-duo, .pillar-grid-quad, .team-grid, .mission-grid, .contact-grid{
-  perspective: 1600px;
-}
 .pillar-featured, .stat-callout, .contact-form,
 .team-grid, .pillar-grid-quad, .pillar-grid-duo, .pillar-stack{
   position: relative;
-  overflow: hidden;
-  z-index: 0;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border-soft);
+  background: var(--surface);
+  border: 1px solid var(--ink);
   border-radius: var(--radius-lg);
-  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  box-shadow: var(--glass-shadow);
-  transform: perspective(1600px) rotateX(var(--tiltx, 0deg)) rotateY(var(--tilty, 0deg)) translateZ(0);
-  transition: transform 500ms cubic-bezier(.16,1,.3,1), box-shadow 400ms ease;
-  transform-style: preserve-3d;
-  will-change: transform;
 }
-.pillar-featured:hover, .stat-callout:hover, .contact-form:hover,
-.team-grid:hover, .pillar-grid-quad:hover, .pillar-grid-duo:hover, .pillar-stack:hover{
-  box-shadow: var(--glass-shadow-lg);
-  transition-duration: 120ms;
-}
-/* Resting depth: every pane holds its own small, permanent tilt so the page
-   reads as floating planes at slightly different angles even before the
-   pointer arrives — spatial staging, not a flat grid that happens to tilt. */
-.pillar-featured{ --tiltx: 1.4deg; --tilty: -3.4deg; margin-top: -10px; }
-.stat-callout{ --tiltx: -2deg; --tilty: 2.8deg; }
-.contact-form{ --tiltx: 1.2deg; --tilty: 2.4deg; }
-.team-grid{ --tiltx: -1.6deg; --tilty: -2.6deg; margin-top: 12px; }
-.pillar-grid-quad{ --tiltx: 1.6deg; --tilty: 3deg; }
-.pillar-grid-duo{ --tiltx: -1.2deg; --tilty: -2.2deg; margin-top: -8px; }
-.pillar-stack{ --tiltx: 0.9deg; --tilty: -2.8deg; margin-top: 14px; }
-/* Cropped brand-mark watermark, once per panel — quiet corner texture */
-.pillar-featured::after, .stat-callout::after, .contact-form::after,
-.team-grid::after, .pillar-grid-quad::after, .pillar-grid-duo::after, .pillar-stack::after{
-  content: '';
-  position: absolute; z-index: -1;
-  right: -18px; bottom: -18px;
-  width: 128px; height: 136px;
-  background-image: url('../../assets/mark-watermark.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  opacity: 0.1;
-  pointer-events: none;
-}
-/* Specular highlight that tracks the pointer — the one authored glass motion */
-.pillar-featured::before, .stat-callout::before, .contact-form::before,
-.team-grid::before, .pillar-grid-quad::before, .pillar-grid-duo::before, .pillar-stack::before,
-.header-inner::before{
-  content: '';
-  position: absolute; inset: 0; z-index: 1;
-  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,0.75), transparent 70%);
-  opacity: 0;
-  transition: opacity 400ms ease;
-  pointer-events: none;
-}
-.header-inner{ position: relative; }
-.pillar-featured:hover::before, .stat-callout:hover::before, .contact-form:hover::before,
-.team-grid:hover::before, .pillar-grid-quad:hover::before, .pillar-grid-duo:hover::before, .pillar-stack:hover::before,
-.header-inner:hover::before{ opacity: 1; }
 
 /* ==========================================================================
-   Hero globe — recast as a lit sphere held inside a glass lens
+   Hero globe — recolored off the removed teal accent; still the same mark
    ========================================================================== */
 .hero-globe{ display: none; }
 .hero-globe svg{ display: block; width: 100%; height: 100%; overflow: hidden; }
-.hero-globe .globe-base-stop-a{ stop-color: var(--mark-blue); stop-opacity: 0.6; }
-.hero-globe .globe-base-stop-b{ stop-color: var(--primary); stop-opacity: 0.48; }
+.hero-globe .globe-base-stop-a{ stop-color: var(--mark-blue); stop-opacity: 1; }
+.hero-globe .globe-base-stop-b{ stop-color: var(--primary); stop-opacity: 1; }
 .hero-globe .globe-shade-stop-a{ stop-color: #000000; stop-opacity: 0; }
 .hero-globe .globe-shade-stop-b{ stop-color: #000000; stop-opacity: 0.16; }
 .hero-globe .globe-continents{ fill: var(--primary); fill-opacity: 0.72; }
@@ -511,13 +421,23 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
    Hero
    ========================================================================== */
 .hero{ position: relative; overflow: hidden; padding: var(--space-lg) 0 var(--space-xl); }
-/* Ambient illustration: tilted translucent planes stacked at depth — the
-   same staging idea as the panels below, made visible as background imagery. */
-.depth-planes{
-  position: absolute; inset: 0; z-index: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
+/* Ambient illustration: a small cluster of large, flat, solid-color
+   geometric shapes — a nod to classic Swiss poster art (Müller-Brockmann
+   concert posters). Solid fills only, no gradient, no translucency.
+   Desktop-only and confined to the hero's right half so it never sits
+   under the headline column at any width. */
+.swiss-geometry{ display: none; z-index: -1; }
+@media (min-width: 1024px){
+  .swiss-geometry{
+    display: block;
+    position: absolute; inset: 0; z-index: -1;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
 }
+.swiss-geometry .geo-square{ fill: var(--brand-green); }
+.swiss-geometry .geo-circle{ fill: var(--ink); }
+.swiss-geometry .geo-rule{ stroke: var(--ink); stroke-width: 1; opacity: 0.14; }
 .hero-grid{
   display: grid; gap: var(--space-lg);
   align-items: center;
@@ -542,15 +462,13 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 
 /* ==========================================================================
-   Credibility strip — a thin glass instrument-panel rail
+   Credibility strip — a thin rule-bordered instrument rail, flat and solid
    ========================================================================== */
 .credibility{
   position: relative;
-  border-top: 1px solid var(--glass-border-soft);
-  border-bottom: 1px solid var(--glass-border-soft);
-  background: rgba(255,255,255,0.3);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  background: var(--bg);
 }
 .credibility-row{
   display: flex; flex-wrap: wrap; justify-content: center;
@@ -558,14 +476,14 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   padding: var(--space-sm) 0;
 }
 .credibility-row span{
-  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
-  letter-spacing: 0.08em; color: var(--ink-dim);
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
   padding: 0 var(--space-md);
   position: relative;
 }
 .credibility-row span + span::before{
   content: ''; position: absolute; left: calc(-1 * var(--space-md) / 2 - 1px);
-  top: 2px; bottom: 2px; width: 1px; background: var(--glass-border-soft);
+  top: 2px; bottom: 2px; width: 1px; background: var(--rule-soft);
 }
 @media (max-width: 640px){
   .credibility-row span + span::before{ display: none; }
@@ -574,6 +492,31 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 /* ==========================================================================
    Mission
    ========================================================================== */
+/* Editorial plate: a bold documentary photo in the Swiss-poster tradition —
+   duotone (grayscale + a single brand-green multiply pass), sharp corners,
+   a small mono caption tag. Real imagery, not another abstract diagram. */
+.mission-plate{
+  margin: 0 0 var(--space-lg);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--ink);
+}
+.mission-plate img{
+  width: 100%; height: clamp(220px, 32vw, 420px); object-fit: cover;
+  filter: grayscale(1) contrast(1.15) brightness(1.05);
+}
+.mission-plate::after{
+  content: ''; position: absolute; inset: 0;
+  background: var(--brand-green);
+  mix-blend-mode: multiply;
+  opacity: 0.82;
+}
+.mission-plate figcaption{
+  position: absolute; left: 0; bottom: 0; z-index: 1;
+  background: var(--bg); color: var(--ink);
+  padding: 6px 14px;
+  border-top: 1px solid var(--ink); border-right: 1px solid var(--ink);
+}
 .mission-grid{
   display: grid; gap: var(--space-lg);
 }
@@ -585,8 +528,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .stat-number{
   font-family: var(--font-display); font-weight: 700; font-size: 56px;
-  line-height: 1; color: var(--brand-teal); margin-bottom: var(--space-sm);
-  text-shadow: 0 0 32px color-mix(in srgb, var(--brand-teal) 22%, transparent);
+  line-height: 1; color: var(--brand-green); margin-bottom: var(--space-sm);
 }
 @media (min-width: 1024px){
   .mission-grid{ grid-template-columns: 1.4fr 1fr; align-items: start; }
@@ -598,8 +540,8 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .enzyme-illustration svg{ width: 100%; max-width: 220px; height: auto; display: block; }
 .enzyme-illustration .chain-half line{ stroke: var(--outline); stroke-opacity: 0.7; stroke-width: 1.5; }
 .enzyme-illustration .chain-half circle{ fill: var(--brand-green); fill-opacity: 0.75; }
-.enzyme-illustration .chain-fragment{ fill: var(--brand-teal); opacity: 0; }
-.enzyme-illustration .enzyme-bite{ fill: var(--brand-teal); }
+.enzyme-illustration .chain-fragment{ fill: var(--brand-green); opacity: 0; }
+.enzyme-illustration .enzyme-bite{ fill: var(--ink); }
 @media (prefers-reduced-motion: no-preference){
   .enzyme-illustration .chain-left{ animation: molecule-cut-left 4.4s ease-in-out infinite; }
   .enzyme-illustration .chain-right{ animation: molecule-cut-right 4.4s ease-in-out infinite; }
@@ -635,19 +577,19 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .section-head p{ margin-top: var(--space-sm); }
 
 /* ==========================================================================
-   Technology / pillars — one large glass instrument + a connected rail
+   Technology / pillars — flat rectangular content blocks in a rigorous grid
    ========================================================================== */
 .hexagon{
   width: 48px; height: 48px;
   display: flex; align-items: center; justify-content: center;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  background: color-mix(in srgb, var(--brand-teal) 12%, white);
-  border: 1px solid color-mix(in srgb, var(--brand-teal) 22%, transparent);
-  color: var(--brand-teal);
+  background: transparent;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
 }
 .pillar-icon svg{ width: 22px; height: 22px; }
-.pillar-icon{ transition: transform 220ms cubic-bezier(.16,1,.3,1); }
-.pillar:hover .pillar-icon, .rail-item:hover .pillar-icon{ transform: scale(1.08) rotate(4deg); }
+.pillar-icon{ transition: border-color 160ms ease, color 160ms ease; }
+.pillar:hover .pillar-icon, .rail-item:hover .pillar-icon{ border-color: var(--brand-green); color: var(--brand-green); }
 
 /* Algae cell cluster — a quiet breathing/dividing loop standing in for a
    static leaf icon on the algae-derived-bioplastics cards. */
@@ -667,23 +609,16 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   display: grid; gap: var(--space-md);
   margin-bottom: var(--space-xl);
 }
-.pillar-featured{ padding: var(--space-lg); display: flex; flex-direction: column; justify-content: center; }
+.pillar-featured{ padding: var(--space-lg); display: flex; flex-direction: column; justify-content: flex-start; }
 .pillar-featured .headline-md{ font-size: 27px; }
 .pillar-featured h3{ margin-top: var(--space-sm); }
 .pillar-featured p{ margin-top: var(--space-sm); }
 
-/* The secondary disciplines share one connected glass rail rather than
-   three separate cards — a circuit, not a shelf of boxes. */
+/* The secondary disciplines share one connected rail rather than three
+   separate cards — a circuit, not a shelf of boxes. */
 .pillar-stack{ display: flex; flex-direction: column; padding: 0 var(--space-md); }
 .pillar-stack .pillar{ position: relative; padding: var(--space-md) 0; }
-.pillar-stack .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
-.pillar-stack .pillar:not(:first-child)::before{
-  content: ''; position: absolute; left: 23px; top: -1px;
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--brand-teal);
-  box-shadow: 0 0 10px 2px color-mix(in srgb, var(--brand-teal) 70%, transparent);
-  transform: translate(-50%, -50%);
-}
+.pillar-stack .pillar:not(:first-child){ border-top: 1px solid var(--rule-soft); }
 .pillar-stack .pillar h3{ margin-top: var(--space-sm); }
 .pillar-stack .pillar p{ margin-top: var(--space-sm); }
 
@@ -691,35 +626,35 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   .pillar-grid{ grid-template-columns: 1.3fr 1fr; }
 }
 
-/* Business model — one glass instrument panel, rows not cards */
+/* Business model — one instrument panel, rows not cards */
 .pillar-grid-quad{ display: grid; padding: var(--space-sm) var(--space-md); }
 .pillar-grid-quad .pillar{ padding: var(--space-md) 0; }
-.pillar-grid-quad .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+.pillar-grid-quad .pillar:not(:first-child){ border-top: 1px solid var(--rule-soft); }
 .pillar-grid-quad .pillar h3{ margin-top: var(--space-sm); }
 .pillar-grid-quad .pillar p{ margin-top: var(--space-sm); }
 @media (min-width: 640px){
   .pillar-grid-quad{ grid-template-columns: 1fr 1fr; }
   .pillar-grid-quad .pillar{ padding: var(--space-md); }
   .pillar-grid-quad .pillar:nth-child(1), .pillar-grid-quad .pillar:nth-child(2){ border-top: none; }
-  .pillar-grid-quad .pillar:nth-child(2n){ border-left: 1px solid var(--glass-border-soft); }
-  .pillar-grid-quad .pillar:nth-child(3), .pillar-grid-quad .pillar:nth-child(4){ border-top: 1px solid var(--glass-border-soft); }
+  .pillar-grid-quad .pillar:nth-child(2n){ border-left: 1px solid var(--rule-soft); }
+  .pillar-grid-quad .pillar:nth-child(3), .pillar-grid-quad .pillar:nth-child(4){ border-top: 1px solid var(--rule-soft); }
 }
 @media (min-width: 1024px){
   .pillar-grid-quad{ grid-template-columns: repeat(4, 1fr); }
   .pillar-grid-quad .pillar{ border-top: none !important; }
-  .pillar-grid-quad .pillar:nth-child(n+2){ border-left: 1px solid var(--glass-border-soft); }
+  .pillar-grid-quad .pillar:nth-child(n+2){ border-left: 1px solid var(--rule-soft); }
 }
 
-/* Viability & scalability — one split glass panel, two columns */
+/* Viability & scalability — one split panel, two columns */
 .pillar-grid-duo{ display: grid; padding: var(--space-sm) var(--space-md); }
 .pillar-grid-duo .pillar{ padding: var(--space-md) 0; }
-.pillar-grid-duo .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+.pillar-grid-duo .pillar:not(:first-child){ border-top: 1px solid var(--rule-soft); }
 .pillar-grid-duo .pillar h3{ margin-top: var(--space-sm); }
 .pillar-grid-duo .pillar p{ margin-top: var(--space-sm); }
 @media (min-width: 768px){
   .pillar-grid-duo{ grid-template-columns: 1fr 1fr; }
   .pillar-grid-duo .pillar{ padding: var(--space-md); }
-  .pillar-grid-duo .pillar:not(:first-child){ border-top: none; border-left: 1px solid var(--glass-border-soft); }
+  .pillar-grid-duo .pillar:not(:first-child){ border-top: none; border-left: 1px solid var(--rule-soft); }
 }
 
 .section-note{ margin-top: var(--space-lg); max-width: 70ch; }
@@ -730,11 +665,9 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .process-step{ text-align: left; }
 .process-node{
-  font-family: var(--font-mono); font-weight: 600; font-size: 15px;
-  color: var(--brand-teal);
+  font-family: var(--font-mono); font-weight: 700; font-size: 15px;
+  color: var(--brand-green);
   margin-bottom: var(--space-sm);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-teal) 25%, transparent);
-  background: color-mix(in srgb, var(--brand-teal) 10%, white);
 }
 .process-step h4{ margin-bottom: var(--space-xs); }
 .process-connector{
@@ -747,25 +680,21 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   .process-connector{
     display: block; align-self: center; height: 1px; width: 100%;
     min-width: 24px;
-    background: linear-gradient(90deg, var(--brand-green), var(--brand-teal));
-    opacity: 0.55;
+    background: var(--ink);
     margin-top: 24px;
   }
 }
 
 /* ==========================================================================
-   Team — one glass roster panel
+   Team — one roster panel
    ========================================================================== */
 .team{ position: relative; overflow: hidden; }
 .team-grid{ display: grid; padding: var(--space-sm) var(--space-md); }
 .team-card{ padding: var(--space-md) 0; }
-.team-card:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+.team-card:not(:first-child){ border-top: 1px solid var(--rule-soft); }
 .team-avatar{
   width: 56px; height: 56px;
   font-family: var(--font-display); font-weight: 600; font-size: 16px;
-  background: color-mix(in srgb, var(--brand-green) 10%, white);
-  border: 1px solid color-mix(in srgb, var(--brand-green) 22%, transparent);
-  color: var(--brand-green);
 }
 .team-card h3{ margin-bottom: var(--space-xs); }
 .team-role{ display: block; }
@@ -773,13 +702,14 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .team-link{
   display: inline-flex; align-items: center; gap: 6px;
   margin-top: var(--space-md);
-  font-size: 14px; font-weight: 600; color: var(--brand-teal);
+  font-size: 14px; font-weight: 600; color: var(--ink);
+  text-decoration: underline;
 }
-.team-link:hover{ text-decoration: underline; }
+.team-link:hover{ color: var(--brand-green); }
 @media (min-width: 768px){
   .team-grid{ grid-template-columns: 1fr 1fr; }
   .team-card{ padding: var(--space-md); }
-  .team-card:not(:first-child){ border-top: none; border-left: 1px solid var(--glass-border-soft); }
+  .team-card:not(:first-child){ border-top: none; border-left: 1px solid var(--rule-soft); }
 }
 
 /* ==========================================================================
@@ -790,8 +720,8 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .contact-copy p{ margin-top: var(--space-sm); }
 .contact-info{ margin-top: var(--space-lg); display: grid; gap: var(--space-sm); }
 .contact-info-row{ display: flex; flex-direction: column; gap: 4px; }
-.contact-info-row a{ color: var(--brand-teal); font-weight: 500; }
-.contact-info-row a:hover{ text-decoration: underline; }
+.contact-info-row a{ color: var(--ink); font-weight: 600; text-decoration: underline; }
+.contact-info-row a:hover{ color: var(--brand-green); }
 
 .contact-form{
   padding: var(--space-lg);
@@ -799,22 +729,21 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .field{ display: grid; gap: var(--space-xs); }
 .field label{
-  font-family: var(--font-body); font-size: 13px; font-weight: 600;
-  letter-spacing: 0.01em; color: var(--ink-dim);
+  font-family: var(--font-mono); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink);
 }
 .field input, .field textarea{
   font-family: var(--font-body); font-size: 15px; color: var(--ink);
-  background: rgba(27,28,28,0.04);
-  border: 1px solid var(--glass-border-soft);
+  background: transparent;
+  border: 1px solid var(--ink);
   border-radius: var(--radius-field);
   padding: 13px 14px;
   resize: vertical;
-  transition: border-color 150ms ease, box-shadow 150ms ease;
+  transition: border-color 140ms ease;
 }
 .field input::placeholder, .field textarea::placeholder{ color: var(--ink-faint); }
 .field input:focus, .field textarea:focus{
-  outline: none; border-color: var(--brand-teal);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--brand-teal) 20%, transparent);
+  outline: none; border-color: var(--brand-green);
 }
 .field-error{
   display: none;
@@ -872,11 +801,11 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
      mistimed render (screenshot tools, slow paint) never catches this content
      invisible; worst case it's a few px off from its resting position. */
   .hero-enter{
-    animation: hero-enter-anim 500ms cubic-bezier(.16,1,.3,1) both;
+    animation: hero-enter-anim 380ms cubic-bezier(.16,1,.3,1) both;
   }
-  .hero-enter-delay{ animation-delay: 100ms; }
+  .hero-enter-delay{ animation-delay: 80ms; }
   @keyframes hero-enter-anim{
-    from{ transform: translateY(12px); }
+    from{ transform: translateY(8px); }
     to{ transform: none; }
   }
 }
@@ -887,11 +816,12 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 
 /* ==========================================================================
    Scroll reveal (progressive enhancement — only takes effect once main.js
-   adds .js to <html>, so content stays fully visible with JS off/blocked)
+   adds .js to <html>, so content stays fully visible with JS off/blocked).
+   Kept to a plain, restrained fade + tiny-slide — no bounce, no spring.
    ========================================================================== */
 .js .reveal{
-  opacity: 0; transform: translateY(18px);
-  transition: opacity 600ms cubic-bezier(.16,1,.3,1), transform 600ms cubic-bezier(.16,1,.3,1);
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 420ms cubic-bezier(.4,0,.2,1), transform 420ms cubic-bezier(.4,0,.2,1);
 }
 .js .reveal.is-visible{ opacity: 1; transform: none; }
 
@@ -910,8 +840,8 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   .js .pillar-grid-duo.reveal .pillar,
   .js .team-grid.reveal .team-card,
   .js .process-flow.reveal .process-step{
-    opacity: 0; transform: translateY(16px);
-    transition: opacity 480ms cubic-bezier(.16,1,.3,1), transform 480ms cubic-bezier(.16,1,.3,1);
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 360ms cubic-bezier(.4,0,.2,1), transform 360ms cubic-bezier(.4,0,.2,1);
   }
   .js .pillar-stack.reveal.is-visible .pillar,
   .js .pillar-grid-quad.reveal.is-visible .pillar,

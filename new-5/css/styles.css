@@ -1,8 +1,10 @@
 /* ==========================================================================
-   Geoxs Biotech — Design tokens (variant: Assembling Glass)
-   World: the same warm-white canvas and Biosphere Green / Lab Teal, but each
-   panel arrives as if it were a pane of glass settling into a frame — a
-   slight rotation and blur resolving into place, once, on first view.
+   Geoxs Biotech — Design tokens (variant: Bento Grid)
+   World: the same warm-white canvas and Biosphere Green / Lab Teal, now read
+   as an Apple-product-page mosaic of solid, generously rounded tiles of
+   deliberately varying sizes — no blur, no translucency, just confident
+   opaque surfaces, soft ambient shadows, and a couple of bold saturated
+   "hero" tiles among the lighter, tinted ones.
    ========================================================================== */
 :root{
   /* Canvas & ink — the original Molecular Precision palette, unchanged */
@@ -21,8 +23,8 @@
 
   /* Legacy role names kept so component + JS references still resolve */
   --surface: var(--bg);
-  --surface-container-lowest: var(--glass-bg);
-  --surface-container-low: var(--glass-bg-soft);
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: var(--tile-teal-wash);
   --on-surface: var(--ink);
   --on-surface-variant: var(--ink-dim);
   --inverse-surface: var(--bg-1);
@@ -37,17 +39,19 @@
   --error: #ba1a1a;
   --mark-blue: var(--brand-teal-deep);
 
-  /* Glass material — white panels over the warm canvas, blur reveals the
-     colored aurora beneath so even a near-white surface reads as glass */
-  --glass-bg: rgba(255,255,255,0.5);
-  --glass-bg-soft: rgba(255,255,255,0.32);
-  --glass-bg-strong: rgba(255,255,255,0.72);
-  --glass-border: rgba(27,28,28,0.16);
-  --glass-border-soft: rgba(27,28,28,0.09);
-  --glass-blur: 26px;
-  --glass-blur-lg: 40px;
-  --glass-shadow: 0 22px 54px -26px rgba(20,32,26,0.18), inset 0 1px 0 rgba(255,255,255,0.85);
-  --glass-shadow-lg: 0 32px 76px -28px rgba(20,32,26,0.22), inset 0 1px 0 rgba(255,255,255,0.9);
+  /* Bento tile material — solid, opaque rounded-rectangle surfaces. Most
+     tiles are white or a soft green/teal wash; a couple of "hero" tiles per
+     grid go full-saturation brand green for a bold typographic moment. */
+  --tile-white: #ffffff;
+  --tile-green-wash: color-mix(in srgb, var(--brand-green) 7%, white);
+  --tile-teal-wash: color-mix(in srgb, var(--brand-teal) 7%, white);
+  --tile-hero-bg: var(--brand-green);
+  --tile-hero-gradient: var(--brand-gradient);
+  --hairline: rgba(27,28,28,0.08);
+  --hairline-strong: rgba(27,28,28,0.16);
+  --tile-shadow: 0 14px 34px -18px rgba(20,32,26,0.16), 0 3px 10px -3px rgba(20,32,26,0.08);
+  --tile-shadow-hover: 0 22px 48px -16px rgba(20,32,26,0.2), 0 6px 16px -4px rgba(20,32,26,0.1);
+  --tile-shadow-hero: 0 20px 44px -16px color-mix(in srgb, var(--brand-green) 55%, transparent), 0 6px 18px -6px color-mix(in srgb, var(--brand-teal) 40%, transparent);
 
   /* Typography */
   --font-display: 'Hanken Grotesk', system-ui, sans-serif;
@@ -55,11 +59,11 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-wordmark: 'PT Serif', Georgia, 'Times New Roman', serif;
 
-  /* Radius — continuous, generous, glass-appropriate */
-  --radius-sm: 0.875rem;
-  --radius: 1.25rem;
-  --radius-md: 1.5rem;
-  --radius-lg: 1.75rem;
+  /* Radius — generous, consistent bento rounding on every tile */
+  --radius-sm: 1rem;
+  --radius: 1.5rem;
+  --radius-md: 1.75rem;
+  --radius-lg: 2rem;
   --radius-xl: 2.25rem;
   --radius-field: 0.875rem;
   --radius-full: 9999px;
@@ -99,7 +103,7 @@ body{
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
-/* Ambient light source: fixed aurora the glass throughout the page catches. */
+/* Ambient light source: a soft fixed aurora behind the mosaic of tiles. */
 body::before{
   content: '';
   position: fixed; inset: 0; z-index: -3; pointer-events: none;
@@ -202,7 +206,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 
 /* ==========================================================================
-   Buttons — glass pills
+   Buttons — solid gradient / solid white pills
    ========================================================================== */
 .btn{
   display: inline-flex; align-items: center; justify-content: center;
@@ -217,34 +221,31 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .btn:active{ transform: translateY(1px) scale(0.98); }
 .btn-primary{
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--brand-green) 22%, transparent), color-mix(in srgb, var(--brand-teal) 16%, transparent)),
-    rgba(255,255,255,0.55);
-  border-color: rgba(27,28,28,0.12);
-  color: var(--ink);
-  box-shadow: 0 10px 26px -14px color-mix(in srgb, var(--brand-green) 55%, transparent),
-    0 14px 34px -20px color-mix(in srgb, var(--brand-teal) 45%, transparent),
-    inset 0 1px 0 rgba(255,255,255,0.8);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  background: var(--brand-gradient);
+  border-color: transparent;
+  color: var(--on-primary);
+  box-shadow: 0 12px 28px -14px color-mix(in srgb, var(--brand-green) 60%, transparent),
+    0 6px 18px -8px color-mix(in srgb, var(--brand-teal) 48%, transparent);
 }
 .btn-primary:hover{
-  border-color: rgba(27,28,28,0.18);
-  box-shadow: 0 12px 32px -12px color-mix(in srgb, var(--brand-green) 65%, transparent),
-    0 16px 40px -18px color-mix(in srgb, var(--brand-teal) 55%, transparent),
-    inset 0 1px 0 rgba(255,255,255,0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px -12px color-mix(in srgb, var(--brand-green) 68%, transparent),
+    0 8px 22px -8px color-mix(in srgb, var(--brand-teal) 56%, transparent);
 }
 .btn-secondary{
-  background: rgba(255,255,255,0.32);
-  border-color: rgba(27,28,28,0.16);
+  background: var(--tile-white);
+  border-color: var(--hairline-strong);
   color: var(--ink);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: var(--tile-shadow);
 }
-.btn-secondary:hover{ background: rgba(255,255,255,0.55); border-color: rgba(27,28,28,0.24); }
+.btn-secondary:hover{
+  border-color: color-mix(in srgb, var(--brand-teal) 45%, var(--hairline-strong));
+  box-shadow: var(--tile-shadow-hover);
+  transform: translateY(-1px);
+}
 
 /* ==========================================================================
-   Header — a floating glass capsule, not a full-width bar
+   Header — a floating solid tile, not a full-width bar
    ========================================================================== */
 .site-header{
   position: sticky; top: 0; z-index: 50;
@@ -264,15 +265,13 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   display: flex; align-items: center; justify-content: space-between;
   width: 100%; max-width: 1180px;
   padding: 10px 18px;
-  border-radius: 0;
-  clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px), 0 16px);
-  background: var(--glass-bg);
-  box-shadow: var(--glass-shadow), inset 0 0 0 1px var(--glass-border-soft);
-  transition: background 220ms ease, box-shadow 220ms ease;
+  border-radius: var(--radius-lg);
+  background: var(--tile-white);
+  box-shadow: var(--tile-shadow);
+  transition: box-shadow 220ms ease;
 }
 .site-header.is-scrolled .header-inner{
-  background: var(--glass-bg-strong);
-  box-shadow: var(--glass-shadow-lg);
+  box-shadow: var(--tile-shadow-hover);
 }
 .brand{ display: inline-flex; align-items: center; gap: 12px; }
 .brand-mark{ width: 44px; height: 44px; flex-shrink: 0; }
@@ -326,12 +325,9 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
     display: flex; flex-direction: column;
     position: fixed; top: calc(var(--header-h) + 8px); left: var(--margin-mobile); right: var(--margin-mobile);
     max-height: calc(100vh - var(--header-h) - 32px);
-    background: var(--bg);
-    border: 1px solid var(--glass-border-soft);
+    background: var(--tile-white);
     border-radius: var(--radius-lg);
-    backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
-    -webkit-backdrop-filter: blur(var(--glass-blur-lg)) saturate(160%);
-    box-shadow: var(--glass-shadow-lg);
+    box-shadow: var(--tile-shadow-hover);
     padding: var(--space-sm) var(--space-md);
     gap: 0;
     overflow-y: auto;
@@ -340,7 +336,8 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   .site-nav.is-open a{
     padding: 15px 4px;
     font-size: 17px;
-    border-bottom: 1px solid var(--glass-border-soft);
+    color: var(--ink);
+    border-bottom: 1px solid var(--hairline);
     border-radius: 0;
   }
   .site-nav.is-open a:hover{ background: transparent; color: var(--secondary); }
@@ -361,7 +358,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 
 /* ==========================================================================
-   Molecular watermark — recast as a dim circuit-trace field on dark glass
+   Molecular watermark — a dim circuit-trace field behind the page
    ========================================================================== */
 :root{
   --molecular-pattern: radial-gradient(circle at 8% 20%, var(--outline) 0 3px, transparent 3px),
@@ -405,54 +402,83 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .hero.js-canvas-active .molecular-canvas{ display: block; }
 
 /* ==========================================================================
-   Glass material — shared by every elevated panel on the page
+   Bento tile material — shared by every solid grid tile on the page
    ========================================================================== */
-/* Faceted signature: every pane is cut like an assembled glass shard —
-   chamfered corners instead of a rounded pill — carrying the "arriving in
-   pieces" idea into the shape language itself, not just the entrance motion. */
-.pillar-featured, .stat-callout, .contact-form,
-.team-grid, .pillar-grid-quad, .pillar-grid-duo, .pillar-stack{
+/* Every tile is opaque: generous rounded corners, a soft ambient shadow for
+   lift, and a gentle hover rise — the one shared motion signature. No blur,
+   no pointer-tracked light; the mosaic reads through solid color and scale. */
+/* :where() keeps the parent-grid part of these selectors at zero
+   specificity, so the single-class tint/hero modifier classes below can
+   still win on background/color without needing !important. */
+.pillar-featured, .stat-callout, .contact-form, .team-card,
+:where(.pillar-grid-quad, .pillar-grid-duo, .pillar-stack) .pillar{
   position: relative;
   overflow: hidden;
-  z-index: 0;
-  background: var(--glass-bg);
-  border-radius: 0;
-  clip-path: polygon(24px 0, calc(100% - 24px) 0, 100% 24px, 100% calc(100% - 24px), calc(100% - 24px) 100%, 24px 100%, 0 calc(100% - 24px), 0 24px);
-  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
-  box-shadow: var(--glass-shadow), inset 0 0 0 1px var(--glass-border-soft);
+  isolation: isolate;
+  background: var(--tile-white);
+  border-radius: var(--radius);
+  box-shadow: var(--tile-shadow);
+  transition: box-shadow 240ms cubic-bezier(.16,1,.3,1), transform 240ms cubic-bezier(.16,1,.3,1);
 }
-/* Cropped brand-mark watermark, once per panel — quiet corner texture */
-.pillar-featured::after, .stat-callout::after, .contact-form::after,
-.team-grid::after, .pillar-grid-quad::after, .pillar-grid-duo::after, .pillar-stack::after{
+@media (hover: hover){
+  .pillar-featured:hover, .stat-callout:hover, .contact-form:hover, .team-card:hover,
+  :where(.pillar-grid-quad, .pillar-grid-duo, .pillar-stack) .pillar:hover{
+    box-shadow: var(--tile-shadow-hover);
+    transform: translateY(-3px);
+  }
+}
+/* Tinted variants — soft washes for most tiles, one full-saturation "hero"
+   tile per grid for a bold, confident typographic moment (Apple-bento
+   staple: a dark/colored tile among lighter ones). */
+.tile-tint-green{ background: var(--tile-green-wash); }
+.tile-tint-teal{ background: var(--tile-teal-wash); }
+.tile-hero{ background: var(--tile-hero-bg); box-shadow: var(--tile-shadow-hero); color: var(--on-primary); }
+.tile-hero-gradient{ background: var(--tile-hero-gradient); box-shadow: var(--tile-shadow-hero); color: var(--on-primary); }
+/* Typography inside a hero tile has its own explicit ink colors by default
+   (.headline-md, .body-md, .label-md) — re-establish inheritance so hero
+   tiles always read as light text on a saturated, dark background. */
+.tile-hero .headline-md, .tile-hero .body-md, .tile-hero .label-md,
+.tile-hero-gradient .headline-md, .tile-hero-gradient .body-md, .tile-hero-gradient .label-md{
+  color: inherit;
+}
+@media (hover: hover){
+  .tile-hero:hover, .tile-hero-gradient:hover{ box-shadow: var(--tile-shadow-hero); }
+}
+
+/* Photo tile — a real image filling the tile, Apple-bento's other staple
+   alongside solid color: some tiles are content, some tiles are a picture. */
+.tile-photo{
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+}
+.tile-photo::before{
   content: '';
-  position: absolute; z-index: -1;
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(180deg, rgba(10,20,14,0.15) 0%, rgba(10,20,14,0.72) 100%);
+}
+.tile-photo .pillar-icon{ background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.3); color: #ffffff; }
+.tile-photo .headline-md, .tile-photo .body-md, .tile-photo .label-md{ color: inherit; position: relative; z-index: 1; }
+.tile-photo .pillar-icon{ position: relative; z-index: 1; }
+
+/* Cropped brand-mark watermark — kept only on the larger, single-tile
+   panels so the mosaic of small tiles doesn't repeat the same corner mark */
+.pillar-featured::after, .stat-callout::after, .contact-form::after{
+  content: '';
+  position: absolute; z-index: 0;
   right: -18px; bottom: -18px;
   width: 128px; height: 136px;
   background-image: url('../../assets/mark-watermark.svg');
   background-repeat: no-repeat;
   background-size: contain;
-  opacity: 0.1;
+  opacity: 0.09;
   pointer-events: none;
 }
-/* Specular highlight that tracks the pointer — the one authored glass motion */
-.pillar-featured::before, .stat-callout::before, .contact-form::before,
-.team-grid::before, .pillar-grid-quad::before, .pillar-grid-duo::before, .pillar-stack::before,
-.header-inner::before{
-  content: '';
-  position: absolute; inset: 0; z-index: 1;
-  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 0%), rgba(255,255,255,0.75), transparent 70%);
-  opacity: 0;
-  transition: opacity 400ms ease;
-  pointer-events: none;
-}
-.header-inner{ position: relative; }
-.pillar-featured:hover::before, .stat-callout:hover::before, .contact-form:hover::before,
-.team-grid:hover::before, .pillar-grid-quad:hover::before, .pillar-grid-duo:hover::before, .pillar-stack:hover::before,
-.header-inner:hover::before{ opacity: 1; }
+.stat-callout.tile-hero::after{ display: none; }
+.pillar-featured > *, .stat-callout > *, .contact-form > *{ position: relative; z-index: 1; }
 
 /* ==========================================================================
-   Hero globe — recast as a lit sphere held inside a glass lens
+   Hero globe — a lit sphere of drifting continents
    ========================================================================== */
 .hero-globe{ display: none; }
 .hero-globe svg{ display: block; width: 100%; height: 100%; overflow: hidden; }
@@ -487,10 +513,10 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
    Hero
    ========================================================================== */
 .hero{ position: relative; overflow: hidden; padding: var(--space-lg) 0 var(--space-xl); }
-/* Ambient illustration: chamfered glass shards scattered through the scene —
-   the same cut-corner shape as every panel, made visible as background imagery. */
-.glass-shards{
-  position: absolute; inset: 0; z-index: 0;
+/* Ambient illustration: a small mosaic of overlapping rounded-rectangle
+   tiles, echoing the bento-grid material language as background imagery. */
+.bento-tiles-deco{
+  position: absolute; inset: 0; z-index: -1;
   width: 100%; height: 100%;
   pointer-events: none;
 }
@@ -518,15 +544,13 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 
 /* ==========================================================================
-   Credibility strip — a thin glass instrument-panel rail
+   Credibility strip — a thin solid instrument rail
    ========================================================================== */
 .credibility{
   position: relative;
-  border-top: 1px solid var(--glass-border-soft);
-  border-bottom: 1px solid var(--glass-border-soft);
-  background: rgba(255,255,255,0.3);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  background: var(--tile-green-wash);
 }
 .credibility-row{
   display: flex; flex-wrap: wrap; justify-content: center;
@@ -541,7 +565,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .credibility-row span + span::before{
   content: ''; position: absolute; left: calc(-1 * var(--space-md) / 2 - 1px);
-  top: 2px; bottom: 2px; width: 1px; background: var(--glass-border-soft);
+  top: 2px; bottom: 2px; width: 1px; background: var(--hairline-strong);
 }
 @media (max-width: 640px){
   .credibility-row span + span::before{ display: none; }
@@ -556,14 +580,14 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .mission-copy h2{ max-width: 24ch; }
 .mission-copy p{ margin-top: var(--space-md); max-width: 62ch; }
 .stat-callout{
-  padding: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
   align-self: start;
 }
 .stat-number{
-  font-family: var(--font-display); font-weight: 700; font-size: 56px;
-  line-height: 1; color: var(--brand-teal); margin-bottom: var(--space-sm);
-  text-shadow: 0 0 32px color-mix(in srgb, var(--brand-teal) 22%, transparent);
+  font-family: var(--font-display); font-weight: 700; font-size: 64px;
+  line-height: 1; color: var(--on-primary); margin-bottom: var(--space-sm);
 }
+.stat-callout .body-md{ color: color-mix(in srgb, var(--on-primary) 88%, transparent); }
 @media (min-width: 1024px){
   .mission-grid{ grid-template-columns: 1.4fr 1fr; align-items: start; }
 }
@@ -572,10 +596,10 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
    fragment particles releasing at the cut — visualizes the stat above it. */
 .enzyme-illustration{ margin-top: var(--space-md); }
 .enzyme-illustration svg{ width: 100%; max-width: 220px; height: auto; display: block; }
-.enzyme-illustration .chain-half line{ stroke: var(--outline); stroke-opacity: 0.7; stroke-width: 1.5; }
-.enzyme-illustration .chain-half circle{ fill: var(--brand-green); fill-opacity: 0.75; }
-.enzyme-illustration .chain-fragment{ fill: var(--brand-teal); opacity: 0; }
-.enzyme-illustration .enzyme-bite{ fill: var(--brand-teal); }
+.enzyme-illustration .chain-half line{ stroke: rgba(255,255,255,0.55); stroke-width: 1.5; }
+.enzyme-illustration .chain-half circle{ fill: rgba(255,255,255,0.9); }
+.enzyme-illustration .chain-fragment{ fill: #ffffff; opacity: 0; }
+.enzyme-illustration .enzyme-bite{ fill: #b6f0c2; }
 @media (prefers-reduced-motion: no-preference){
   .enzyme-illustration .chain-left{ animation: molecule-cut-left 4.4s ease-in-out infinite; }
   .enzyme-illustration .chain-right{ animation: molecule-cut-right 4.4s ease-in-out infinite; }
@@ -611,7 +635,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .section-head p{ margin-top: var(--space-sm); }
 
 /* ==========================================================================
-   Technology / pillars — one large glass instrument + a connected rail
+   Technology / pillars — one large featured tile beside a stack of tiles
    ========================================================================== */
 .hexagon{
   width: 48px; height: 48px;
@@ -623,7 +647,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .pillar-icon svg{ width: 22px; height: 22px; }
 .pillar-icon{ transition: transform 220ms cubic-bezier(.16,1,.3,1); }
-.pillar:hover .pillar-icon, .rail-item:hover .pillar-icon{ transform: scale(1.08) rotate(4deg); }
+.pillar:hover .pillar-icon{ transform: scale(1.08) rotate(4deg); }
 
 /* Algae cell cluster — a quiet breathing/dividing loop standing in for a
    static leaf icon on the algae-derived-bioplastics cards. */
@@ -643,99 +667,110 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   display: grid; gap: var(--space-md);
   margin-bottom: var(--space-xl);
 }
-.pillar-featured{ padding: var(--space-lg); display: flex; flex-direction: column; justify-content: center; }
+.pillar-featured{
+  padding: var(--space-lg);
+  display: flex; flex-direction: column; justify-content: center;
+}
 .pillar-featured .headline-md{ font-size: 27px; }
 .pillar-featured h3{ margin-top: var(--space-sm); }
 .pillar-featured p{ margin-top: var(--space-sm); }
 
-/* The secondary disciplines share one connected glass rail rather than
-   three separate cards — a circuit, not a shelf of boxes. */
-.pillar-stack{ display: flex; flex-direction: column; padding: 0 var(--space-md); }
-.pillar-stack .pillar{ position: relative; padding: var(--space-md) 0; }
-.pillar-stack .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
-.pillar-stack .pillar:not(:first-child)::before{
-  content: ''; position: absolute; left: 23px; top: -1px;
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--brand-teal);
-  box-shadow: 0 0 10px 2px color-mix(in srgb, var(--brand-teal) 70%, transparent);
-  transform: translate(-50%, -50%);
+/* The three secondary disciplines are now their own tiles, stacked as a
+   sub-grid beside the larger featured tile — a mosaic, not a shelf. */
+.pillar-stack{
+  display: grid; grid-template-rows: repeat(3, 1fr); gap: var(--space-sm);
 }
+.pillar-stack .pillar{ padding: var(--space-md); }
 .pillar-stack .pillar h3{ margin-top: var(--space-sm); }
 .pillar-stack .pillar p{ margin-top: var(--space-sm); }
 
 @media (min-width: 1024px){
-  .pillar-grid{ grid-template-columns: 1.3fr 1fr; }
+  .pillar-grid{ grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+  .pillar-featured{ grid-column: span 2; }
+  .pillar-stack{ grid-column: span 1; }
 }
 
-/* Business model — one glass instrument panel, rows not cards */
-.pillar-grid-quad{ display: grid; padding: var(--space-sm) var(--space-md); }
-.pillar-grid-quad .pillar{ padding: var(--space-md) 0; }
-.pillar-grid-quad .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+/* Business model — four independent tiles; one enlarged hero tile among
+   lighter tinted/white ones, a genuine bento mosaic rather than four
+   uniform boxes. */
+.pillar-grid-quad{ display: grid; gap: var(--space-md); }
+.pillar-grid-quad .pillar{ padding: var(--space-md); display: flex; flex-direction: column; }
 .pillar-grid-quad .pillar h3{ margin-top: var(--space-sm); }
 .pillar-grid-quad .pillar p{ margin-top: var(--space-sm); }
-@media (min-width: 640px){
-  .pillar-grid-quad{ grid-template-columns: 1fr 1fr; }
-  .pillar-grid-quad .pillar{ padding: var(--space-md); }
-  .pillar-grid-quad .pillar:nth-child(1), .pillar-grid-quad .pillar:nth-child(2){ border-top: none; }
-  .pillar-grid-quad .pillar:nth-child(2n){ border-left: 1px solid var(--glass-border-soft); }
-  .pillar-grid-quad .pillar:nth-child(3), .pillar-grid-quad .pillar:nth-child(4){ border-top: 1px solid var(--glass-border-soft); }
+@media (min-width: 640px) and (max-width: 1023px){
+  .pillar-grid-quad{ grid-template-columns: repeat(2, 1fr); }
+  .pillar-grid-quad .pillar:nth-child(1){ grid-column: span 2; }
+  .pillar-grid-quad .pillar:nth-child(4){ grid-column: span 2; }
 }
 @media (min-width: 1024px){
-  .pillar-grid-quad{ grid-template-columns: repeat(4, 1fr); }
-  .pillar-grid-quad .pillar{ border-top: none !important; }
-  .pillar-grid-quad .pillar:nth-child(n+2){ border-left: 1px solid var(--glass-border-soft); }
+  .pillar-grid-quad{
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, minmax(180px, auto));
+  }
+  .pillar-grid-quad .pillar{ padding: var(--space-lg); }
+  .pillar-grid-quad .pillar:nth-child(1){
+    grid-column: span 2; grid-row: span 2; justify-content: center;
+  }
+  .pillar-grid-quad .pillar:nth-child(1) .headline-md{ font-size: 27px; }
+  .pillar-grid-quad .pillar:nth-child(2){ grid-column: span 2; }
+  .pillar-grid-quad .pillar:nth-child(3){ grid-column: span 1; }
+  .pillar-grid-quad .pillar:nth-child(4){ grid-column: span 1; }
 }
 
-/* Viability & scalability — one split glass panel, two columns */
-.pillar-grid-duo{ display: grid; padding: var(--space-sm) var(--space-md); }
-.pillar-grid-duo .pillar{ padding: var(--space-md) 0; }
-.pillar-grid-duo .pillar:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+/* Viability & scalability — two asymmetric tiles, a wider one beside a
+   narrower one instead of an even split. */
+.pillar-grid-duo{ display: grid; gap: var(--space-md); }
+.pillar-grid-duo .pillar{ padding: var(--space-md); }
 .pillar-grid-duo .pillar h3{ margin-top: var(--space-sm); }
 .pillar-grid-duo .pillar p{ margin-top: var(--space-sm); }
 @media (min-width: 768px){
-  .pillar-grid-duo{ grid-template-columns: 1fr 1fr; }
-  .pillar-grid-duo .pillar{ padding: var(--space-md); }
-  .pillar-grid-duo .pillar:not(:first-child){ border-top: none; border-left: 1px solid var(--glass-border-soft); }
+  .pillar-grid-duo{ grid-template-columns: repeat(5, 1fr); align-items: stretch; }
+  .pillar-grid-duo .pillar{ padding: var(--space-lg); }
+  .pillar-grid-duo .pillar:nth-child(1){ grid-column: span 3; }
+  .pillar-grid-duo .pillar:nth-child(2){ grid-column: span 2; }
 }
 
 .section-note{ margin-top: var(--space-lg); max-width: 70ch; }
 
+/* Process flow — each step is its own tile, led by a bold gradient numeral
+   badge; no connecting rail between tiles (that's a rail idea, not bento). */
 .process-flow{
   display: grid; gap: var(--space-md);
-  align-items: start;
 }
-.process-step{ text-align: left; }
+.process-step{
+  text-align: left;
+  padding: var(--space-md);
+  background: var(--tile-white);
+  border-radius: var(--radius);
+  box-shadow: var(--tile-shadow);
+  transition: box-shadow 240ms cubic-bezier(.16,1,.3,1), transform 240ms cubic-bezier(.16,1,.3,1);
+}
+@media (hover: hover){
+  .process-step:hover{ box-shadow: var(--tile-shadow-hover); transform: translateY(-3px); }
+}
 .process-node{
-  font-family: var(--font-mono); font-weight: 600; font-size: 15px;
-  color: var(--brand-teal);
-  margin-bottom: var(--space-sm);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-teal) 25%, transparent);
-  background: color-mix(in srgb, var(--brand-teal) 10%, white);
+  width: 56px; height: 56px;
+  font-family: var(--font-display); font-weight: 700; font-size: 24px;
+  color: var(--on-primary);
+  border-color: transparent;
+  margin-bottom: var(--space-md);
+  background: var(--brand-gradient);
 }
 .process-step h4{ margin-bottom: var(--space-xs); }
-.process-connector{
-  display: none;
+.process-connector{ display: none; }
+@media (min-width: 640px){
+  .process-flow{ grid-template-columns: repeat(2, 1fr); }
 }
-@media (min-width: 900px){
-  .process-flow{
-    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
-  }
-  .process-connector{
-    display: block; align-self: center; height: 1px; width: 100%;
-    min-width: 24px;
-    background: linear-gradient(90deg, var(--brand-green), var(--brand-teal));
-    opacity: 0.55;
-    margin-top: 24px;
-  }
+@media (min-width: 1024px){
+  .process-flow{ grid-template-columns: repeat(4, 1fr); }
 }
 
 /* ==========================================================================
-   Team — one glass roster panel
+   Team — two independent roster tiles
    ========================================================================== */
 .team{ position: relative; overflow: hidden; }
-.team-grid{ display: grid; padding: var(--space-sm) var(--space-md); }
-.team-card{ padding: var(--space-md) 0; }
-.team-card:not(:first-child){ border-top: 1px solid var(--glass-border-soft); }
+.team-grid{ display: grid; gap: var(--space-md); }
+.team-card{ padding: var(--space-md); }
 .team-avatar{
   width: 56px; height: 56px;
   font-family: var(--font-display); font-weight: 600; font-size: 16px;
@@ -753,9 +788,10 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 }
 .team-link:hover{ text-decoration: underline; }
 @media (min-width: 768px){
-  .team-grid{ grid-template-columns: 1fr 1fr; }
-  .team-card{ padding: var(--space-md); }
-  .team-card:not(:first-child){ border-top: none; border-left: 1px solid var(--glass-border-soft); }
+  .team-grid{ grid-template-columns: repeat(5, 1fr); }
+  .team-card{ padding: var(--space-lg); }
+  .team-card:nth-child(1){ grid-column: span 3; }
+  .team-card:nth-child(2){ grid-column: span 2; }
 }
 
 /* ==========================================================================
@@ -781,7 +817,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .field input, .field textarea{
   font-family: var(--font-body); font-size: 15px; color: var(--ink);
   background: rgba(27,28,28,0.04);
-  border: 1px solid var(--glass-border-soft);
+  border: 1px solid var(--hairline-strong);
   border-radius: var(--radius-field);
   padding: 13px 14px;
   resize: vertical;
@@ -866,20 +902,20 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
    adds .js to <html>, so content stays fully visible with JS off/blocked)
    ========================================================================== */
 .js .reveal{
-  opacity: 0; transform: translateY(26px) rotate(-1.6deg) scale(0.97);
-  filter: blur(7px);
-  transition: opacity 750ms cubic-bezier(.16,1,.3,1), transform 750ms cubic-bezier(.16,1,.3,1), filter 750ms ease;
+  opacity: 0; transform: scale(0.95);
+  transition: opacity 600ms cubic-bezier(.16,1,.3,1), transform 600ms cubic-bezier(.16,1,.3,1);
 }
-.js .reveal.is-visible{ opacity: 1; transform: none; filter: blur(0); }
+.js .reveal.is-visible{ opacity: 1; transform: none; }
 
 @media print{
-  .js .reveal{ opacity: 1; transform: none; filter: none; }
+  .js .reveal{ opacity: 1; transform: none; }
 }
 
 /* ==========================================================================
-   Card-grid & process-step stagger — these are lists, so siblings cascade
-   in on the same reveal trigger instead of the whole grid fading as one
-   block. Delays are capped under ~350ms total.
+   Card-grid & process-step stagger — these are lists, so tiles cascade in
+   on the same reveal trigger instead of the whole grid popping as one
+   block: each tile scales up from 0.95 and fades in. Delays are capped
+   under ~350ms total.
    ========================================================================== */
 @media (prefers-reduced-motion: no-preference){
   .js .pillar-stack.reveal .pillar,
@@ -887,23 +923,15 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   .js .pillar-grid-duo.reveal .pillar,
   .js .team-grid.reveal .team-card,
   .js .process-flow.reveal .process-step{
-    opacity: 0; transform: translateY(20px) rotate(4deg) scale(0.92);
-    filter: blur(5px);
-    transition: opacity 560ms cubic-bezier(.16,1,.3,1), transform 560ms cubic-bezier(.16,1,.3,1), filter 560ms ease;
-  }
-  .js .pillar-stack.reveal .pillar:nth-child(even),
-  .js .pillar-grid-quad.reveal .pillar:nth-child(even),
-  .js .pillar-grid-duo.reveal .pillar:nth-child(even),
-  .js .team-grid.reveal .team-card:nth-child(even),
-  .js .process-flow.reveal .process-step:nth-child(even){
-    transform: translateY(20px) rotate(-4deg) scale(0.92);
+    opacity: 0; transform: scale(0.92);
+    transition: opacity 460ms cubic-bezier(.16,1,.3,1), transform 460ms cubic-bezier(.16,1,.3,1);
   }
   .js .pillar-stack.reveal.is-visible .pillar,
   .js .pillar-grid-quad.reveal.is-visible .pillar,
   .js .pillar-grid-duo.reveal.is-visible .pillar,
   .js .team-grid.reveal.is-visible .team-card,
   .js .process-flow.reveal.is-visible .process-step{
-    opacity: 1; transform: none; filter: blur(0);
+    opacity: 1; transform: none;
   }
 
   .js .pillar-stack.reveal.is-visible .pillar:nth-child(1){ transition-delay: 90ms; }
@@ -929,6 +957,6 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   .js .pillar-grid-duo.reveal .pillar,
   .js .team-grid.reveal .team-card,
   .js .process-flow.reveal .process-step{
-    opacity: 1; transform: none; filter: none;
+    opacity: 1; transform: none;
   }
 }

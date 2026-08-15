@@ -139,26 +139,15 @@
       <section class="hero" id="top">
         <div class="molecular-watermark" aria-hidden="true"></div>
         <canvas class="molecular-canvas" aria-hidden="true"></canvas>
-        <svg class="depth-planes" viewBox="0 0 1200 700" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <linearGradient id="plane-fill-a" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="var(--brand-teal)" stop-opacity="0.16" />
-              <stop offset="100%" stop-color="var(--brand-teal)" stop-opacity="0.02" />
-            </linearGradient>
-            <linearGradient id="plane-fill-b" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="var(--brand-green)" stop-opacity="0.14" />
-              <stop offset="100%" stop-color="var(--brand-green)" stop-opacity="0.02" />
-            </linearGradient>
-          </defs>
-          <g>
-            <rect x="700" y="60" width="360" height="230" rx="18" fill="url(#plane-fill-b)" stroke="var(--outline)" stroke-opacity="0.22" transform="rotate(-8 880 175)" />
-            <rect x="620" y="330" width="420" height="260" rx="18" fill="url(#plane-fill-a)" stroke="var(--outline)" stroke-opacity="0.26" transform="rotate(6 830 460)" />
-            <rect x="20" y="600" width="280" height="190" rx="16" fill="url(#plane-fill-b)" stroke="var(--outline)" stroke-opacity="0.2" transform="rotate(-5 160 695)" />
-          </g>
+        <svg class="swiss-geometry" viewBox="0 0 1200 700" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
+          <line class="geo-rule" x1="640" y1="0" x2="640" y2="700" />
+          <line class="geo-rule" x1="560" y1="230" x2="1200" y2="230" />
+          <rect class="geo-square" x="660" y="60" width="400" height="400" />
+          <circle class="geo-circle" cx="1140" cy="610" r="105" />
         </svg>
         <div class="container hero-grid">
           <div class="hero-copy hero-enter">
-            <h1 class="display-lg">Enzymes that break plastic back down.</h1>
+            <h1 class="display-lg">Enzymes that break <span class="accent">plastic</span> back down.</h1>
             <p class="body-lg hero-sub">
               Geoxs Biotech develops microbial and enzymatic technology that
               degrades plastic waste and returns it to raw material industries
@@ -299,6 +288,12 @@
 
       <!-- MISSION -->
       <section class="section mission" id="mission">
+        <div class="container">
+          <figure class="mission-plate reveal">
+            <img src="../../assets/photos/ocean-plastic.jpg" alt="Plastic waste and juvenile fish suspended in ocean water" loading="lazy" />
+            <figcaption class="label-md">FIG. 01 — PLASTIC IN OPEN WATER</figcaption>
+          </figure>
+        </div>
         <div class="container mission-grid">
           <div class="mission-copy reveal">
             <h2 class="headline-lg">

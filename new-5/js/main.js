@@ -146,28 +146,6 @@
     successMsg.hidden = false;
   });
 
-  // Glass specular highlight: every frosted panel catches a soft light
-  // that follows the pointer, as if the surface were real ground glass.
-  // One coherent motion system shared by every panel, not a per-element effect.
-  try {
-    var glassSelector = '.pillar-featured, .stat-callout, .contact-form, ' +
-      '.team-grid, .pillar-grid-quad, .pillar-grid-duo, .pillar-stack, .header-inner';
-    var reduceMotionForGlass = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduceMotionForGlass && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
-      document.addEventListener('pointermove', function (e) {
-        var panel = e.target.closest ? e.target.closest(glassSelector) : null;
-        if (!panel) return;
-        var rect = panel.getBoundingClientRect();
-        var mx = ((e.clientX - rect.left) / rect.width) * 100;
-        var my = ((e.clientY - rect.top) / rect.height) * 100;
-        panel.style.setProperty('--mx', mx + '%');
-        panel.style.setProperty('--my', my + '%');
-      }, { passive: true });
-    }
-  } catch (err) {
-    // Panels keep their default top-centered highlight.
-  }
-
   // Interactive molecular background: a lightweight canvas node network in
   // the hero that drifts on its own and responds to pointer/touch proximity.
   // It only takes over from the static CSS watermark once motion is allowed

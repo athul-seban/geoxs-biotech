@@ -139,24 +139,39 @@
       <section class="hero" id="top">
         <div class="molecular-watermark" aria-hidden="true"></div>
         <canvas class="molecular-canvas" aria-hidden="true"></canvas>
-        <svg class="instrument-schematic" viewBox="0 0 1200 700" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-          <g stroke="var(--brand-teal)" fill="none">
-            <circle cx="980" cy="330" r="230" stroke-width="1" opacity="0.5" />
-            <circle cx="980" cy="330" r="170" stroke-width="1" opacity="0.4" />
-            <circle cx="980" cy="330" r="110" stroke-width="1" opacity="0.35" />
-            <line x1="980" y1="70" x2="980" y2="590" stroke-width="1" opacity="0.4" />
-            <line x1="720" y1="330" x2="1200" y2="330" stroke-width="1" opacity="0.4" />
-            <circle cx="980" cy="330" r="4" fill="var(--brand-green)" stroke="none" opacity="0.7" />
-            <path d="M960,330 h-40 M980,350 v40" stroke-width="1" opacity="0.5" />
+        <svg class="clay-blobs" viewBox="0 0 1200 700" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+          <g class="blob-a">
+            <path
+              class="blob-fill-teal"
+              d="M1010 120c70 -18 158 20 182 92 24 71 -14 156 -80 196 -66 40 -160 34 -214 -20 -54 -54 -62 -150 -18 -212 34 -48 74 -40 130 -56z"
+            />
+            <ellipse class="blob-highlight" cx="1000" cy="160" rx="46" ry="26" transform="rotate(-18 1000 160)" />
           </g>
-          <g stroke="var(--outline)" stroke-width="1" opacity="0.3">
-            <path d="M40,40 h28 M40,40 v28" />
-            <path d="M1160,40 h-28 M1160,40 v28" />
-            <path d="M40,660 h28 M40,660 v-28" />
+          <g class="blob-b">
+            <path
+              class="blob-fill-green"
+              d="M870 360c58 -34 138 -18 176 38 38 56 30 138 -18 182 -48 44 -134 50 -184 8 -50 -42 -64 -122 -32 -178 20 -34 28 -32 58 -50z"
+            />
+            <ellipse class="blob-highlight" cx="880" cy="380" rx="34" ry="20" transform="rotate(-12 880 380)" />
           </g>
-          <g stroke="var(--outline)" stroke-width="1" opacity="0.16">
-            <line x1="0" y1="175" x2="1200" y2="175" />
-            <line x1="0" y1="525" x2="1200" y2="525" />
+          <g class="blob-c">
+            <path
+              class="blob-fill-green-deep"
+              d="M1120 380c44 4 82 42 84 88 2 46 -32 90 -78 100 -46 10 -96 -16 -112 -60 -16 -44 4 -96 46 -118 16 -8 40 -12 60 -10z"
+            />
+          </g>
+          <g class="blob-d">
+            <path
+              class="blob-fill-teal-deep"
+              d="M120 90c40 -14 88 6 106 46 18 40 4 90 -32 114 -36 24 -88 16 -114 -18 -26 -34 -22 -84 8 -112 10 -10 20 -22 32 -30z"
+            />
+          </g>
+          <g class="blob-a">
+            <path
+              class="blob-fill-teal"
+              d="M90 480c50 -20 112 2 134 50 22 48 2 106 -46 130 -48 24 -108 8 -134 -38 -26 -46 -14 -104 30 -132 6 -4 10 -8 16 -10z"
+            />
+            <ellipse class="blob-highlight" cx="110" cy="500" rx="26" ry="16" transform="rotate(-10 110 500)" />
           </g>
         </svg>
         <div class="container hero-grid">
@@ -320,6 +335,9 @@
               biodegradable alternative from the outset, not just a way to clean
               up afterward.
             </p>
+            <figure class="clay-photo-frame">
+              <img src="../../assets/photos/ocean-plastic.jpg" alt="Plastic waste and juvenile fish suspended in ocean water" loading="lazy" />
+            </figure>
           </div>
           <aside class="stat-callout reveal">
             <div class="stat-number">9%</div>
