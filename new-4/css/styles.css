@@ -245,65 +245,64 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .btn-secondary:hover{ background: rgba(255,255,255,0.55); border-color: rgba(27,28,28,0.24); }
 
 /* ==========================================================================
-   Header — a floating glass capsule, not a full-width bar
+   Header — a small, detached dark capsule modeled on the physical Dynamic
+   Island, not a full-width bar and not a light glass pane like the rest of
+   the page. It sits apart from the canvas rather than blending into it.
    ========================================================================== */
 .site-header{
   position: sticky; top: 0; z-index: 50;
-  padding: 14px var(--margin-mobile) 0;
+  padding: 16px var(--margin-mobile) 0;
   display: flex; justify-content: center;
   pointer-events: none;
   transition: transform 280ms cubic-bezier(.16,1,.3,1);
 }
 .site-header > .header-inner{ pointer-events: auto; }
 @media (min-width: 1024px){
-  .site-header{ padding: 18px var(--margin-desktop) 0; }
+  .site-header{ padding: 20px var(--margin-desktop) 0; }
 }
 @media (max-width: 1023px){
   .site-header.is-hidden{ transform: translateY(-130%); }
 }
 .header-inner{
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; max-width: 1180px;
-  padding: 8px 10px 8px 20px;
+  width: 100%; max-width: 860px;
+  padding: 7px 8px 7px 18px;
   border-radius: var(--radius-full);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border-soft);
-  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  box-shadow: var(--glass-shadow);
-  transition: background 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+  background: #15171a;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 20px 40px -14px rgba(0,0,0,0.45), 0 4px 12px -4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: box-shadow 220ms ease;
 }
 .site-header.is-scrolled .header-inner{
-  background: var(--glass-bg-strong);
-  box-shadow: var(--glass-shadow-lg);
+  box-shadow: 0 26px 50px -16px rgba(0,0,0,0.55), 0 6px 16px -6px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
 }
 .brand{ display: inline-flex; align-items: center; gap: 12px; }
-.brand-mark{ width: 44px; height: 44px; flex-shrink: 0; }
+.brand-mark{ width: 40px; height: 40px; flex-shrink: 0; filter: brightness(1.3) saturate(1.15); }
 .brand-text{ display: flex; flex-direction: column; line-height: 1; }
 .brand-word{
-  font-family: var(--font-wordmark); font-weight: 700; font-size: 19px;
-  color: var(--ink); letter-spacing: 0.02em; text-transform: uppercase;
+  font-family: var(--font-wordmark); font-weight: 700; font-size: 17px;
+  color: #f4f5f4; letter-spacing: 0.02em; text-transform: uppercase;
 }
 .brand-sub{
-  font-family: var(--font-wordmark); font-weight: 400; font-size: 11.5px;
-  color: var(--ink-dim); letter-spacing: 0.08em; text-transform: uppercase;
+  font-family: var(--font-wordmark); font-weight: 400; font-size: 11px;
+  color: rgba(244,245,244,0.55); letter-spacing: 0.08em; text-transform: uppercase;
   margin-top: 2px;
 }
 .site-nav{ display: none; align-items: center; gap: 2px; position: relative; }
 .site-nav a{
   position: relative; z-index: 1;
-  font-size: 14.5px; font-weight: 500; color: var(--ink-dim);
+  font-size: 14px; font-weight: 500; color: rgba(244,245,244,0.62);
   padding: 9px 16px;
   border-radius: var(--radius-full);
   transition: color 200ms ease;
 }
-.site-nav a:hover{ color: var(--ink); }
+.site-nav a:hover{ color: #f4f5f4; }
 /* Island indicator: one capsule that slides and resizes to whichever link
    the visitor is about to choose, instead of each link owning its own state. */
 .nav-island{
   position: absolute; inset: 0; z-index: 0;
-  background: color-mix(in srgb, var(--brand-teal) 12%, white);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-teal) 20%, transparent);
+  background: color-mix(in srgb, var(--brand-teal-deep) 45%, #2a2d31);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1);
   opacity: 0;
   clip-path: inset(0 100% 0 0 round 9999px);
   transition: clip-path 480ms cubic-bezier(.34,1.4,.4,1), opacity 200ms ease;
@@ -356,6 +355,7 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   .site-nav.is-open a{
     padding: 15px 4px;
     font-size: 17px;
+    color: var(--ink-dim);
     border-bottom: 1px solid var(--glass-border-soft);
     border-radius: 0;
   }
@@ -500,6 +500,13 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
    Hero
    ========================================================================== */
 .hero{ position: relative; overflow: hidden; padding: var(--space-lg) 0 var(--space-xl); }
+/* Ambient illustration: faint capsule outlines echoing the header's dark
+   island shape, scattered through the scene like signal traces. */
+.island-echoes{
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
 .hero-grid{
   display: grid; gap: var(--space-lg);
   align-items: center;

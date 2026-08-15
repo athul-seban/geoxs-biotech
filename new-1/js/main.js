@@ -168,6 +168,51 @@
     // Panels keep their default top-centered highlight.
   }
 
+  // Liquid droplet: a soft brand-colored blob that trails the pointer through
+  // the hero with spring physics — this variant's one signature motion, a
+  // literal drop of light moving through the glass rather than a static glow.
+  try {
+    var liquidHero = document.querySelector('.hero');
+    var reduceMotionForLiquid = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (liquidHero && !reduceMotionForLiquid && window.matchMedia && window.matchMedia('(hover: hover)').matches) {
+      var droplet = document.createElement('div');
+      droplet.className = 'liquid-droplet';
+      droplet.setAttribute('aria-hidden', 'true');
+      liquidHero.appendChild(droplet);
+
+      var dropletTarget = { x: 0, y: 0 };
+      var dropletPos = { x: 0, y: 0 };
+      var dropletActive = false;
+      var dropletRaf = null;
+
+      liquidHero.addEventListener('pointermove', function (e) {
+        var rect = liquidHero.getBoundingClientRect();
+        dropletTarget.x = e.clientX - rect.left;
+        dropletTarget.y = e.clientY - rect.top;
+        if (!dropletActive) {
+          dropletPos.x = dropletTarget.x;
+          dropletPos.y = dropletTarget.y;
+          droplet.classList.add('is-active');
+        }
+        dropletActive = true;
+      }, { passive: true });
+      liquidHero.addEventListener('pointerleave', function () {
+        dropletActive = false;
+        droplet.classList.remove('is-active');
+      }, { passive: true });
+
+      function dropletStep() {
+        dropletPos.x += (dropletTarget.x - dropletPos.x) * 0.12;
+        dropletPos.y += (dropletTarget.y - dropletPos.y) * 0.12;
+        droplet.style.transform = 'translate(' + dropletPos.x + 'px,' + dropletPos.y + 'px) translate(-50%,-50%)';
+        dropletRaf = requestAnimationFrame(dropletStep);
+      }
+      dropletRaf = requestAnimationFrame(dropletStep);
+    }
+  } catch (err) {
+    // Hero renders fine with just its static aurora.
+  }
+
   // Interactive molecular background: a lightweight canvas node network in
   // the hero that drifts on its own and responds to pointer/touch proximity.
   // It only takes over from the static CSS watermark once motion is allowed

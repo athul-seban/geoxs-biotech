@@ -139,6 +139,26 @@
       <section class="hero" id="top">
         <div class="molecular-watermark" aria-hidden="true"></div>
         <canvas class="molecular-canvas" aria-hidden="true"></canvas>
+        <svg class="liquid-blobs" viewBox="0 0 900 700" aria-hidden="true" preserveAspectRatio="none">
+          <defs>
+            <filter id="liquid-blob-blur" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="16" />
+            </filter>
+            <linearGradient id="liquid-blob-a" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="var(--brand-teal-deep)" />
+              <stop offset="100%" stop-color="var(--brand-green)" />
+            </linearGradient>
+            <linearGradient id="liquid-blob-b" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--brand-green-deep)" />
+              <stop offset="100%" stop-color="var(--brand-teal)" />
+            </linearGradient>
+          </defs>
+          <g filter="url(#liquid-blob-blur)">
+            <path fill="url(#liquid-blob-a)" opacity="0.32" d="M120,140 C40,210 30,340 110,410 C190,480 320,470 380,390 C440,310 420,180 330,120 C260,75 180,90 120,140 Z" />
+            <path fill="url(#liquid-blob-b)" opacity="0.26" d="M760,80 C860,110 900,220 850,300 C800,380 670,390 610,320 C550,250 570,140 650,100 C690,80 725,70 760,80 Z" />
+            <path fill="url(#liquid-blob-a)" opacity="0.22" d="M660,480 C740,500 780,580 740,630 C700,680 610,680 570,630 C530,580 550,510 600,485 C620,475 640,475 660,480 Z" />
+          </g>
+        </svg>
         <div class="container hero-grid">
           <div class="hero-copy hero-enter">
             <h1 class="display-lg">Enzymes that break plastic back down.</h1>

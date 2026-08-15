@@ -1,9 +1,8 @@
 /* ==========================================================================
-   Geoxs Biotech — Design tokens (variant: Liquid Glass)
-   World: the same warm-white canvas and Biosphere Green / Lab Teal, but the
-   glass itself behaves like a fluid — panels breathe with organic, softly
-   morphing corners, controls respond with elastic overshoot, and a soft
-   colored droplet trails the pointer through the hero like light in water.
+   Geoxs Biotech — Design tokens
+   World: instrument-grade frosted glass over the brand's own warm-white
+   canvas, with its original Biosphere Green / Lab Teal read as soft washes
+   of light glowing up through the panels — daylight glass, not night glass.
    ========================================================================== */
 :root{
   /* Canvas & ink — the original Molecular Precision palette, unchanged */
@@ -47,8 +46,8 @@
   --glass-border-soft: rgba(27,28,28,0.09);
   --glass-blur: 26px;
   --glass-blur-lg: 40px;
-  --glass-shadow: 0 22px 54px -26px rgba(20,32,26,0.18), inset 0 1px 0 rgba(255,255,255,0.85);
-  --glass-shadow-lg: 0 32px 76px -28px rgba(20,32,26,0.22), inset 0 1px 0 rgba(255,255,255,0.9);
+  --glass-shadow: 0 6px 16px -10px rgba(20,32,26,0.14), inset 0 1px 0 rgba(255,255,255,0.85);
+  --glass-shadow-lg: 0 10px 24px -12px rgba(20,32,26,0.18), inset 0 1px 0 rgba(255,255,255,0.9);
 
   /* Typography */
   --font-display: 'Hanken Grotesk', system-ui, sans-serif;
@@ -56,13 +55,13 @@
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   --font-wordmark: 'PT Serif', Georgia, 'Times New Roman', serif;
 
-  /* Radius — continuous, generous, glass-appropriate */
-  --radius-sm: 0.875rem;
-  --radius: 1.25rem;
-  --radius-md: 1.5rem;
-  --radius-lg: 1.75rem;
-  --radius-xl: 2.25rem;
-  --radius-field: 0.875rem;
+  /* Radius — tight and precise, an instrument panel rather than a pillow */
+  --radius-sm: 0.375rem;
+  --radius: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 0.875rem;
+  --radius-field: 0.5rem;
   --radius-full: 9999px;
 
   /* Spacing */
@@ -214,10 +213,9 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   border-radius: var(--radius-full);
   border: 1px solid transparent;
   cursor: pointer;
-  transition: transform 480ms cubic-bezier(.34,1.56,.42,1), background-color 160ms ease, border-color 160ms ease, box-shadow 200ms ease;
+  transition: transform 160ms cubic-bezier(.16,1,.3,1), background-color 160ms ease, border-color 160ms ease, box-shadow 200ms ease;
 }
-.btn:hover{ transform: scale(1.035); }
-.btn:active{ transform: scale(0.94, 1.06); transition-duration: 120ms; }
+.btn:active{ transform: translateY(1px) scale(0.98); }
 .btn-primary{
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--brand-green) 22%, transparent), color-mix(in srgb, var(--brand-teal) 16%, transparent)),
@@ -246,33 +244,33 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
 .btn-secondary:hover{ background: rgba(255,255,255,0.55); border-color: rgba(27,28,28,0.24); }
 
 /* ==========================================================================
-   Header — a floating glass capsule, not a full-width bar
+   Header — a full-width instrument bar docked flush to the top, not a
+   floating capsule. A single hairline accent marks its lower edge like the
+   sealed seam of a lab enclosure.
    ========================================================================== */
 .site-header{
   position: sticky; top: 0; z-index: 50;
-  padding: 14px var(--margin-mobile) 0;
-  display: flex; justify-content: center;
   pointer-events: none;
   transition: transform 280ms cubic-bezier(.16,1,.3,1);
 }
 .site-header > .header-inner{ pointer-events: auto; }
-@media (min-width: 1024px){
-  .site-header{ padding: 18px var(--margin-desktop) 0; }
-}
 @media (max-width: 1023px){
-  .site-header.is-hidden{ transform: translateY(-130%); }
+  .site-header.is-hidden{ transform: translateY(-100%); }
 }
 .header-inner{
   display: flex; align-items: center; justify-content: space-between;
-  width: 100%; max-width: 1180px;
-  padding: 8px 10px 8px 20px;
-  border-radius: var(--radius-full);
+  width: 100%;
+  padding: 18px var(--margin-mobile);
   background: var(--glass-bg);
-  border: 1px solid var(--glass-border-soft);
-  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border-bottom: 1px solid var(--glass-border-soft);
+  border-top: 2px solid var(--brand-green);
+  backdrop-filter: blur(var(--glass-blur)) saturate(140%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(140%);
   box-shadow: var(--glass-shadow);
   transition: background 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+@media (min-width: 1024px){
+  .header-inner{ padding: 18px var(--margin-desktop); }
 }
 .site-header.is-scrolled .header-inner{
   background: var(--glass-bg-strong);
@@ -423,26 +421,6 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
   box-shadow: var(--glass-shadow);
 }
-/* Liquid signature: every panel's corners breathe between soft organic
-   states rather than holding one fixed radius — glass as a fluid, not a pane. */
-@media (prefers-reduced-motion: no-preference){
-  .pillar-featured, .stat-callout, .contact-form,
-  .team-grid, .pillar-grid-quad, .pillar-grid-duo, .pillar-stack{
-    animation: liquid-breathe 16s ease-in-out infinite;
-  }
-  .stat-callout{ animation-duration: 13s; }
-  .contact-form{ animation-duration: 19s; animation-delay: -4s; }
-  .team-grid{ animation-duration: 21s; animation-delay: -9s; }
-  .pillar-grid-quad{ animation-duration: 24s; animation-delay: -6s; }
-  .pillar-grid-duo{ animation-duration: 17s; animation-delay: -11s; }
-  .pillar-stack{ animation-duration: 22s; animation-delay: -3s; }
-  @keyframes liquid-breathe{
-    0%, 100%{ border-radius: 1.75rem; }
-    25%{ border-radius: 2.6rem 1.4rem 2.2rem 1.9rem / 1.6rem 2.3rem 1.5rem 2.4rem; }
-    50%{ border-radius: 1.5rem 2.4rem 1.7rem 2.6rem / 2.4rem 1.5rem 2.5rem 1.6rem; }
-    75%{ border-radius: 2.1rem 1.8rem 2.7rem 1.5rem / 1.8rem 2.2rem 1.6rem 2.5rem; }
-  }
-}
 /* Cropped brand-mark watermark, once per panel — quiet corner texture */
 .pillar-featured::after, .stat-callout::after, .contact-form::after,
 .team-grid::after, .pillar-grid-quad::after, .pillar-grid-duo::after, .pillar-stack::after{
@@ -508,21 +486,13 @@ a, .team-link, .footer-nav a{ text-underline-offset: 3px; text-decoration-thickn
    Hero
    ========================================================================== */
 .hero{ position: relative; overflow: hidden; padding: var(--space-lg) 0 var(--space-xl); }
-.liquid-droplet{
-  position: absolute; top: 0; left: 0; z-index: 0;
-  width: 420px; height: 420px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%,
-    color-mix(in srgb, var(--brand-teal) 30%, transparent),
-    color-mix(in srgb, var(--brand-green) 16%, transparent) 55%,
-    transparent 72%);
-  filter: blur(10px);
-  opacity: 0;
-  transition: opacity 500ms ease;
+/* Ambient illustration: a calibration schematic — crosshair, graticule rings,
+   corner registration marks — standing in for instrumentation imagery. */
+.instrument-schematic{
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%;
   pointer-events: none;
-  will-change: transform;
 }
-.liquid-droplet.is-active{ opacity: 1; }
 .hero-grid{
   display: grid; gap: var(--space-lg);
   align-items: center;

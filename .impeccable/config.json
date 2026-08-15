@@ -106,10 +106,10 @@
         "rule": "bounce-easing",
         "value": "cubic-bezier(.34, 1.56, .42, 1)",
         "files": [
-          "new-2/css/styles.css"
+          "new-1/css/styles.css"
         ],
         "createdAt": "2026-08-15T15:35:32.159Z",
-        "reason": "User confirmed elastic overshoot is new-2's Liquid Glass signature motion"
+        "reason": "User confirmed elastic overshoot is new-1's Liquid Glass signature motion (new-1 and new-2 swapped identities so only new-1 is Liquid Glass)"
       },
       {
         "rule": "bounce-easing",
@@ -124,10 +124,46 @@
         "rule": "design-system-radius",
         "value": "*",
         "files": [
-          "new-2/css/styles.css"
+          "new-1/css/styles.css"
         ],
         "createdAt": "2026-08-15T15:46:29.656Z",
-        "reason": "User confirmed the liquid-breathe keyframe animation's irregular organic radii are new-2's Liquid Glass signature shape language, not drift"
+        "reason": "User confirmed the liquid-breathe keyframe animation's irregular organic radii are new-1's Liquid Glass signature shape language, not drift (new-1 and new-2 swapped identities so only new-1 is Liquid Glass)"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.45)",
+        "files": [
+          "new-4/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T16:41:30.515Z",
+        "reason": "Dark drop-shadow needed for the black Dynamic-Island-style capsule header, which is intentionally outside the light-glass palette"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.3)",
+        "files": [
+          "new-4/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T16:41:30.925Z",
+        "reason": "Dark drop-shadow needed for the black Dynamic-Island-style capsule header, which is intentionally outside the light-glass palette"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.55)",
+        "files": [
+          "new-4/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T16:41:31.331Z",
+        "reason": "Dark drop-shadow needed for the black Dynamic-Island-style capsule header, which is intentionally outside the light-glass palette"
+      },
+      {
+        "rule": "design-system-color",
+        "value": "rgba(0,0,0,0.35)",
+        "files": [
+          "new-4/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T16:41:31.754Z",
+        "reason": "Dark drop-shadow needed for the black Dynamic-Island-style capsule header, which is intentionally outside the light-glass palette"
       }
     ]
   }

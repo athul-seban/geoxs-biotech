@@ -185,13 +185,13 @@
           panel.style.setProperty('--tilty', (px * 6) + 'deg');
         }, { passive: true });
         panel.addEventListener('pointerleave', function () {
-          panel.style.setProperty('--tiltx', '0deg');
-          panel.style.setProperty('--tilty', '0deg');
+          panel.style.removeProperty('--tiltx');
+          panel.style.removeProperty('--tilty');
         }, { passive: true });
       });
     }
   } catch (err) {
-    // Panels keep their default flat resting state.
+    // Panels keep their own permanent resting tilt, set in CSS.
   }
 
   // Hero parallax: the globe, copy, and aurora drift at different rates on
