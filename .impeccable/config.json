@@ -65,6 +65,69 @@
         "value": "cubic-bezier(.3, .9, .4, 1.15)",
         "createdAt": "2026-08-13T15:38:17.021Z",
         "reason": "User confirmed hex-bite snap overshoot is intentional literal motion"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "64px",
+        "createdAt": "2026-08-15T15:34:51.132Z",
+        "reason": "User confirmed the glass-redesign prototypes (new-1..new-5) intentionally use a larger type scale than the live DESIGN.md ramp"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "38px",
+        "createdAt": "2026-08-15T15:34:51.563Z",
+        "reason": "User confirmed the glass-redesign prototypes (new-1..new-5) intentionally use a larger type scale than the live DESIGN.md ramp"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "29px",
+        "createdAt": "2026-08-15T15:34:51.951Z",
+        "reason": "User confirmed the glass-redesign prototypes (new-1..new-5) intentionally use a larger type scale than the live DESIGN.md ramp"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "19px",
+        "createdAt": "2026-08-15T15:34:52.376Z",
+        "reason": "User confirmed the glass-redesign prototypes (new-1..new-5) intentionally use a larger type scale than the live DESIGN.md ramp"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "17px",
+        "createdAt": "2026-08-15T15:34:52.736Z",
+        "reason": "User confirmed the glass-redesign prototypes (new-1..new-5) intentionally use a larger type scale than the live DESIGN.md ramp"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "27px",
+        "createdAt": "2026-08-15T15:34:53.180Z",
+        "reason": "User confirmed the glass-redesign prototypes (new-1..new-5) intentionally use a larger type scale than the live DESIGN.md ramp"
+      },
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(.34, 1.56, .42, 1)",
+        "files": [
+          "new-2/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T15:35:32.159Z",
+        "reason": "User confirmed elastic overshoot is new-2's Liquid Glass signature motion"
+      },
+      {
+        "rule": "bounce-easing",
+        "value": "cubic-bezier(.34, 1.4, .4, 1)",
+        "files": [
+          "new-4/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T15:35:32.396Z",
+        "reason": "User confirmed spring easing is new-4's Dynamic-Island-style capsule signature motion"
+      },
+      {
+        "rule": "design-system-radius",
+        "value": "*",
+        "files": [
+          "new-2/css/styles.css"
+        ],
+        "createdAt": "2026-08-15T15:46:29.656Z",
+        "reason": "User confirmed the liquid-breathe keyframe animation's irregular organic radii are new-2's Liquid Glass signature shape language, not drift"
       }
     ]
   }
