@@ -181,8 +181,9 @@
       islandNav.insertBefore(island, islandNav.firstChild);
 
       function moveIslandTo(link) {
-        island.style.width = link.offsetWidth + 'px';
-        island.style.transform = 'translateX(' + link.offsetLeft + 'px)';
+        var navWidth = islandNav.clientWidth;
+        var rightInset = navWidth - (link.offsetLeft + link.offsetWidth);
+        island.style.clipPath = 'inset(0 ' + rightInset + 'px 0 ' + link.offsetLeft + 'px round 9999px)';
       }
       islandLinks.forEach(function (link) {
         link.addEventListener('pointerenter', function () {
